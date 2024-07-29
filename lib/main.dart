@@ -122,6 +122,8 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
             const SizedBox(height: 20),
             Center(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   DropdownButton<double>(
                     value: _playbackSpeed,

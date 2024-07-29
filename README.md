@@ -1,18 +1,7 @@
-# Audio Ebook App
+## **I am not good or pro programmer**
 
-This is a Flutter application that converts YouTube videos to audio and plays the audio.
+**I am always use chatgpt,mistral,gemini,claude and other ai tool.**
 
-## Getting Started
+***I make audio book apps. i am basically youtube video show this hmm not show video so convert video is audio.***
 
-1. Clone the repository.
-2. Navigate to the project directory.
-3. Run `flutter pub get` to install dependencies.
-4. Run the app with `flutter run`.
-
-## Directory Structure
-
-- `lib/`: Contains the Flutter code.
-  - `main.dart`: The main entry point of the application.
-  - `youtube_url_input.dart`: The screen to input YouTube URL.
-  - `extract_audio.dart`: The screen to extract audio from YouTube video.
-  - `play_audio.dart`: The screen to play the extracted audio.
+## CAN YOU CONTRIBUTION THIS PROJECT
