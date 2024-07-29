@@ -59,6 +59,20 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     _controller.setPlaybackRate(speed);
   }
 
+  void _undo() {
+    double newPosition = _currentSliderValue - 10;
+    if (newPosition < 0) newPosition = 0;
+    _controller.seekTo(Duration(seconds: newPosition.toInt()));
+  }
+
+  void _redo() {
+    double newPosition = _currentSliderValue + 10;
+    if (newPosition > _controller.metadata.duration.inSeconds.toDouble()) {
+      newPosition = _controller.metadata.duration.inSeconds.toDouble();
+    }
+    _controller.seekTo(Duration(seconds: newPosition.toInt()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,41 +120,58 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
               ],
             ),
             const SizedBox(height: 20),
-            Row(
-              children: [
-                DropdownButton<double>(
-                  value: _playbackSpeed,
-                  items: const [
-                    DropdownMenuItem(value: 0.5, child: Text('0.5x')),
-                    DropdownMenuItem(value: 1.0, child: Text('1.0x')),
-                    DropdownMenuItem(value: 1.5, child: Text('1.5x')),
-                    DropdownMenuItem(value: 2.0, child: Text('2.0x')),
-                  ],
-                  onChanged: (double? newValue) {
-                    if (newValue != null) {
-                      _setPlaybackSpeed(newValue);
-                    }
-                  },
-                  hint: const Text('Playback Speed'),
-                ),
-                const SizedBox(width: 10),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      if (_controller.value.isPlaying) {
-                        _controller.pause();
-                      } else {
-                        _controller.play();
+            Center(
+              child: Row(
+                children: [
+                  DropdownButton<double>(
+                    value: _playbackSpeed,
+                    items: const [
+                      DropdownMenuItem(value: 0.25, child: Text('0.25x')),
+                      DropdownMenuItem(value: 0.5, child: Text('0.5x')),
+                      DropdownMenuItem(value: 1.0, child: Text('1.0x')),
+                      DropdownMenuItem(value: 1.25, child: Text('1.25x')),
+                      DropdownMenuItem(value: 1.5, child: Text('1.5x')),
+                      DropdownMenuItem(value: 1.75, child: Text('1.75x')),
+                      DropdownMenuItem(value: 2.0, child: Text('2.0x')),
+                      DropdownMenuItem(value: 2.5, child: Text('2.5x')),
+                      DropdownMenuItem(value: 3.0, child: Text('3.0x')),
+                      DropdownMenuItem(value: 3.5, child: Text('3.5x')),
+                      DropdownMenuItem(value: 4.0, child: Text('4.0x')),
+                    ],
+                    onChanged: (double? newValue) {
+                      if (newValue != null) {
+                        _setPlaybackSpeed(newValue);
                       }
-                    });
-                  },
-                  icon: Icon(
-                    _controller.value.isPlaying
-                        ? Icons.pause
-                        : Icons.play_arrow,
+                    },
+                    hint: const Text('Playback Speed'),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 10),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        if (_controller.value.isPlaying) {
+                          _controller.pause();
+                        } else {
+                          _controller.play();
+                        }
+                      });
+                    },
+                    icon: Icon(
+                      _controller.value.isPlaying
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: _undo,
+                    icon: const Icon(Icons.replay_10),
+                  ),
+                  IconButton(
+                    onPressed: _redo,
+                    icon: const Icon(Icons.forward_10),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             Opacity(
