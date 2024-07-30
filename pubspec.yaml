@@ -10,23 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   cupertino_icons: ^1.0.8
-  # youtube_explode_dart: ^1.12.4
   youtube_player_flutter: ^9.0.1
   cached_network_image: ^3.3.1
   icons_launcher: ^2.1.7
-  # http: ^0.13.4
-  google_fonts: ^3.0.1
-  # path_provider: ^2.0.11
-  # permission_handler:
-  # dio: ^4.0.6
-  # open_file: ^3.2.1
-  # youtube_downloader: ^0.0.6
-  # audioplayers: ^6.0.0
-  # just_audio: ^0.9.39
-  # audio_service: ^0.18.15
-  # http: ^0.13.3
 
 dev_dependencies:
   flutter_test:
@@ -51,8 +38,6 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
-
-  # example:
   # fonts:
   #   - family: Schyler
   #     fonts:

@@ -32,6 +32,9 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
         autoPlay: true,
         mute: false,
         hideControls: true,
+        forceHD: false,
+        enableCaption: false,
+        hideThumbnail: true,
       ),
     );
     _controller.addListener(_listener);
