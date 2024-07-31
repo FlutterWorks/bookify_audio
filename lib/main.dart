@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 void main() {
   runApp(
@@ -9,71 +10,73 @@ void main() {
     ),
   );
 }
-
+ 
 class AudioPlayerScreen extends StatefulWidget {
   const AudioPlayerScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _AudioPlayerScreenState createState() => _AudioPlayerScreenState();
 }
 
 class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
-  late YoutubePlayerController _controller;
+  late AudioPlayer _audioPlayer;
+  late Video video;
+  bool _isPlaying = false;
   double _currentSliderValue = 0;
-  double _playbackSpeed = 1.0; // Default playback speed
+  double _playbackSpeed = 1.0;
+  Duration _duration = Duration.zero;
+  Duration _position = Duration.zero;
 
   @override
   void initState() {
     super.initState();
-    _controller = YoutubePlayerController(
-      initialVideoId: '4hKy3-MRs_s', // Your video ID
-      flags: const YoutubePlayerFlags(
-        autoPlay: true,
-        mute: false,
-        hideControls: true,
-        forceHD: false,
-        enableCaption: false,
-        hideThumbnail: true,
-      ),
-    );
-    _controller.addListener(_listener);
+    _audioPlayer = AudioPlayer();
+    _initializePlayer();
   }
 
-  void _listener() {
-    if (_controller.value.isReady && !_controller.value.isFullScreen) {
+  Future<void> _initializePlayer() async {
+    final youtube = YoutubeExplode();
+    final videoId = '4hKy3-MRs_s'; // Your video ID
+    video = await youtube.videos.get(videoId);
+
+    final manifest = await youtube.videos.streams.getManifest(videoId);
+    final streamInfo = manifest.audioOnly.first;
+    final audioUrl = streamInfo.url.toString();
+
+    await _audioPlayer.setUrl(audioUrl);
+    _audioPlayer.durationStream.listen((duration) {
       setState(() {
-        _currentSliderValue = _controller.value.position.inSeconds.toDouble();
+        _duration = duration ?? Duration.zero;
       });
-    }
-  }
-
-  String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
-  }
-
-  void _setPlaybackSpeed(double speed) {
-    setState(() {
-      _playbackSpeed = speed;
     });
-    _controller.setPlaybackRate(speed);
+    _audioPlayer.positionStream.listen((position) {
+      setState(() {
+        _position = position;
+        _currentSliderValue = _position.inSeconds.toDouble();
+      });
+    });
+  }
+
+  void _playPause() {
+    setState(() {
+      if (_isPlaying) {
+        _audioPlayer.pause();
+      } else {
+        _audioPlayer.play();
+      }
+      _isPlaying = !_isPlaying;
+    });
   }
 
   void _undo() {
-    double newPosition = _currentSliderValue - 10;
-    if (newPosition < 0) newPosition = 0;
-    _controller.seekTo(Duration(seconds: newPosition.toInt()));
+    final newPosition = _position - Duration(seconds: 10);
+    _audioPlayer
+        .seek(newPosition > Duration.zero ? newPosition : Duration.zero);
   }
 
   void _redo() {
-    double newPosition = _currentSliderValue + 10;
-    if (newPosition > _controller.metadata.duration.inSeconds.toDouble()) {
-      newPosition = _controller.metadata.duration.inSeconds.toDouble();
-    }
-    _controller.seekTo(Duration(seconds: newPosition.toInt()));
+    final newPosition = _position + Duration(seconds: 10);
+    _audioPlayer.seek(newPosition < _duration ? newPosition : _duration);
   }
 
   @override
@@ -96,30 +99,25 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
             const Text('সুভা'),
             const SizedBox(height: 10),
             const Text('রবীন্দ্রনাথ ঠাকুর'),
-            const SizedBox(width: 10),
+            const SizedBox(height: 10),
             Slider(
               value: _currentSliderValue,
               min: 0,
-              max: _controller.metadata.duration.inSeconds.toDouble(),
+              max: _duration.inSeconds.toDouble(),
               onChanged: (double value) {
                 setState(() {
                   _currentSliderValue = value;
                 });
-                _controller.seekTo(Duration(seconds: value.toInt()));
+                _audioPlayer.seek(Duration(seconds: value.toInt()));
               },
             ),
-            const SizedBox(width: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  _formatDuration(
-                    Duration(
-                      seconds: _currentSliderValue.toInt(),
-                    ),
-                  ),
+                  _formatDuration(_position),
                 ),
-                Text(_formatDuration(_controller.metadata.duration)),
+                Text(_formatDuration(_duration)),
               ],
             ),
             const SizedBox(height: 20),
@@ -133,6 +131,8 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                     items: const [
                       DropdownMenuItem(value: 0.25, child: Text('0.25x')),
                       DropdownMenuItem(value: 0.5, child: Text('0.5x')),
+                      DropdownMenuItem(value: 0.6, child: Text('0.6x')),
+                      DropdownMenuItem(value: 0.75, child: Text('0.75x')),
                       DropdownMenuItem(value: 1.0, child: Text('1.0x')),
                       DropdownMenuItem(value: 1.25, child: Text('1.25x')),
                       DropdownMenuItem(value: 1.5, child: Text('1.5x')),
@@ -142,29 +142,24 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                       DropdownMenuItem(value: 3.0, child: Text('3.0x')),
                       DropdownMenuItem(value: 3.5, child: Text('3.5x')),
                       DropdownMenuItem(value: 4.0, child: Text('4.0x')),
+                      DropdownMenuItem(value: 4.5, child: Text('4.5x')),
+                      DropdownMenuItem(value: 5.0, child: Text('5.0x')),
                     ],
                     onChanged: (double? newValue) {
                       if (newValue != null) {
-                        _setPlaybackSpeed(newValue);
+                        setState(() {
+                          _playbackSpeed = newValue;
+                          _audioPlayer.setSpeed(newValue);
+                        });
                       }
                     },
                     hint: const Text('Playback Speed'),
                   ),
                   const SizedBox(width: 10),
                   IconButton(
-                    onPressed: () {
-                      setState(() {
-                        if (_controller.value.isPlaying) {
-                          _controller.pause();
-                        } else {
-                          _controller.play();
-                        }
-                      });
-                    },
+                    onPressed: _playPause,
                     icon: Icon(
-                      _controller.value.isPlaying
-                          ? Icons.pause
-                          : Icons.play_arrow,
+                      _isPlaying ? Icons.pause : Icons.play_arrow,
                     ),
                   ),
                   IconButton(
@@ -178,25 +173,22 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            Opacity(
-              opacity: 0,
-              child: SizedBox(
-                height: 0,
-                width: 0,
-                child: YoutubePlayer(controller: _controller),
-              ),
-            ),
           ],
         ),
       ),
     );
   }
 
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
   @override
   void dispose() {
-    _controller.removeListener(_listener);
-    _controller.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 }
