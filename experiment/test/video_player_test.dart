@@ -1,151 +1,149 @@
-import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+// import 'package:flutter/material.dart';
+// import 'package:video_player/video_player.dart';
 
-void main() => runApp(const VideoApp());
+// void main() => runApp(const VideoApp());
 
-class VideoApp extends StatefulWidget {
-  const VideoApp({super.key});
+// class VideoApp extends StatefulWidget {
+//   const VideoApp({super.key});
 
-  @override
-  _VideoAppState createState() => _VideoAppState();
-}
+//   @override
+//   _VideoAppState createState() => _VideoAppState();
+// }
 
-class _VideoAppState extends State<VideoApp> {
-  late VideoPlayerController _controller;
+// class _VideoAppState extends State<VideoApp> {
+//   late VideoPlayerController _controller;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(
-        'https://www.example.com/video.mp4')) // Replace with your video URL
-      ..initialize().then((_) {
-        setState(() {});
-      });
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     _controller = VideoPlayerController.networkUrl(Uri.parse(
+//         'https://www.example.com/video.mp4')) // Replace with your video URL
+//       ..initialize().then((_) {
+//         setState(() {});
+//       });
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Video Demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Video Player'),
-        ),
-        body: Center(
-          child: _controller.value.isInitialized
-              ? Stack(
-                  children: [
-                    AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
-                    ),
-                    Positioned(
-                      bottom: 20,
-                      left: 20,
-                      right: 20,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            icon: Icon(
-                              _controller.value.isPlaying
-                                  ? Icons.pause
-                                  : Icons.play_arrow,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                if (_controller.value.isPlaying) {
-                                  _controller.pause();
-                                } else {
-                                  _controller.play();
-                                }
-                              });
-                            },
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.replay_10, color: Colors.white),
-                            onPressed: () {
-                              final currentPosition = _controller.value.position;
-                              _controller.seekTo(currentPosition - const Duration(seconds: 10));
-                            },
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.forward_10, color: Colors.white),
-                            onPressed: () {
-                              final currentPosition = _controller.value.position;
-                              _controller.seekTo(currentPosition + const Duration(seconds: 10));
-                            },
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              _controller.value.isPlaying ? Icons.fullscreen_exit : Icons.fullscreen,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              if (_controller.value.isPlaying) {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => FullScreenVideo(controller: _controller),
-                                  ),
-                                );
-                              } else {
-                                Navigator.of(context).pop();
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 60,
-                      left: 0,
-                      right: 0,
-                      child: VideoProgressIndicator(
-                        _controller,
-                        allowScrubbing: true,
-                        colors: VideoProgressColors(
-                          playedColor: Colors.red,
-                          bufferedColor: Colors.grey,
-                          backgroundColor: Colors.black.withOpacity(0.5),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              : const CircularProgressIndicator(),
-        ),
-      ),
-    );
-  }
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Video Demo',
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: const Text('Video Player'),
+//         ),
+//         body: Center(
+//           child: _controller.value.isInitialized
+//               ? Stack(
+//                   children: [
+//                     AspectRatio(
+//                       aspectRatio: _controller.value.aspectRatio,
+//                       child: VideoPlayer(_controller),
+//                     ),
+//                     Positioned(
+//                       bottom: 20,
+//                       left: 20,
+//                       right: 20,
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                         children: [
+//                           IconButton(
+//                             icon: Icon(
+//                               _controller.value.isPlaying
+//                                   ? Icons.pause
+//                                   : Icons.play_arrow,
+//                               color: Colors.white,
+//                             ),
+//                             onPressed: () {
+//                               setState(() {
+//                                 if (_controller.value.isPlaying) {
+//                                   _controller.pause();
+//                                 } else {
+//                                   _controller.play();
+//                                 }
+//                               });
+//                             },
+//                           ),
+//                           IconButton(
+//                             icon: const Icon(Icons.replay_10, color: Colors.white),
+//                             onPressed: () {
+//                               final currentPosition = _controller.value.position;
+//                               _controller.seekTo(currentPosition - const Duration(seconds: 10));
+//                             },
+//                           ),
+//                           IconButton(
+//                             icon: const Icon(Icons.forward_10, color: Colors.white),
+//                             onPressed: () {
+//                               final currentPosition = _controller.value.position;
+//                               _controller.seekTo(currentPosition + const Duration(seconds: 10));
+//                             },
+//                           ),
+//                           IconButton(
+//                             icon: Icon(
+//                               _controller.value.isPlaying ? Icons.fullscreen_exit : Icons.fullscreen,
+//                               color: Colors.white,
+//                             ),
+//                             onPressed: () {
+//                               if (_controller.value.isPlaying) {
+//                                 Navigator.of(context).push(
+//                                   MaterialPageRoute(
+//                                     builder: (context) => FullScreenVideo(controller: _controller),
+//                                   ),
+//                                 );
+//                               } else {
+//                                 Navigator.of(context).pop();
+//                               }
+//                             },
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     Positioned(
+//                       bottom: 60,
+//                       left: 0,
+//                       right: 0,
+//                       child: VideoProgressIndicator(
+//                         _controller,
+//                         allowScrubbing: true,
+//                         colors: VideoProgressColors(
+//                           playedColor: Colors.red,
+//                           bufferedColor: Colors.grey,
+//                           backgroundColor: Colors.black.withOpacity(0.5),
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 )
+//               : const CircularProgressIndicator(),
+//         ),
+//       ),
+//     );
+//   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-}
+//   @override
+//   void dispose() {
+//     _controller.dispose();
+//     super.dispose();
+//   }
+// }
 
-class FullScreenVideo extends StatelessWidget {
-  final VideoPlayerController controller;
+// class FullScreenVideo extends StatelessWidget {
+//   final VideoPlayerController controller;
 
-  const FullScreenVideo({Key? key, required this.controller}) : super(key: key);
+//   const FullScreenVideo({Key? key, required this.controller}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: AspectRatio(
-          aspectRatio: controller.value.aspectRatio,
-          child: VideoPlayer(controller),
-        ),
-      ),
-      backgroundColor: Colors.black,
-    );
-  }
-}
-
-
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: AspectRatio(
+//           aspectRatio: controller.value.aspectRatio,
+//           child: VideoPlayer(controller),
+//         ),
+//       ),
+//       backgroundColor: Colors.black,
+//     );
+//   }
+// }
 
 // import 'package:flutter/material.dart';
 // import 'package:video_player/video_player.dart';

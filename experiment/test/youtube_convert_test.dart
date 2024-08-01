@@ -2,7 +2,7 @@ import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 Future<void> main() async {
   final yt = YoutubeExplode();
-  final videoId = 'https://www.youtube.com/watch?v=iJ58sv6SCrw';
+  const videoId = 'https://www.youtube.com/watch?v=iJ58sv6SCrw';
   final manifestAudio = await yt.videos.streams.getManifest(videoId);
   final manifestVideo = await yt.videos.streams.getManifest(videoId);
   final streamAudio = manifestAudio.audioOnly.first;

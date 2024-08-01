@@ -10,7 +10,7 @@ void main() {
     ),
   );
 }
- 
+
 class AudioPlayerScreen extends StatefulWidget {
   const AudioPlayerScreen({super.key});
 
@@ -192,3 +192,66 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     super.dispose();
   }
 }
+
+
+
+
+
+// import 'package:flutter/material.dart';
+
+// void main() {
+//   runApp(
+//     const MaterialApp(
+//       home: MyApp(),
+//     ),
+//   );
+// }
+
+// class MyApp extends StatefulWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   State<MyApp> createState() => _MyAppState();
+// }
+
+// class _MyAppState extends State<MyApp> {
+//   @override
+//   Widget build(BuildContext context) {
+//     // Extract the book names and marks
+//     final List<Map<String, dynamic>> bookDetails = [];
+//     for (var item in data) {
+//       final books = item["book"] as List<String>;
+//       final marks = item["Mark"] as Map<String, int>;
+//       for (var book in books) {
+//         bookDetails.add({"book": book, "mark": marks[book.toLowerCase()]});
+//       }
+//     }
+
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Book List'),
+//       ),
+//       body: ListView.builder(
+//         itemCount: bookDetails.length,
+//         itemBuilder: (context, index) {
+//           final bookDetail = bookDetails[index];
+//           return ListTile(
+//             title: Text(bookDetail["book"]),
+//             subtitle: Text('Mark: ${bookDetail["mark"]}'),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+
+// const data = [
+//   {
+//     "name": "apon",
+//     "roll": 105,
+//     "class": 10,
+//     "goodBoy": true,
+//     "book": ["bangla", "english", "math"],
+//     "Mark": {"bangla": 161, "english": 169, "math": 80}
+//   }
+// ];
