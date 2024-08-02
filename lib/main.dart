@@ -20,7 +20,6 @@ class AudioPlayerScreen extends StatefulWidget {
 
 class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
   late AudioPlayer _audioPlayer;
-  late Video video;
   bool _isPlaying = false;
   double _currentSliderValue = 0;
   double _playbackSpeed = 1.0;
@@ -36,9 +35,9 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
 
   Future<void> _initializePlayer() async {
     final youtube = YoutubeExplode();
-    final videoId = '4hKy3-MRs_s'; // Your video ID
-    video = await youtube.videos.get(videoId);
-
+    final youtubeUrl = 'https://www.youtube.com/watch?v=SAqJBJkByzU'; // Your video ID or Url
+    final video = await youtube.videos.get(youtubeUrl);
+    final videoId =  video.id;
     final manifest = await youtube.videos.streams.getManifest(videoId);
     final streamInfo = manifest.audioOnly.first;
     final audioUrl = streamInfo.url.toString();
@@ -197,61 +196,61 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
 
 
 
-// import 'package:flutter/material.dart';
+// // import 'package:flutter/material.dart';
 
-// void main() {
-//   runApp(
-//     const MaterialApp(
-//       home: MyApp(),
-//     ),
-//   );
-// }
+// // void main() {
+// //   runApp(
+// //     const MaterialApp(
+// //       home: MyApp(),
+// //     ),
+// //   );
+// // }
 
-// class MyApp extends StatefulWidget {
-//   const MyApp({super.key});
+// // class MyApp extends StatefulWidget {
+// //   const MyApp({super.key});
 
-//   @override
-//   State<MyApp> createState() => _MyAppState();
-// }
+// //   @override
+// //   State<MyApp> createState() => _MyAppState();
+// // }
 
-// class _MyAppState extends State<MyApp> {
-//   @override
-//   Widget build(BuildContext context) {
-//     // Extract the book names and marks
-//     final List<Map<String, dynamic>> bookDetails = [];
-//     for (var item in data) {
-//       final books = item["book"] as List<String>;
-//       final marks = item["Mark"] as Map<String, int>;
-//       for (var book in books) {
-//         bookDetails.add({"book": book, "mark": marks[book.toLowerCase()]});
-//       }
-//     }
+// // class _MyAppState extends State<MyApp> {
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     // Extract the book names and marks
+// //     final List<Map<String, dynamic>> bookDetails = [];
+// //     for (var item in data) {
+// //       final books = item["book"] as List<String>;
+// //       final marks = item["Mark"] as Map<String, int>;
+// //       for (var book in books) {
+// //         bookDetails.add({"book": book, "mark": marks[book.toLowerCase()]});
+// //       }
+// //     }
 
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Book List'),
-//       ),
-//       body: ListView.builder(
-//         itemCount: bookDetails.length,
-//         itemBuilder: (context, index) {
-//           final bookDetail = bookDetails[index];
-//           return ListTile(
-//             title: Text(bookDetail["book"]),
-//             subtitle: Text('Mark: ${bookDetail["mark"]}'),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
+// //     return Scaffold(
+// //       appBar: AppBar(
+// //         title: const Text('Book List'),
+// //       ),
+// //       body: ListView.builder(
+// //         itemCount: bookDetails.length,
+// //         itemBuilder: (context, index) {
+// //           final bookDetail = bookDetails[index];
+// //           return ListTile(
+// //             title: Text(bookDetail["book"]),
+// //             subtitle: Text('Mark: ${bookDetail["mark"]}'),
+// //           );
+// //         },
+// //       ),
+// //     );
+// //   }
+// // }
 
-// const data = [
-//   {
-//     "name": "apon",
-//     "roll": 105,
-//     "class": 10,
-//     "goodBoy": true,
-//     "book": ["bangla", "english", "math"],
-//     "Mark": {"bangla": 161, "english": 169, "math": 80}
-//   }
-// ];
+// // const data = [
+// //   {
+// //     "name": "apon",
+// //     "roll": 105,
+// //     "class": 10,
+// //     "goodBoy": true,
+// //     "book": ["bangla", "english", "math"],
+// //     "Mark": {"bangla": 161, "english": 169, "math": 80}
+// //   }
+// // ];
