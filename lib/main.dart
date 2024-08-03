@@ -41,7 +41,6 @@
 //     final manifest = await youtube.videos.streams.getManifest(videoId);
 //     final streamInfo = manifest.audioOnly.first;
 //     final audioUrl = streamInfo.url.toString();
-
 //     await _audioPlayer.setUrl(audioUrl);
 //     _audioPlayer.durationStream.listen((duration) {
 //       setState(() {

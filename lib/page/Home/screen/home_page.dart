@@ -12,10 +12,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double imageWidth =
-        (screenWidth - 40) / 3; // Subtracting padding and spacing
-    final double imageHeight =
-        imageWidth * 1.5; // Maintaining a 2:3 aspect ratio
+    final double imageWidth = (screenWidth - 40) / 3;
+    final double imageHeight = imageWidth * 1.5;
 
     return Scaffold(
       body: SafeArea(

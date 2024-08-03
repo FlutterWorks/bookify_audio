@@ -1,11 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:test/page/Home/screen/episode_page.dart';
 
 class SeeMoreGridWidget extends StatefulWidget {
   final String seemorepageListTile;
-  final Function()? clickEpisode;
   final String seeMorePageListImage;
   final String dataSaveName;
   final String apiurl;
@@ -17,7 +18,6 @@ class SeeMoreGridWidget extends StatefulWidget {
     required this.apiurl,
     required this.dataSaveName,
     required this.seemorepageListTile,
-    this.clickEpisode,
     required this.seeMorePageListImage,
     required this.imageHeight,
     required this.imageWidth,
@@ -82,16 +82,21 @@ class _SeeMoreGridWidgetState extends State<SeeMoreGridWidget> {
                   return Padding(
                     padding: const EdgeInsets.all(5),
                     child: GestureDetector(
-                      onTap: widget.clickEpisode,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (b) => EpisodeListPage(
+                              audiobook: book,
+                            ),
+                          ),
+                        );
+                      },
                       child: Container(
                         height: widget.imageHeight,
                         width: widget.imageWidth,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image:
-                                NetworkImage(book[widget.seeMorePageListImage]),
-                            fit: BoxFit.fill,
-                          ),
+                        child: CachedNetworkImage(
+                          imageUrl: book[widget.seeMorePageListImage],
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ),

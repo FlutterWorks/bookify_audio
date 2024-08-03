@@ -3,12 +3,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:test/page/Home/screen/episode_page.dart';
 import 'package:test/page/Home/screen/see_more.dart';
 
 class HomePageListWidget extends StatefulWidget {
   final String homepageListTile;
-  final Function()? seeMoreClick;
-  final Function()? clickEpisode;
+  // final Function()? seeMoreClick;
   final String homepageListImage;
   final String dataSaveName;
   final String apiurl;
@@ -18,8 +18,6 @@ class HomePageListWidget extends StatefulWidget {
     required this.imageHeight,
     required this.imageWidth,
     required this.homepageListTile,
-    this.seeMoreClick,
-    this.clickEpisode,
     required this.homepageListImage,
     required this.dataSaveName,
     required this.apiurl,
@@ -43,7 +41,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
 
     if (storedData != null) {
       setState(() {
-        _audiobooks = jsonDecode(storedData)['audiobooks'];
+  _audiobooks = jsonDecode(storedData)['audiobooks'];
         _isLoading = false;
       });
     } else {
@@ -131,7 +129,14 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                         return Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: GestureDetector(
-                            onTap: widget.clickEpisode,
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (builder) =>
+                                      EpisodeListPage(audiobook: book),
+                                ),
+                              );
+                            },
                             child: CachedNetworkImage(
                               width: widget.imageWidth,
                               height: widget.imageHeight,
