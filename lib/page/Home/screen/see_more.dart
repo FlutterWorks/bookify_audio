@@ -8,6 +8,8 @@ class SeeMorePage extends StatelessWidget {
   final String apiurl;
   final double imageHeight;
   final double imageWidth;
+    final String seeMorePageListTitle ;
+  final String seeMorePageListCreatorName ;
   const SeeMorePage({
     super.key,
     required this.apiurl,
@@ -15,7 +17,8 @@ class SeeMorePage extends StatelessWidget {
     required this.seemorepageListTile,
     required this.seeMorePageListImage,
     required this.imageHeight,
-    required this.imageWidth,
+    required this.imageWidth, required this.seeMorePageListTitle, required this.seeMorePageListCreatorName,
+    
   });
 
   @override
@@ -25,13 +28,12 @@ class SeeMorePage extends StatelessWidget {
         title: Text(seemorepageListTile),
       ),
       body: SafeArea(
-        child: SeeMoreGridWidget(
+        child: SeeMoreListWidget(
           apiurl: apiurl,
           dataSaveName: dataSaveName,
-          seemorepageListTile: seemorepageListTile,
           seeMorePageListImage: seeMorePageListImage,
           imageHeight: imageHeight,
-          imageWidth: imageHeight,
+          imageWidth: imageHeight, seeMorePageListTitle: seeMorePageListTitle, seeMorePageListCreatorName: seeMorePageListCreatorName,
         ),
       ),
     );

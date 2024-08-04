@@ -201,7 +201,7 @@ import 'package:test/page/Home/screen/home_page.dart';
 
 void main() {
   runApp(
-    MyApp(),
+    const MyApp(),
   );
 }
 
@@ -211,8 +211,52 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomePage(),
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:url_launcher/url_launcher.dart';
+
+// void main() {
+//   runApp(MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: HomePage(),
+//     );
+//   }
+// }
+
+// class HomePage extends StatelessWidget {
+//   final String youtubeUrl = 'https://www.youtube.com/watch?v=wXXNWmYN4as&t=33s';
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('YouTube Opener'),
+//       ),
+//       body: Center(
+//         child: ElevatedButton(
+//           onPressed: () async {
+//             final Uri youtubeAppUrl = Uri.parse('vnd.youtube://www.youtube.com/watch?v=wXXNWmYN4as&t=33s');
+//             final Uri webUrl = Uri.parse(youtubeUrl);
+
+//             if (await canLaunch(youtubeAppUrl.toString())) {
+//               await launch(youtubeAppUrl.toString());
+//             } else {
+//               await launch(webUrl.toString());
+//             }
+//           },
+//           child: Text('Open YouTube Video'),
+//         ),
+//       ),
+//     );
+//   }
+// }

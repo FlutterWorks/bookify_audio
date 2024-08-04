@@ -25,6 +25,8 @@ class _HomePageState extends State<HomePage> {
             homepageListImage: 'image',
             dataSaveName: 'FreeSave',
             apiurl: 'https://apon10510.github.io/bookify_api/dummy_api.json',
+            seeMorePageListTitle: 'title',
+            seeMorePageListCreatorName: 'bookCreatorName',
           ),
         ),
       ),

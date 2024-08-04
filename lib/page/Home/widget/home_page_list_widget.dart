@@ -8,8 +8,9 @@ import 'package:test/page/Home/screen/see_more.dart';
 
 class HomePageListWidget extends StatefulWidget {
   final String homepageListTile;
-  // final Function()? seeMoreClick;
   final String homepageListImage;
+  final String seeMorePageListTitle;
+  final String seeMorePageListCreatorName;
   final String dataSaveName;
   final String apiurl;
 
@@ -19,8 +20,11 @@ class HomePageListWidget extends StatefulWidget {
     required this.imageWidth,
     required this.homepageListTile,
     required this.homepageListImage,
+        required this.seeMorePageListTitle,
+    required this.seeMorePageListCreatorName,
     required this.dataSaveName,
     required this.apiurl,
+
   });
 
   final double imageHeight;
@@ -41,7 +45,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
 
     if (storedData != null) {
       setState(() {
-  _audiobooks = jsonDecode(storedData)['audiobooks'];
+        _audiobooks = jsonDecode(storedData)['audiobooks'];
         _isLoading = false;
       });
     } else {
@@ -74,6 +78,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // dynamic seeMoreBook ;
     return Column(
       children: [
         Row(
@@ -83,7 +88,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
               padding: const EdgeInsets.all(5.0),
               child: Text(
                 widget.homepageListTile,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                 ),
               ),
@@ -99,13 +104,17 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                         dataSaveName: widget.dataSaveName,
                         seemorepageListTile: widget.homepageListTile,
                         seeMorePageListImage: widget.homepageListImage,
+                        seeMorePageListTitle: widget.seeMorePageListTitle,
+                        seeMorePageListCreatorName:
+                            widget.seeMorePageListCreatorName,
                         imageHeight: widget.imageHeight,
                         imageWidth: widget.imageHeight,
+                        
                       ),
                     ),
                   );
                 },
-                child: Text(
+                child: const Text(
                   'See More',
                   style: TextStyle(
                     fontSize: 20,
@@ -118,7 +127,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
         SizedBox(
           height: widget.imageHeight + 10,
           child: _isLoading
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : _error != null
                   ? Center(child: Text('Error: $_error'))
                   : ListView.builder(
@@ -126,6 +135,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                       itemCount: _audiobooks!.length,
                       itemBuilder: (context, index) {
                         var book = _audiobooks![index];
+
                         return Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: GestureDetector(

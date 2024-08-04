@@ -4,34 +4,39 @@
       "id": 1,
       "title": "Book One",
       "image": "https://i.postimg.cc/nzFNMvyZ/momotadi.jpg",
+      "bookCreatorName": "রবীন্দ্রনাথ ঠাকুর",
       "episodes": [
         {
           "episode_id": 1,
           "title": "Episode 1",
-          "audio_url": "https://example.com/audio1_1.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         }
-       
       ]
     },
     {
       "id": 2,
       "title": "Book Two",
       "image": "https://i.postimg.cc/nzFNMvyZ/momotadi.jpg",
+      "bookCreatorName": "রবীন্দ্রনাথ ঠাকুর",
       "episodes": [
         {
           "episode_id": 1,
           "title": "Episode 1",
-          "audio_url": "https://example.com/audio2_1.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 2,
           "title": "Episode 2",
-          "audio_url": "https://example.com/audio2_2.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 3,
           "title": "Episode 3",
-          "audio_url": "https://example.com/audio2_3.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         }
       ]
     },
@@ -39,21 +44,25 @@
       "id": 3,
       "title": "Book Three",
       "image": "https://i.postimg.cc/nzFNMvyZ/momotadi.jpg",
+      "bookCreatorName": "রবীন্দ্রনাথ ঠাকুর",
       "episodes": [
         {
           "episode_id": 1,
           "title": "Episode 1",
-          "audio_url": "https://example.com/audio3_1.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 2,
           "title": "Episode 2",
-          "audio_url": "https://example.com/audio3_2.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 3,
           "title": "Episode 3",
-          "audio_url": "https://example.com/audio3_3.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         }
       ]
     },
@@ -61,21 +70,25 @@
       "id": 4,
       "title": "Book Four",
       "image": "https://i.postimg.cc/nzFNMvyZ/momotadi.jpg",
+      "bookCreatorName": "রবীন্দ্রনাথ ঠাকুর",
       "episodes": [
         {
           "episode_id": 1,
           "title": "Episode 1",
-          "audio_url": "https://example.com/audio4_1.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 2,
           "title": "Episode 2",
-          "audio_url": "https://example.com/audio4_2.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 3,
           "title": "Episode 3",
-          "audio_url": "https://example.com/audio4_3.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         }
       ]
     },
@@ -83,21 +96,25 @@
       "id": 5,
       "title": "Book Five",
       "image": "https://i.postimg.cc/nzFNMvyZ/momotadi.jpg",
+      "bookCreatorName": "রবীন্দ্রনাথ ঠাকুর",
       "episodes": [
         {
           "episode_id": 1,
           "title": "Episode 1",
-          "audio_url": "https://example.com/audio5_1.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 2,
           "title": "Episode 2",
-          "audio_url": "https://example.com/audio5_2.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 3,
           "title": "Episode 3",
-          "audio_url": "https://example.com/audio5_3.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         }
       ]
     },
@@ -105,21 +122,25 @@
       "id": 6,
       "title": "Book Six",
       "image": "https://i.postimg.cc/nzFNMvyZ/momotadi.jpg",
+      "bookCreatorName": "রবীন্দ্রনাথ ঠাকুর",
       "episodes": [
         {
           "episode_id": 1,
           "title": "Episode 1",
-          "audio_url": "https://example.com/audio6_1.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 2,
           "title": "Episode 2",
-          "audio_url": "https://example.com/audio6_2.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 3,
           "title": "Episode 3",
-          "audio_url": "https://example.com/audio6_3.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         }
       ]
     },
@@ -127,21 +148,25 @@
       "id": 7,
       "title": "Book Seven",
       "image": "https://i.postimg.cc/nzFNMvyZ/momotadi.jpg",
+      "bookCreatorName": "রবীন্দ্রনাথ ঠাকুর",
       "episodes": [
         {
           "episode_id": 1,
           "title": "Episode 1",
-          "audio_url": "https://example.com/audio7_1.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 2,
           "title": "Episode 2",
-          "audio_url": "https://example.com/audio7_2.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 3,
           "title": "Episode 3",
-          "audio_url": "https://example.com/audio7_3.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         }
       ]
     },
@@ -149,21 +174,25 @@
       "id": 8,
       "title": "Book Eight",
       "image": "https://i.postimg.cc/nzFNMvyZ/momotadi.jpg",
+      "bookCreatorName": "রবীন্দ্রনাথ ঠাকুর",
       "episodes": [
         {
           "episode_id": 1,
           "title": "Episode 1",
-          "audio_url": "https://example.com/audio8_1.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 2,
           "title": "Episode 2",
-          "audio_url": "https://example.com/audio8_2.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 3,
           "title": "Episode 3",
-          "audio_url": "https://example.com/audio8_3.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         }
       ]
     },
@@ -171,21 +200,25 @@
       "id": 9,
       "title": "Book Nine",
       "image": "https://i.postimg.cc/nzFNMvyZ/momotadi.jpg",
+      "bookCreatorName": "রবীন্দ্রনাথ ঠাকুর",
       "episodes": [
         {
           "episode_id": 1,
           "title": "Episode 1",
-          "audio_url": "https://example.com/audio9_1.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 2,
           "title": "Episode 2",
-          "audio_url": "https://example.com/audio9_2.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 3,
           "title": "Episode 3",
-          "audio_url": "https://example.com/audio9_3.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         }
       ]
     },
@@ -193,21 +226,25 @@
       "id": 10,
       "title": "Book Ten",
       "image": "https://i.postimg.cc/nzFNMvyZ/momotadi.jpg",
+      "bookCreatorName": "রবীন্দ্রনাথ ঠাকুর",
       "episodes": [
         {
           "episode_id": 1,
           "title": "Episode 1",
-          "audio_url": "https://example.com/audio10_1.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 2,
           "title": "Episode 2",
-          "audio_url": "https://example.com/audio10_2.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         },
         {
           "episode_id": 3,
           "title": "Episode 3",
-          "audio_url": "https://example.com/audio10_3.mp3"
+          "audio_url": "https://www.youtube.com/watch?v=k2qgadSvNyU",
+          "voice_owner": "https://www.youtube.com/@BankuraMemesShorts"
         }
       ]
     }

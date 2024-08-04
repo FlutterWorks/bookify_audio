@@ -5,29 +5,30 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test/page/Home/screen/episode_page.dart';
 
-class SeeMoreGridWidget extends StatefulWidget {
-  final String seemorepageListTile;
+class SeeMoreListWidget extends StatefulWidget {
   final String seeMorePageListImage;
+  final String seeMorePageListTitle;
+  final String seeMorePageListCreatorName;
   final String dataSaveName;
   final String apiurl;
   final double imageHeight;
   final double imageWidth;
-
-  const SeeMoreGridWidget({
+  const SeeMoreListWidget({
     super.key,
     required this.apiurl,
     required this.dataSaveName,
-    required this.seemorepageListTile,
     required this.seeMorePageListImage,
     required this.imageHeight,
     required this.imageWidth,
+    required this.seeMorePageListTitle,
+    required this.seeMorePageListCreatorName,
   });
 
   @override
-  State<SeeMoreGridWidget> createState() => _SeeMoreGridWidgetState();
+  State<SeeMoreListWidget> createState() => _SeeMoreListWidgetState();
 }
 
-class _SeeMoreGridWidgetState extends State<SeeMoreGridWidget> {
+class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
   List<dynamic>? _audiobooks;
   bool _isLoading = true;
   String? _error;
@@ -75,7 +76,7 @@ class _SeeMoreGridWidgetState extends State<SeeMoreGridWidget> {
         ? const Center(child: CircularProgressIndicator())
         : _error != null
             ? Center(child: Text('Error: $_error'))
-            : GridView.builder(
+            : ListView.builder(
                 itemCount: _audiobooks!.length,
                 itemBuilder: (context, index) {
                   var book = _audiobooks![index];
@@ -92,20 +93,50 @@ class _SeeMoreGridWidgetState extends State<SeeMoreGridWidget> {
                         );
                       },
                       child: Container(
-                        height: widget.imageHeight,
-                        width: widget.imageWidth,
-                        child: CachedNetworkImage(
-                          imageUrl: book[widget.seeMorePageListImage],
-                          fit: BoxFit.fill,
+                        height: 135,
+                        width: MediaQuery.of(context).size.width * .99,
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(4)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(3),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 120,
+                                    width: 100,
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          book[widget.seeMorePageListImage],
+                                          fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(book[widget.seeMorePageListTitle]),
+                                        Text(book[
+                                            widget.seeMorePageListCreatorName]),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   );
                 },
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 0,
-                ),
               );
   }
 }

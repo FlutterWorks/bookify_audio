@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,13 +16,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AudiobookListPage(),
+      home: const AudiobookListPage(),
     );
   }
 }
 
 class AudiobookListPage extends StatefulWidget {
+  const AudiobookListPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _AudiobookListPageState createState() => _AudiobookListPageState();
 }
 
@@ -40,7 +45,7 @@ class _AudiobookListPageState extends State<AudiobookListPage> {
     setState(() {
       audiobooks = data['audiobooks'];
       audioTitle =  data['audiotile'];
-      print(audiobooks);
+      // print(audiobooks);
     });
   }
 
@@ -75,7 +80,7 @@ class _AudiobookListPageState extends State<AudiobookListPage> {
 class EpisodeListPage extends StatelessWidget {
   final dynamic audiobook;
 
-  EpisodeListPage({required this.audiobook});
+  const EpisodeListPage({super.key, required this.audiobook});
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +112,7 @@ class EpisodeListPage extends StatelessWidget {
 class AudioPlayerPage extends StatelessWidget {
   final dynamic episode;
 
-  AudioPlayerPage({required this.episode});
+  const AudioPlayerPage({super.key, required this.episode});
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +129,7 @@ class AudioPlayerPage extends StatelessWidget {
               onPressed: () {
                 // Implement audio playing functionality here
               },
-              child: Text('Play'),
+              child: const Text('Play'),
             ),
           ],
         ),

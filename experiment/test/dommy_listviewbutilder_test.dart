@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
         title: const Text('Book List'),
       ),
       body: ListView.builder(
-        itemCount: Data.length,
+        itemCount: data.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
                   MaterialPageRoute(builder: (b) => BookList(index: index)));
             },
             child: Card(
-              child: Text(Data[index]["name"].toString()),
+              child: Text(data[index]["name"].toString()),
             ),
           );
         },
@@ -51,7 +51,7 @@ class BookList extends StatefulWidget {
 class _BookListState extends State<BookList> {
   @override
   Widget build(BuildContext context) {
-    final List<String> books = Data[widget.index]["book"] as List<String>;
+    final List<String> books = data[widget.index]["book"] as List<String>;
 
     return Scaffold(
       body: ListView.builder(
@@ -64,7 +64,7 @@ class _BookListState extends State<BookList> {
   }
 }
 
-const Data = [
+const data = [
   {
     "name": "apon",
     "roll": 105,

@@ -5,7 +5,7 @@ import 'package:test/page/Home/screen/audio_player_page.dart';
 class EpisodeListPage extends StatelessWidget {
   final dynamic audiobook;
 
-  EpisodeListPage({required this.audiobook});
+  const EpisodeListPage({super.key, required this.audiobook});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class EpisodeListPage extends StatelessWidget {
                   child: Card(
                     child: ListTile(
                       title: Text(episode['title']),
-                      trailing: Icon(Icons.navigate_next),
+                      trailing: const Icon(Icons.navigate_next),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -38,7 +38,8 @@ class EpisodeListPage extends StatelessWidget {
                               title: audiobook['title'],
                               bookCreatorName: audiobook['bookCreatorName'],
                               bookImage: audiobook['image'],
-                              audioUrl: episode['audio_url'],
+                              audioUrl: episode['audio_url'], 
+                              voiceOwner: episode['voice_owner'],
                               // bookCreatorName: audiobook['bookCreatorName'],
                             ),
                           ),
