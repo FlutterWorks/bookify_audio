@@ -214,7 +214,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
               ),
               GestureDetector(
                 onTap: () async {
-                  final String youtubeUrl = widget.voiceOwner;
+                  final String youtubeUrl = 'https://www.youtube.com/@${widget.voiceOwner}';
                   final String httpsRemove =
                       youtubeUrl.replaceAll('https:', 'vnd.youtube://');
                   final Uri youtubeAppUrl = Uri.parse(httpsRemove);
