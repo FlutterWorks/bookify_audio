@@ -11,24 +11,91 @@ class EpisodeListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(audiobook['title']),
+        title: Text(
+          audiobook['title'],
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            CachedNetworkImage(imageUrl: audiobook['image']),
-            Text(audiobook['title']),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: CachedNetworkImage(
+                    imageUrl: audiobook['image'],
+                    // height: 200,
+                    // width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                'নাম: ${audiobook['title']}',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Text(
+                'লেখক: ${audiobook['bookCreatorName']}',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(16.0),
+            //   child: Divider(
+            //     color: Colors.black,
+            //   ),
+            // ),
             ListView.builder(
               shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               itemCount: audiobook['episodes'].length,
               itemBuilder: (context, index) {
                 final episode = audiobook['episodes'][index];
                 return Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     child: ListTile(
-                      title: Text(episode['title']),
-                      trailing: const Icon(Icons.navigate_next),
+                      title: Text(
+                        episode['title'],
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      trailing: Icon(Icons.navigate_next, color: Colors.deepPurple),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -38,9 +105,8 @@ class EpisodeListPage extends StatelessWidget {
                               title: audiobook['title'],
                               bookCreatorName: audiobook['bookCreatorName'],
                               bookImage: audiobook['image'],
-                              audioUrl: episode['audio_url'], 
+                              audioUrl: episode['audio_url'],
                               voiceOwner: episode['voice_owner'],
-                              // bookCreatorName: audiobook['bookCreatorName'],
                             ),
                           ),
                         );
@@ -56,6 +122,7 @@ class EpisodeListPage extends StatelessWidget {
     );
   }
 }
+
 
 // class AudioPlayerPage extends StatelessWidget {
 //   final dynamic episode;

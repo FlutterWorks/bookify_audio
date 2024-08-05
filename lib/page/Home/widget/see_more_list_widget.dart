@@ -6,81 +6,83 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test/page/Home/screen/episode_page.dart';
 
 class SeeMoreListWidget extends StatefulWidget {
-  final String seeMorePageListImage;
-  final String seeMorePageListTitle;
-  final String seeMorePageListCreatorName;
-  final String dataSaveName;
-  final String apiurl;
-  final double imageHeight;
-  final double imageWidth;
-
-  const SeeMoreListWidget({
-    super.key,
-    required this.apiurl,
-    required this.dataSaveName,
-    required this.seeMorePageListImage,
-    required this.imageHeight,
-    required this.imageWidth,
-    required this.seeMorePageListTitle,
-    required this.seeMorePageListCreatorName,
-  });
+  const SeeMoreListWidget({super.key});
 
   @override
   State<SeeMoreListWidget> createState() => _SeeMoreListWidgetState();
 }
 
 class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
-  List<dynamic>? _audiobooks;
-  bool _isLoading = true;
-  String? _error;
-
-  Future<void> fetchAudiobooks() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    try {
-      final response = await http.get(Uri.parse(widget.apiurl));
-      if (response.statusCode == 200) {
-        final json = jsonDecode(response.body);
-        prefs.setString(widget.dataSaveName, response.body);
-        setState(() {
-          _audiobooks = json['audiobooks'];
-          _isLoading = false;
-        });
-      } else {
-        throw Exception('Failed to load audiobooks');
-      }
-    } catch (error) {
-      setState(() {
-        _error = error.toString();
-        _isLoading = false;
-      });
-      // Fallback to local data if API request fails
-      final storedData = prefs.getString(widget.dataSaveName);
-      if (storedData != null) {
-        setState(() {
-          _audiobooks = jsonDecode(storedData)['audiobooks'];
-          _isLoading = false;
-        });
-      }
-    }
-  }
+  List<dynamic> data = [];
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    fetchAudiobooks();
+    loadData();
+  }
+
+  Future<void> getData() async {
+    final res = await http.get(
+      Uri.parse('https://apon10510.github.io/bookify_api/dummy_api.json'),
+    );
+    if (res.statusCode == 200) {
+      final decoded = json.decode(res.body);
+      data = decoded['audiobooks'];
+      await saveDataToPreferences();
+      setState(() {
+        isLoading = false;
+      });
+    } else {
+      // Handle the error accordingly
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> saveDataToPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('audiobooks', json.encode(data));
+  }
+
+  Future<void> loadData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedData = prefs.getString('audiobooks');
+    if (savedData != null) {
+      data = json.decode(savedData);
+      setState(() {
+        isLoading = false;
+      });
+    }
+    await getData();
+  }
+
+  Future<void> refreshData() async {
+    setState(() {
+      isLoading = true;
+    });
+    await getData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading
-        ? const Center(child: CircularProgressIndicator())
-        : _error != null
-            ? Center(child: Text('Error: $_error'))
-            : ListView.builder(
-                itemCount: _audiobooks!.length,
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          'BookType',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : RefreshIndicator(
+              onRefresh: refreshData,
+              child: ListView.builder(
+                itemCount: data.length,
                 itemBuilder: (context, index) {
-                  var book = _audiobooks![index];
+                  var book = data[index];
                   return Padding(
                     padding: const EdgeInsets.all(5),
                     child: GestureDetector(
@@ -93,51 +95,57 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
                           ),
                         );
                       },
-                      child: Container(
-                        height: 135,
-                        width: MediaQuery.of(context).size.width * .99,
-                        decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(4)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(3),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 120,
-                                    width: 100,
-                                    child: CachedNetworkImage(
-                                      imageUrl:
-                                          book[widget.seeMorePageListImage],
-                                      fit: BoxFit.cover,
+                      child: Card(
+                        color: Colors.white,
+                        elevation: 5,
+                        child: SizedBox(
+                          height: 135,
+                          width: MediaQuery.of(context).size.width * .99,
+                          child: Padding(
+                            padding: const EdgeInsets.all(3),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: SizedBox(
+                                        height: 120,
+                                        width: 100,
+                                        child: CachedNetworkImage(
+                                          imageUrl: book['image'],
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(book[widget.seeMorePageListTitle]),
-                                        Text(book[
-                                            widget.seeMorePageListCreatorName]),
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text("নাম ${book['title']}"),
+                                          Text(
+                                              'লেখক ${book['bookCreatorName']}'),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              )
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   );
                 },
-              );
+              ),
+            ),
+    );
   }
 }

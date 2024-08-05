@@ -111,17 +111,47 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              CachedNetworkImage(
-                imageUrl: widget.bookImage,
-                placeholder: (context, url) => const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                // height: 200,
-                // width: 330,
-                fit: BoxFit.fill,
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.bookImage,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    fit: BoxFit.fill,
+                    // height: 200,
+                    // width: 330,
+                  ),
+                ),
               ),
-              Text(widget.title),
               const SizedBox(height: 10),
-              Text(widget.bookCreatorName),
+              Text(
+                widget.title,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                widget.bookCreatorName,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               const SizedBox(height: 10),
               if (_error != null)
                 Text(
@@ -160,15 +190,19 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                           DropdownButton<double>(
                             value: _playbackSpeed,
                             items: const [
-                              DropdownMenuItem(value: 0.25, child: Text('0.25x')),
+                              DropdownMenuItem(
+                                  value: 0.25, child: Text('0.25x')),
                               DropdownMenuItem(value: 0.5, child: Text('0.5x')),
                               DropdownMenuItem(value: 0.6, child: Text('0.6x')),
-                              DropdownMenuItem(value: 0.75, child: Text('0.75x')),
+                              DropdownMenuItem(
+                                  value: 0.75, child: Text('0.75x')),
                               DropdownMenuItem(value: 1.0, child: Text('1.0x')),
-                              DropdownMenuItem(value: 1.25, child: Text('1.25x')),
+                              DropdownMenuItem(
+                                  value: 1.25, child: Text('1.25x')),
                               DropdownMenuItem(value: 1.4, child: Text('1.4x')),
                               DropdownMenuItem(value: 1.5, child: Text('1.5x')),
-                              DropdownMenuItem(value: 1.75, child: Text('1.75x')),
+                              DropdownMenuItem(
+                                  value: 1.75, child: Text('1.75x')),
                               DropdownMenuItem(value: 2.0, child: Text('2.0x')),
                               DropdownMenuItem(value: 2.5, child: Text('2.5x')),
                               DropdownMenuItem(value: 3.0, child: Text('3.0x')),
@@ -214,12 +248,13 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
               ),
               GestureDetector(
                 onTap: () async {
-                  final String youtubeUrl = 'https://www.youtube.com/@${widget.voiceOwner}';
+                  final String youtubeUrl =
+                      'https://www.youtube.com/@${widget.voiceOwner}';
                   final String httpsRemove =
                       youtubeUrl.replaceAll('https:', 'vnd.youtube://');
                   final Uri youtubeAppUrl = Uri.parse(httpsRemove);
                   final Uri webUrl = Uri.parse(youtubeUrl);
-          
+
                   // ignore: deprecated_member_use
                   if (await canLaunch(youtubeAppUrl.toString())) {
                     // ignore: deprecated_member_use
@@ -243,7 +278,13 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                       ],
                       borderRadius: BorderRadius.circular(150)),
                   child: const Center(
-                    child: Text('Subscribe The Voice Owner'),
+                    child: Text(
+                      'Subscribe The Voice Owner',
+                      style: TextStyle(
+                        // fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),

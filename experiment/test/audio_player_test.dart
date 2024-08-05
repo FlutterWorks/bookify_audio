@@ -15,6 +15,7 @@ class AudioPlayerScreen extends StatefulWidget {
   const AudioPlayerScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AudioPlayerScreenState createState() => _AudioPlayerScreenState();
 }
 
@@ -35,7 +36,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
 
   Future<void> _initializePlayer() async {
     final youtube = YoutubeExplode();
-    final youtubeUrl = 'https://www.youtube.com/watch?v=SAqJBJkByzU'; // Your video ID or Url
+    const youtubeUrl = 'https://www.youtube.com/watch?v=SAqJBJkByzU'; // Your video ID or Url
     final video = await youtube.videos.get(youtubeUrl);
     final videoId =  video.id;
     final manifest = await youtube.videos.streams.getManifest(videoId);
@@ -67,13 +68,13 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
   }
 
   void _undo() {
-    final newPosition = _position - Duration(seconds: 10);
+    final newPosition = _position - const Duration(seconds: 10);
     _audioPlayer
         .seek(newPosition > Duration.zero ? newPosition : Duration.zero);
   }
 
   void _redo() {
-    final newPosition = _position + Duration(seconds: 10);
+    final newPosition = _position + const Duration(seconds: 10);
     _audioPlayer.seek(newPosition < _duration ? newPosition : _duration);
   }
 
