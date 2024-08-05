@@ -6,7 +6,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test/page/Home/screen/episode_page.dart';
 
 class SeeMoreListWidget extends StatefulWidget {
-  const SeeMoreListWidget({super.key});
+  final String api;
+  final String bookType;
+  final String bookImage;
+  final String saveKey;
+  final String bookName;
+  final String bookCreator;
+  const SeeMoreListWidget({
+    super.key,
+    required this.api,
+    required this.bookType,
+    required this.bookImage,
+    required this.saveKey,
+    required this.bookName,
+    required this.bookCreator,
+  });
 
   @override
   State<SeeMoreListWidget> createState() => _SeeMoreListWidgetState();
@@ -24,7 +38,7 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
 
   Future<void> getData() async {
     final res = await http.get(
-      Uri.parse('https://apon10510.github.io/bookify_api/dummy_api.json'),
+      Uri.parse(widget.api),
     );
     if (res.statusCode == 200) {
       final decoded = json.decode(res.body);
@@ -43,12 +57,12 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
 
   Future<void> saveDataToPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('audiobooks', json.encode(data));
+    prefs.setString(widget.saveKey, json.encode(data));
   }
 
   Future<void> loadData() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedData = prefs.getString('audiobooks');
+    final savedData = prefs.getString(widget.saveKey);
     if (savedData != null) {
       data = json.decode(savedData);
       setState(() {
@@ -70,9 +84,9 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'BookType',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        title: Text(
+          widget.bookType,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
       body: isLoading
@@ -115,7 +129,7 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
                                         height: 120,
                                         width: 100,
                                         child: CachedNetworkImage(
-                                          imageUrl: book['image'],
+                                          imageUrl: book[widget.bookImage],
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -128,9 +142,9 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text("নাম ${book['title']}"),
+                                          Text("নাম: ${book[widget.bookName]}"),
                                           Text(
-                                              'লেখক ${book['bookCreatorName']}'),
+                                              'লেখক: ${book[widget.bookCreator]}'),
                                         ],
                                       ),
                                     ),

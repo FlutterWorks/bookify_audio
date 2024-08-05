@@ -13,7 +13,7 @@ class EpisodeListPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           audiobook['title'],
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -25,7 +25,7 @@ class EpisodeListPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(
-                 decoration: BoxDecoration(
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: const [
                     BoxShadow(
@@ -39,8 +39,6 @@ class EpisodeListPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(
                     imageUrl: audiobook['image'],
-                    // height: 200,
-                    // width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -50,7 +48,7 @@ class EpisodeListPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
                 'নাম: ${audiobook['title']}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
@@ -58,7 +56,8 @@ class EpisodeListPage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Text(
                 'লেখক: ${audiobook['bookCreatorName']}',
                 style: TextStyle(
@@ -68,20 +67,14 @@ class EpisodeListPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(16.0),
-            //   child: Divider(
-            //     color: Colors.black,
-            //   ),
-            // ),
             ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
               itemCount: audiobook['episodes'].length,
               itemBuilder: (context, index) {
                 final episode = audiobook['episodes'][index];
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16, vertical: 6),
                   child: Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
@@ -90,12 +83,15 @@ class EpisodeListPage extends StatelessWidget {
                     child: ListTile(
                       title: Text(
                         episode['title'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      trailing: Icon(Icons.navigate_next, color: Colors.deepPurple),
+                      trailing: const Icon(
+                        Icons.navigate_next,
+                        color: Colors.deepPurple,
+                      ),
                       onTap: () {
                         Navigator.push(
                           context,

@@ -8,6 +8,13 @@ class SeeMorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SeeMoreListWidget();
+    return const SeeMoreListWidget(
+      api: 'https://apon10510.github.io/bookify_api/dummy_api.json',
+      bookType: 'Free Bangladesh',
+      bookImage: 'image',
+      saveKey: 'save_bangladesh',
+      bookName: 'title',
+      bookCreator: 'bookCreatorName',
+    );
   }
 }

@@ -7,7 +7,17 @@ import 'package:test/page/Home/screen/episode_page.dart';
 import 'package:test/page/Home/screen/see_more.dart';
 
 class HomePageListWidget extends StatefulWidget {
-  const HomePageListWidget({super.key});
+  final String api;
+  final String bookType;
+  final String bookImage;
+  final String saveKey;
+  const HomePageListWidget({
+    super.key,
+    required this.api,
+    required this.bookType,
+    required this.bookImage,
+    required this.saveKey,
+  });
 
   @override
   State<HomePageListWidget> createState() => _HomePageListWidgetState();
@@ -44,12 +54,12 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
 
   Future<void> saveDataToPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('audiobooks', json.encode(data));
+    prefs.setString(widget.saveKey, json.encode(data));
   }
 
   Future<void> loadData() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedData = prefs.getString('audiobooks');
+    final savedData = prefs.getString(widget.saveKey);
     if (savedData != null) {
       data = json.decode(savedData);
       setState(() {
@@ -82,15 +92,25 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'BookType',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Text(
+                  widget.bookType,
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (b) => const SeeMorePage()));
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (b) => const SeeMorePage(),
+                      ),
+                    );
                   },
-                  child: const Text('See More'),
+                  child: const Text(
+                    'See More',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -109,30 +129,44 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (builder) => EpisodeListPage(audiobook: book),
+                                  builder: (builder) =>
+                                      EpisodeListPage(audiobook: book),
                                 ),
                               );
                             },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: CachedNetworkImage(
-                                imageUrl: book['image'].toString(),
-                                width: imageWidth,
-                                height: imageHeight,
-                                fit: BoxFit.cover,
-                                placeholder: (context, url) => Container(
-                                  width: imageWidth,
-                                  height: imageHeight,
-                                  color: Colors.grey[200],
-                                  child: const Center(
-                                    child: CircularProgressIndicator(),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
                                   ),
-                                ),
-                                errorWidget: (context, url, error) => Container(
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: CachedNetworkImage(
+                                  imageUrl: book['image'].toString(),
                                   width: imageWidth,
                                   height: imageHeight,
-                                  color: Colors.grey[200],
-                                  child: const Icon(Icons.error),
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => Container(
+                                    width: imageWidth,
+                                    height: imageHeight,
+                                    color: Colors.grey[200],
+                                    child: const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                    width: imageWidth,
+                                    height: imageHeight,
+                                    color: Colors.grey[200],
+                                    child: const Icon(Icons.error),
+                                  ),
                                 ),
                               ),
                             ),

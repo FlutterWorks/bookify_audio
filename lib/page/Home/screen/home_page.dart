@@ -11,21 +11,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-
-
     return const Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: HomePageListWidget(
-              // imageHeight: imageHeight,
-              // imageWidth: imageWidth,
-              // homepageListTile: 'Free',
-              // homepageListImage: 'image',
-              // dataSaveName: 'FreeSave',
-              // apiurl: 'https://apon10510.github.io/bookify_api/dummy_api.json',
-              // seeMorePageListTitle: 'title',
-              // seeMorePageListCreatorName: 'bookCreatorName',
-              ),
+            api: 'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
+            bookType: 'Free Bangladesh',
+            bookImage: 'image',
+            saveKey: 'save_bangladesh',
+          ),
         ),
       ),
     );
