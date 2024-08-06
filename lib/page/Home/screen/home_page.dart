@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test/core/star_the_project.dart';
 import 'package:test/page/Home/utils/slider_image_utils.dart';
 import 'package:test/page/Home/widget/home_page_list_widget.dart';
 
@@ -10,6 +11,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      GitHubStarPrompt.checkAndShowDialog(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
