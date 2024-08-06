@@ -330,7 +330,7 @@ class _SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen> {
   double _playbackSpeed = 1.0;
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
-  String? _error;
+  // String? _error;
 
   @override
   void initState() {
@@ -367,7 +367,7 @@ class _SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen> {
       });
     } catch (e) {
       setState(() {
-        _error = 'Failed to load audio: $e';
+        // _error = 'Failed to load audio: $e';
       });
     }
   }
@@ -450,12 +450,7 @@ class _SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-              if (_error != null)
-                Text(
-                  _error!,
-                  style: const TextStyle(color: Colors.red),
-                )
-              else
+           
                 Column(
                   children: [
                     Slider(

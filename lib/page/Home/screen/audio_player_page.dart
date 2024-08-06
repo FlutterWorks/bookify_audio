@@ -33,7 +33,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
   double _playbackSpeed = 1.0;
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
-  String? _error;
+  // String? _error;
 
   @override
   void initState() {
@@ -70,7 +70,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
       });
     } catch (e) {
       setState(() {
-        _error = 'Failed to load audio: $e';
+        // _error = 'Failed to load audio: $e';
       });
     }
   }
@@ -153,96 +153,88 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-              if (_error != null)
-                Text(
-                  _error!,
-                  style: const TextStyle(color: Colors.red),
-                )
-              else
-                Column(
-                  children: [
-                    Slider(
-                      value: _currentSliderValue,
-                      min: 0,
-                      max: _duration.inSeconds.toDouble(),
-                      onChanged: (double value) {
-                        setState(() {
+              Column(
+                children: [
+                  Slider(
+                    value: _currentSliderValue,
+                    min: 0,
+                    max: _duration.inSeconds.toDouble(),
+                    onChanged: (double value) {
+                      setState(
+                        () {
                           _currentSliderValue = value;
-                        });
-                        _audioPlayer.seek(Duration(seconds: value.toInt()));
-                      },
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        },
+                      );
+                      _audioPlayer.seek(Duration(seconds: value.toInt()));
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        _formatDuration(_position),
+                      ),
+                      Text(_formatDuration(_duration)),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          _formatDuration(_position),
+                        DropdownButton<double>(
+                          value: _playbackSpeed,
+                          items: const [
+                            DropdownMenuItem(value: 0.25, child: Text('0.25x')),
+                            DropdownMenuItem(value: 0.5, child: Text('0.5x')),
+                            DropdownMenuItem(value: 0.6, child: Text('0.6x')),
+                            DropdownMenuItem(value: 0.75, child: Text('0.75x')),
+                            DropdownMenuItem(value: 1.0, child: Text('1.0x')),
+                            DropdownMenuItem(value: 1.25, child: Text('1.25x')),
+                            DropdownMenuItem(value: 1.4, child: Text('1.4x')),
+                            DropdownMenuItem(value: 1.5, child: Text('1.5x')),
+                            DropdownMenuItem(value: 1.75, child: Text('1.75x')),
+                            DropdownMenuItem(value: 2.0, child: Text('2.0x')),
+                            DropdownMenuItem(value: 2.5, child: Text('2.5x')),
+                            DropdownMenuItem(value: 3.0, child: Text('3.0x')),
+                            DropdownMenuItem(value: 3.5, child: Text('3.5x')),
+                            DropdownMenuItem(value: 4.0, child: Text('4.0x')),
+                            DropdownMenuItem(value: 4.5, child: Text('4.5x')),
+                            DropdownMenuItem(value: 5.0, child: Text('5.0x')),
+                            DropdownMenuItem(value: 5.5, child: Text('5.5x')),
+                            DropdownMenuItem(value: 6.0, child: Text('6.0x')),
+                          ],
+                          onChanged: (double? newValue) {
+                            if (newValue != null) {
+                              setState(() {
+                                _playbackSpeed = newValue;
+                                _audioPlayer.setSpeed(newValue);
+                              });
+                            }
+                          },
+                          hint: const Text('Playback Speed'),
                         ),
-                        Text(_formatDuration(_duration)),
+                        const SizedBox(width: 10),
+                        IconButton(
+                          onPressed: _playPause,
+                          icon: Icon(
+                            _isPlaying ? Icons.pause : Icons.play_arrow,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: _undo,
+                          icon: const Icon(Icons.replay_10),
+                        ),
+                        IconButton(
+                          onPressed: _redo,
+                          icon: const Icon(Icons.forward_10),
+                        ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          DropdownButton<double>(
-                            value: _playbackSpeed,
-                            items: const [
-                              DropdownMenuItem(
-                                  value: 0.25, child: Text('0.25x')),
-                              DropdownMenuItem(value: 0.5, child: Text('0.5x')),
-                              DropdownMenuItem(value: 0.6, child: Text('0.6x')),
-                              DropdownMenuItem(
-                                  value: 0.75, child: Text('0.75x')),
-                              DropdownMenuItem(value: 1.0, child: Text('1.0x')),
-                              DropdownMenuItem(
-                                  value: 1.25, child: Text('1.25x')),
-                              DropdownMenuItem(value: 1.4, child: Text('1.4x')),
-                              DropdownMenuItem(value: 1.5, child: Text('1.5x')),
-                              DropdownMenuItem(
-                                  value: 1.75, child: Text('1.75x')),
-                              DropdownMenuItem(value: 2.0, child: Text('2.0x')),
-                              DropdownMenuItem(value: 2.5, child: Text('2.5x')),
-                              DropdownMenuItem(value: 3.0, child: Text('3.0x')),
-                              DropdownMenuItem(value: 3.5, child: Text('3.5x')),
-                              DropdownMenuItem(value: 4.0, child: Text('4.0x')),
-                              DropdownMenuItem(value: 4.5, child: Text('4.5x')),
-                              DropdownMenuItem(value: 5.0, child: Text('5.0x')),
-                              DropdownMenuItem(value: 5.5, child: Text('5.5x')),
-                              DropdownMenuItem(value: 6.0, child: Text('6.0x')),
-                            ],
-                            onChanged: (double? newValue) {
-                              if (newValue != null) {
-                                setState(() {
-                                  _playbackSpeed = newValue;
-                                  _audioPlayer.setSpeed(newValue);
-                                });
-                              }
-                            },
-                            hint: const Text('Playback Speed'),
-                          ),
-                          const SizedBox(width: 10),
-                          IconButton(
-                            onPressed: _playPause,
-                            icon: Icon(
-                              _isPlaying ? Icons.pause : Icons.play_arrow,
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: _undo,
-                            icon: const Icon(Icons.replay_10),
-                          ),
-                          IconButton(
-                            onPressed: _redo,
-                            icon: const Icon(Icons.forward_10),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
               const SizedBox(
                 height: 20,
               ),
