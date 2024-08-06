@@ -11,7 +11,7 @@ class SeeMoreListWidget extends StatefulWidget {
   final String bookImage;
   final String saveKey;
   final String bookName;
-  final String bookCreator;
+  final String bookCreatorName;
   const SeeMoreListWidget({
     super.key,
     required this.api,
@@ -19,7 +19,7 @@ class SeeMoreListWidget extends StatefulWidget {
     required this.bookImage,
     required this.saveKey,
     required this.bookName,
-    required this.bookCreator,
+    required this.bookCreatorName,
   });
 
   @override
@@ -110,7 +110,7 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
                         );
                       },
                       child: Card(
-                        color: Colors.white,
+                        // color: Colors.white,
                         elevation: 5,
                         child: SizedBox(
                           height: 135,
@@ -144,7 +144,7 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
                                         children: [
                                           Text("নাম: ${book[widget.bookName]}"),
                                           Text(
-                                              'লেখক: ${book[widget.bookCreator]}'),
+                                              'লেখক: ${book[widget.bookCreatorName]}'),
                                         ],
                                       ),
                                     ),

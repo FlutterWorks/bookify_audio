@@ -25,6 +25,44 @@ class _HomePageState extends State<HomePage> {
                 bookType: 'রবীন্দ্রনাথ ঠাকুর',
                 bookImage: 'image',
                 saveKey: 'save_bangladesh',
+                bookCreatorName: 'bookCreatorName',
+                bookName: 'title',
+              ),
+              HomePageListWidget(
+                api:
+                    'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
+                bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                bookImage: 'image',
+                saveKey: 'save_bangladesh',
+                bookCreatorName: 'bookCreatorName',
+                bookName: 'title',
+              ),
+              HomePageListWidget(
+                api:
+                    'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
+                bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                bookImage: 'image',
+                saveKey: 'save_bangladesh',
+                bookCreatorName: 'bookCreatorName',
+                bookName: 'title',
+              ),
+              HomePageListWidget(
+                api:
+                    'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
+                bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                bookImage: 'image',
+                saveKey: 'save_bangladesh',
+                bookCreatorName: 'bookCreatorName',
+                bookName: 'title',
+              ),
+              HomePageListWidget(
+                api:
+                    'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
+                bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                bookImage: 'image',
+                saveKey: 'save_bangladesh',
+                bookCreatorName: 'bookCreatorName',
+                bookName: 'title',
               ),
             ],
           ),

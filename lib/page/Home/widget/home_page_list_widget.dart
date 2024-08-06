@@ -11,12 +11,16 @@ class HomePageListWidget extends StatefulWidget {
   final String bookType;
   final String bookImage;
   final String saveKey;
+  final String bookCreatorName;
+  final String bookName;
   const HomePageListWidget({
     super.key,
     required this.api,
     required this.bookType,
     required this.bookImage,
     required this.saveKey,
+    required this.bookCreatorName,
+    required this.bookName,
   });
 
   @override
@@ -35,7 +39,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
 
   Future<void> getData() async {
     final res = await http.get(
-      Uri.parse('https://apon10510.github.io/bookify_api/dummy_api.json'),
+      Uri.parse(widget.api),
     );
     if (res.statusCode == 200) {
       final decoded = json.decode(res.body);
@@ -101,7 +105,14 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (b) => const SeeMorePage(),
+                        builder: (b) => SeeMorePage(
+                          api: widget.api,
+                          bookType: widget.bookType,
+                          bookImage: widget.bookImage,
+                          saveKey: widget.saveKey,
+                          bookName: widget.bookName,
+                          bookCreatorName: widget.bookCreatorName,
+                        ),
                       ),
                     );
                   },
@@ -148,7 +159,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: CachedNetworkImage(
-                                  imageUrl: book['image'].toString(),
+                                  imageUrl: book[widget.bookImage].toString(),
                                   width: imageWidth,
                                   height: imageHeight,
                                   fit: BoxFit.cover,

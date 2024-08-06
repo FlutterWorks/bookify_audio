@@ -560,7 +560,7 @@ class _SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen> {
                   height: 50,
                   width: 200,
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      // color: Colors.white,
                       boxShadow: const [
                         BoxShadow(
                           color: Colors.black54,
