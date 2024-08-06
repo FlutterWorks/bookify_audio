@@ -17,13 +17,13 @@ dependencies:
   icons_launcher: ^2.1.7
   shared_preferences: ^2.2.3
   url_launcher: ^6.3.0
-  path_provider: ^2.1.4
-  dio: ^5.5.0+1
-  just_audio_cache: ^0.1.2
-  connectivity_plus: ^6.0.4
+  # path_provider: ^2.1.4
+  # dio: ^5.5.0+1
+  # just_audio_cache: ^0.1.2
+  # connectivity_plus: ^6.0.4
   http: ^1.2.2
   carousel_slider: ^4.2.1
-  speech_to_text: ^6.6.2
+  # speech_to_text: ^6.6.2
 
 dev_dependencies:
   flutter_test:
