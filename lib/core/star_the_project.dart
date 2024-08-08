@@ -37,9 +37,10 @@ class GitHubStarPrompt {
               child: const Text('Star on GitHub'),
               onPressed: () async {
                 // final Uri url =
-                // Uri.parse('https://github.com/apon10510/bookify_audio');
+                // Uri.parse('https://github.com/apon06/bookify_audio');
                 final Uri webUrl =
-                    Uri.parse('https://github.com/apon10510/bookify_audio');
+                    Uri.parse('https://github.com/apon06/bookify_audio');
+                // ignore: deprecated_member_use
                 if (await canLaunch(webUrl.toString())) {
                   // ignore: deprecated_member_use
                   await launch(webUrl.toString());

@@ -37,7 +37,7 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> {
 
   Future<void> _fetchImages() async {
     final response = await http.get(
-        Uri.parse('https://apon10510.github.io/bookify_api/slider_api.json'));
+        Uri.parse('https://apon06.github.io/bookify_api/slider_api.json'));
     if (response.statusCode == 200) {
       setState(() {
         _imageList = json.decode(response.body);
