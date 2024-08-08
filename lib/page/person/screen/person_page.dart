@@ -1,135 +1,232 @@
+import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:http/http.dart' as http;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class PersonPage extends StatelessWidget {
+class PersonPage extends StatefulWidget {
   const PersonPage({super.key});
+
+  @override
+  State<PersonPage> createState() => _PersonPageState();
+}
+
+class _PersonPageState extends State<PersonPage> {
+  List<dynamic> personList = [];
+  bool isLoading = true;
+  dynamic selectedPerson;
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  Future<void> getData() async {
+    final res = await http.get(
+      Uri.parse('https://apon06.github.io/bookify_api/person_api.json'),
+    );
+    if (res.statusCode == 200) {
+      final decoded = json.decode(res.body);
+      setState(() {
+        personList = decoded['personInfo'];
+        isLoading = false;
+        selectedPerson = personList.isNotEmpty ? personList[0] : null;
+      });
+      await saveDataToPreferences();
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> saveDataToPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('personSave', json.encode(personList));
+  }
+
+  Future<void> loadData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedData = prefs.getString('personSave');
+    if (savedData != null) {
+      setState(() {
+        personList = json.decode(savedData);
+        selectedPerson = personList.isNotEmpty ? personList[0] : null;
+        isLoading = false;
+      });
+    }
+    await getData();
+  }
+
+  Future<void> refreshData() async {
+    setState(() {
+      isLoading = true;
+    });
+    await getData();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.25,
-                    height: MediaQuery.of(context).size.height,
-                    child: ListView.builder(
-                      itemCount: 100,
-                      itemBuilder: (b, index) {
-                        return GestureDetector(
-                          child: const Column(
+      appBar: AppBar(
+        toolbarHeight: 10,
+        automaticallyImplyLeading: false,
+      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.25,
+                  height: MediaQuery.of(context).size.height,
+                  child: ListView.builder(
+                    itemCount: personList.length,
+                    itemBuilder: (context, index) {
+                      dynamic person = personList[index];
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedPerson = person;
+                          });
+                        },
+                        child: SizedBox(
+                          height: 55,
+                          child: Column(
                             children: [
                               Padding(
-                                padding: EdgeInsets.all(5),
+                                padding: const EdgeInsets.all(5),
                                 child: AutoSizeText(
-                                  'রবীন্দ্রনাথ ঠাকুর',
+                                  person['personName'],
                                   maxLines: 1,
                                 ),
                               ),
-                              Divider(),
+                              const Divider(),
                             ],
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
-                  VerticalDivider(
-                    color: Colors.white,
-                    width: MediaQuery.of(context).size.width * 0.04,
-                  ),
-                  const PersonInfo(),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+                ),
+                VerticalDivider(
+                  // color: Colors.white,
+                  width: MediaQuery.of(context).size.width * 0.04,
+                ),
+                selectedPerson != null
+                    ? Expanded(
+                        child: PersonInfoPage(
+                          personImage: selectedPerson['personImage'],
+                          personName: selectedPerson['personName'],
+                          personBirth: selectedPerson['personBirth'],
+                          personDeath: selectedPerson['personDeath'],
+                          personBio: selectedPerson['personBio'],
+                          personBook: selectedPerson['personBook'],
+                          personWiki: selectedPerson['personWiki'],
+                        ),
+                      )
+                    : const Expanded(
+                        child: Center(
+                          child: Text('No person selected'),
+                        ),
+                      ),
+              ],
+            ),
     );
   }
 }
 
-class PersonInfo extends StatelessWidget {
-  const PersonInfo({super.key});
+class PersonInfoPage extends StatelessWidget {
+  final String personImage;
+  final String personName;
+  final String personBirth;
+  final String personDeath;
+  final String personBio;
+  final String personBook;
+  final String? personWiki;
+
+  const PersonInfoPage({
+    super.key,
+    required this.personImage,
+    required this.personName,
+    required this.personBirth,
+    required this.personDeath,
+    required this.personBio,
+    required this.personBook,
+    this.personWiki,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.7,
       height: MediaQuery.of(context).size.height,
-      child: const SingleChildScrollView(
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Center(
               child: CircleAvatar(
                 radius: 80,
                 backgroundColor: Colors.white,
                 child: CircleAvatar(
                   radius: 75,
-                  backgroundImage: NetworkImage(
-                    'https://via.placeholder.com/150', // Replace with actual image URL
-                  ),
+                  backgroundImage: CachedNetworkImageProvider(personImage),
                 ),
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Center(
               child: Text(
-                'Person\'s Name', // Replace with actual name
-                style: TextStyle(fontSize: 30),
+                personName,
+                style: const TextStyle(fontSize: 30),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Date of Birth:',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  'January 1, 1900', // Replace with actual DOB
-                ),
+                Text(personBirth),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Date of Death:',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  'December 31, 1980', // Replace with actual DOD
-                ),
+                Text(personDeath),
               ],
             ),
-            SizedBox(height: 24),
-            Text(
+            const SizedBox(height: 24),
+            const Text(
               'Biography:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet accumsan tortor. Sed vel risus vitae quam gravida consectetur. Vivamus vitae ex sed dui accumsan tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet accumsan tortor. Sed vel risus vitae quam gravida consectetur. Vivamus vitae ex sed dui accumsan tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet accumsan tortor. Sed vel risus vitae quam gravida consectetur. Vivamus vitae ex sed dui accumsan tempor.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet accumsan tortor',
-              style: TextStyle(height: 1.5),
+              personBio,
+              style: const TextStyle(height: 1.5),
             ),
-            SizedBox(height: 24),
-            Text(
+            const SizedBox(height: 24),
+            const Text(
               'Famous poetry',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
-              'Gitanjali, Kabuliwala,The Home and the World, Chokher Bali,Sadhana: The Realization of Life etc',
-              style: TextStyle(height: 1.5),
+              personBook,
+              style: const TextStyle(height: 1.5),
             ),
           ],
         ),

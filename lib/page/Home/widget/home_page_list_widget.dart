@@ -99,7 +99,9 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                 Text(
                   widget.bookType,
                   style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 TextButton(
                   onPressed: () {
@@ -126,7 +128,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
               ],
             ),
             SizedBox(
-              height: imageHeight + 10,
+              height: imageHeight + 5,
               child: isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ListView.builder(
