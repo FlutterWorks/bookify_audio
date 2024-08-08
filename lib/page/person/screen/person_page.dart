@@ -191,7 +191,7 @@ class PersonInfoPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'Date of Birth:',
+                  'জন্ম তারিখ:',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(personBirth),
@@ -202,15 +202,15 @@ class PersonInfoPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'Date of Death:',
+                  'মৃত্যুর তারিখ:',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(personDeath),
+                Text(personDeath.isEmpty ? 'জীবিত' : personDeath),
               ],
             ),
             const SizedBox(height: 24),
             const Text(
-              'Biography:',
+              'জীবনী:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
@@ -220,7 +220,7 @@ class PersonInfoPage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             const Text(
-              'Famous poetry',
+              'বিখ্যাত বই',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
