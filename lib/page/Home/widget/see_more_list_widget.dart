@@ -44,14 +44,18 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
       final decoded = json.decode(res.body);
       data = decoded['audiobooks'];
       await saveDataToPreferences();
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     } else {
       // Handle the error accordingly
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -65,17 +69,21 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
     final savedData = prefs.getString(widget.saveKey);
     if (savedData != null) {
       data = json.decode(savedData);
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
     await getData();
   }
 
   Future<void> refreshData() async {
-    setState(() {
-      isLoading = true;
-    });
+    if (mounted) {
+      setState(() {
+        isLoading = true;
+      });
+    }
     await getData();
   }
 
@@ -110,7 +118,6 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
                         );
                       },
                       child: Card(
-                        // color: Colors.white,
                         elevation: 5,
                         child: SizedBox(
                           height: 135,
