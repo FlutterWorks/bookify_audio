@@ -24,6 +24,7 @@ dependencies:
   http: ^1.2.2
   carousel_slider: ^4.2.1
   auto_size_text: ^3.0.0
+  search_page: ^2.3.0
   # speech_to_text: ^6.6.2
 
 dev_dependencies:

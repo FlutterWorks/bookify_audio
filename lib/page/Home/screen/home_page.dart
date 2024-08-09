@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test/core/star_the_project.dart';
+import 'package:test/page/Home/utils/app_bar_util.dart';
 import 'package:test/page/Home/utils/slider_image_utils.dart';
 import 'package:test/page/Home/widget/home_page_list_widget.dart';
 
@@ -21,8 +22,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
+    return Scaffold(
+      appBar: AppBar(
+        actions: const [
+          AppBarUtil(),
+        ],
+      ),
+      body: const SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
