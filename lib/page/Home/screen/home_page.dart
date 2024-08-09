@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 10),
+              // SizedBox(height: 10),
               ImageSliderScreen(),
               HomePageListWidget(
                 api:

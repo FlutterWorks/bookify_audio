@@ -362,6 +362,7 @@ class _ContainerSearchBarUtilsState extends State<ContainerSearchBarUtils> {
             },
             filter: (filter) => [
               filter['title'].toString(),
+              filter['titleEn'].toString(),
             ],
             items: data,
           ),

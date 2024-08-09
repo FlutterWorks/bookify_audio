@@ -89,7 +89,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
     return RefreshIndicator(
       onRefresh: refreshData,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
