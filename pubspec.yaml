@@ -25,8 +25,8 @@ dependencies:
   carousel_slider: ^4.2.1
   auto_size_text: ^3.0.0
   search_page: ^2.3.0
-  just_audio_background: ^0.0.1-beta.13
-  audio_service: ^0.18.15
+  # just_audio_background: ^0.0.1-beta.13
+  # audio_service: ^0.18.15
   # speech_to_text: ^6.6.2
   assets_audio_player: ^3.1.1
 

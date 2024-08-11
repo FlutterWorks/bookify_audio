@@ -6,20 +6,25 @@
 
 ## App's api needs to add more audio which is not possible for me alone. You can contribute to this repo if you want [api repo](https://github.com/apon06/bookify_api)
 
+## Anyone can help to add this download functionality
+
 ## Future Plan
 
  1. Local Notification Add
  2. Sleep Reminder Add
  3. multi language support
  4. multi language audio support support
- 5. Notification Bar Show Audio And Off Home Screen Show
+ 5. Notification Bar Show Audio And Off Home Screen Show ✓
  6. Audio Book rating and review
  7. Animation Add
  8. category page add
- 9. life story
- 10. Search Bar Add 
- 11.  Download Audio Offline
+ 9. life story ✓
+ 10. Search Bar Add ✓
+ 11. Download Audio Offline
  12. Data base create make the code more good
  13. apps testing add
  14. make api more better
  15. add ai this apps
+ 16. Remote Config add
+ 17. BookMark Add
+ 18. When App Exit This Time Audio Return Play

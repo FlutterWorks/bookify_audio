@@ -1,6 +1,6 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
@@ -27,7 +27,7 @@ class AudioPlayerScreen extends StatefulWidget {
 }
 
 class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
-  late AudioPlayer _audioPlayer;
+  late AssetsAudioPlayer _audioPlayer;
   bool _isPlaying = false;
   double _currentSliderValue = 0;
   double _playbackSpeed = 1.0;
@@ -36,7 +36,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
   @override
   void initState() {
     super.initState();
-    _audioPlayer = AudioPlayer();
+    _audioPlayer = AssetsAudioPlayer();
     _initializePlayer();
   }
 
@@ -48,20 +48,30 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
       final streamInfo = manifest.audioOnly.first;
       final audioUrl = streamInfo.url.toString();
 
-      await _audioPlayer.setUrl(audioUrl);
-      _audioPlayer.durationStream.listen((duration) {
+      await _audioPlayer.open(
+        Audio.network(
+          audioUrl,
+          metas: Metas(
+            title: widget.title,
+            artist: widget.bookCreatorName,
+            album: widget.voiceOwner,
+            image: MetasImage.network(widget.bookImage),
+          ),
+        ),
+        showNotification: true,
+        notificationSettings: const NotificationSettings(),
+      );
+      _audioPlayer.current.listen((playingAudio) {
         setState(() {
-          _duration = duration ?? Duration.zero;
+          _duration = playingAudio?.audio.duration ?? Duration.zero;
         });
       });
-      _audioPlayer.positionStream.listen((position) {
+      _audioPlayer.currentPosition.listen((position) {
         setState(() {
           _position = position;
           _currentSliderValue = _position.inSeconds.toDouble();
         });
       });
-
-      // Start playing automatically
       _audioPlayer.play();
       setState(() {
         _isPlaying = true;
@@ -203,7 +213,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                             if (newValue != null) {
                               setState(() {
                                 _playbackSpeed = newValue;
-                                _audioPlayer.setSpeed(newValue);
+                                _audioPlayer.setPlaySpeed(newValue);
                               });
                             }
                           },
