@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test/page/Home/screen/home_page.dart';
@@ -33,7 +35,64 @@ class MyApp extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.system,
-      home: const StartPage(),
+      home: const SplashScreenPage(),
+    );
+  }
+}
+
+class SplashScreenPage extends StatefulWidget {
+  const SplashScreenPage({super.key});
+
+  @override
+  _SplashScreenPageState createState() => _SplashScreenPageState();
+}
+
+class _SplashScreenPageState extends State<SplashScreenPage> {
+  @override
+  void initState() {
+    super.initState();
+    _navigateToHome();
+  }
+
+  void _navigateToHome() {
+    Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const StartPage()),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 198, 194, 183),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/splash.png',
+              height: MediaQuery.of(context).size.height * 0.5,
+              width: MediaQuery.of(context).size.width * 0.5,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              'Turn silence into stories.',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -188,86 +247,3 @@ class StartPageState extends State<StartPage> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:test/page/Home/screen/home_page.dart';
-// import 'package:test/page/person/screen/person_page.dart';
-// import 'package:test/page/setting/screen/setting_page.dart';
-
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//         visualDensity: VisualDensity.adaptivePlatformDensity,
-//       ),
-//       home: const StartPage(),
-//     );
-//   }
-// }
-
-// class StartPage extends StatefulWidget {
-//   const StartPage({super.key});
-
-//   @override
-//   StartPageState createState() => StartPageState();
-// }
-
-// class StartPageState extends State<StartPage> {
-//   int currentIndex = 0;
-
-//   final List<Widget> _pages = [
-//     PersonPage(),
-//     PersonPage(),
-//     SettingPage(),
-//   ];
-
-//   final List<String> _titles = ['Home', 'Profile', 'Settings'];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: _pages[currentIndex],
-//       bottomNavigationBar: BottomNavigationBar(
-//         currentIndex: currentIndex,
-//         onTap: (index) {
-//           setState(() {
-//             currentIndex = index;
-//           });
-//         },
-//         items: [
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.home),
-//             label: 'Home',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.person),
-//             label: 'Profile',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.settings),
-//             label: 'Settings',
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

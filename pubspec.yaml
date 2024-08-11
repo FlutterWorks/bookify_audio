@@ -19,13 +19,16 @@ dependencies:
   url_launcher: ^6.3.0
   # path_provider: ^2.1.4
   # dio: ^5.5.0+1
-  # just_audio_cache: ^0.1.2
+  just_audio_cache: ^0.1.2
   # connectivity_plus: ^6.0.4
   http: ^1.2.2
   carousel_slider: ^4.2.1
   auto_size_text: ^3.0.0
   search_page: ^2.3.0
+  just_audio_background: ^0.0.1-beta.13
+  audio_service: ^0.18.15
   # speech_to_text: ^6.6.2
+  assets_audio_player: ^3.1.1
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +52,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/audiobooks.json
+    - assets/app_icon.png
+    - assets/splash.png
   #   - images/a_dot_ham.jpegother descriptors for the font. For
 
   # fonts:

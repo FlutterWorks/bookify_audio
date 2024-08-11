@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                AutoSizeText(
                   widget.bookType,
                   style: const TextStyle(
                     fontSize: 18,
@@ -118,7 +119,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                       ),
                     );
                   },
-                  child: const Text(
+                  child: const AutoSizeText(
                     'See More',
                     style: TextStyle(
                       fontSize: 18,
