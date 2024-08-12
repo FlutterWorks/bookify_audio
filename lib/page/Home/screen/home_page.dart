@@ -123,6 +123,7 @@
 // //                     // ),
 
 import 'package:flutter/material.dart';
+import 'package:test/page/Home/screen/writer_page.dart';
 import 'package:test/page/Home/utils/app_bar_util.dart';
 import 'package:test/page/Home/utils/slider_image_utils.dart';
 import 'package:test/page/Home/widget/home_page_list_widget.dart';
@@ -165,6 +166,25 @@ class _HomePageState extends State<HomePage> {
                 bookCreatorName: 'bookCreatorName',
                 bookName: 'title',
               ),
+              HomePageListWidget(
+                api:
+                    'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
+                bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                bookImage: 'image',
+                saveKey: 'save_bangladesh',
+                bookCreatorName: 'bookCreatorName',
+                bookName: 'title',
+              ),
+              HomePageListWidget(
+                api:
+                    'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
+                bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                bookImage: 'image',
+                saveKey: 'save_bangladesh',
+                bookCreatorName: 'bookCreatorName',
+                bookName: 'title',
+              ),
+              WriterPage(),
               HomePageListWidget(
                 api:
                     'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',

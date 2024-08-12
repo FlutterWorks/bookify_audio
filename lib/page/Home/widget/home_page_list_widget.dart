@@ -87,111 +87,116 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
     final double imageWidth = (screenWidth - 40) / 3;
     final double imageHeight = imageWidth * 1.5;
 
-    return RefreshIndicator(
-      onRefresh: refreshData,
-      child: Padding(
-        padding: const EdgeInsets.all(4),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AutoSizeText(
-                  widget.bookType,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (b) => SeeMorePage(
-                          api: widget.api,
-                          bookType: widget.bookType,
-                          bookImage: widget.bookImage,
-                          saveKey: widget.saveKey,
-                          bookName: widget.bookName,
-                          bookCreatorName: widget.bookCreatorName,
+    return isLoading
+        ? const CircularProgressIndicator()
+        : RefreshIndicator(
+            onRefresh: refreshData,
+            child: Padding(
+              padding: const EdgeInsets.all(4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AutoSizeText(
+                        widget.bookType,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    );
-                  },
-                  child: const AutoSizeText(
-                    'See More',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (b) => SeeMorePage(
+                                api: widget.api,
+                                bookType: widget.bookType,
+                                bookImage: widget.bookImage,
+                                saveKey: widget.saveKey,
+                                bookName: widget.bookName,
+                                bookCreatorName: widget.bookCreatorName,
+                              ),
+                            ),
+                          );
+                        },
+                        child: const AutoSizeText(
+                          'See More',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: imageHeight + 5,
-              child: isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        dynamic book = data[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (builder) =>
-                                      EpisodeListPage(audiobook: book),
+                  SizedBox(
+                    height: imageHeight + 5,
+                    child: isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              dynamic book = data[index];
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (builder) =>
+                                            EpisodeListPage(audiobook: book),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Colors.black26,
+                                          spreadRadius: 1,
+                                          blurRadius: 5,
+                                        ),
+                                      ],
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            book[widget.bookImage].toString(),
+                                        width: imageWidth,
+                                        height: imageHeight,
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) =>
+                                            Container(
+                                          width: imageWidth,
+                                          height: imageHeight,
+                                          color: Colors.grey[200],
+                                          child: const Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            Container(
+                                          width: imageWidth,
+                                          height: imageHeight,
+                                          color: Colors.grey[200],
+                                          child: const Icon(Icons.error),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               );
                             },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.black26,
-                                    spreadRadius: 1,
-                                    blurRadius: 5,
-                                  ),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: CachedNetworkImage(
-                                  imageUrl: book[widget.bookImage].toString(),
-                                  width: imageWidth,
-                                  height: imageHeight,
-                                  fit: BoxFit.cover,
-                                  placeholder: (context, url) => Container(
-                                    width: imageWidth,
-                                    height: imageHeight,
-                                    color: Colors.grey[200],
-                                    child: const Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  ),
-                                  errorWidget: (context, url, error) =>
-                                      Container(
-                                    width: imageWidth,
-                                    height: imageHeight,
-                                    color: Colors.grey[200],
-                                    child: const Icon(Icons.error),
-                                  ),
-                                ),
-                              ),
-                            ),
                           ),
-                        );
-                      },
-                    ),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }

@@ -76,13 +76,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
         ),
         autoStart: false,
         showNotification: true,
-        notificationSettings: const NotificationSettings(
-            // stopEnabled: false,
-            // customPlayPauseAction: true,
-            // customNextAction: true,
-            // customPrevAction: true,
-            // customStopAction: true,
-            ),
+        notificationSettings: const NotificationSettings(),
         playInBackground: PlayInBackground.enabled,
         seek: Duration(seconds: lastPosition),
       );
