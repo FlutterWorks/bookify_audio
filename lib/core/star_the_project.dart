@@ -144,15 +144,18 @@ class GitHubStarPrompt {
               child: const Text('Star on GitHub'),
               onPressed: () async {
                 final Uri webUrl = Uri.parse('https://github.com/apon06/bookify_audio');
+                // ignore: deprecated_member_use
                 if (await canLaunch(webUrl.toString())) {
+                  // ignore: deprecated_member_use
                   await launch(webUrl.toString());
                   // Mark as starred
                   final SharedPreferences prefs = await SharedPreferences.getInstance();
                   await prefs.setBool(_hasStarredKey, true);
                 } else {
                   // Handle error
-                  print('Could not launch $webUrl');
+                  // print('Could not launch $webUrl');
                 }
+                // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
               },
             ),
