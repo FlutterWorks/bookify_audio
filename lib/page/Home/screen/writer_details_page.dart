@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:test/page/Home/screen/episode_page.dart';
 
 class WriterDetailsPage extends StatefulWidget {
   final String api;
@@ -117,15 +118,15 @@ class _WriterDetailsPageState extends State<WriterDetailsPage> {
                         onPressed: () {},
                       ),
                       const SizedBox(width: 20),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '23 songs',
-                            style: TextStyle(fontSize: 16),
+                            '${writerData.last['id'].toString()} songs',
+                            style: const TextStyle(fontSize: 16),
                           ),
-                          Text(
-                            '58 minutes',
+                          const Text(
+                            '67 minutes',
                             style: TextStyle(fontSize: 16),
                           ),
                         ],
@@ -138,21 +139,31 @@ class _WriterDetailsPageState extends State<WriterDetailsPage> {
                   child: ListView.builder(
                     itemCount: writerData.length,
                     itemBuilder: (context, index) {
-                      final writer = writerData[index];
-                      return SizedBox(
-                        height: 70,
-                        child: ListTile(
-                          leading: CachedNetworkImage(
-                            width: 50,
-                            height: 50,
-                            imageUrl: writer['image'],
-                          ),
-                          title: Text(
-                            writer['title'],
-                            style: const TextStyle(),
-                          ),
-                          trailing: const Icon(
-                            Icons.navigate_next,
+                      dynamic writer = writerData[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (builder) =>
+                                  EpisodeListPage(audiobook: writer),
+                            ),
+                          );
+                        },
+                        child: SizedBox(
+                          height: 70,
+                          child: ListTile(
+                            leading: CachedNetworkImage(
+                              width: 50,
+                              height: 50,
+                              imageUrl: writer['image'],
+                            ),
+                            title: Text(
+                              writer['title'],
+                              style: const TextStyle(),
+                            ),
+                            trailing: const Icon(
+                              Icons.navigate_next,
+                            ),
                           ),
                         ),
                       );
