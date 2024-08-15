@@ -22,3 +22,6 @@
 # remove 
 
 ```git remote remove origin```
+
+# remove any file
+```git rm --cached lib/firebase_options.dart```

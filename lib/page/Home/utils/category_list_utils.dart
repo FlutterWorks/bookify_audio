@@ -70,22 +70,28 @@ class _CategoryListUtilsState extends State<CategoryListUtils> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 35,
+      height: 32,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: categoryList.length,
         itemBuilder: (b, index) {
           var categoryApi = categoryList[index];
+          // print(categoryApi["bookImage"]); // image but why plz tell me
           return CategoryButtonWidget(
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => SeeMorePage(
                   api: categoryApi["api"],
-                  bookType: categoryApi["bookName"],
+                  bookType: categoryApi["bookType"],
                   bookImage: categoryApi["bookImage"],
                   bookName: categoryApi["bookName"],
                   bookCreatorName: categoryApi["bookCreatorName"],
+                  // api: 'https://apon06.github.io/bookify_api/dummy_api.json',
+                  // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                  // bookImage: "bookImage",
+                  // bookCreatorName: 'bookCreatorName',
+                  // bookName: "রবীন্দ্রনাথ ঠাকুর",
                 ),
               ),
             ),

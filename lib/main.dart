@@ -1,15 +1,12 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test/firebase_options.dart';
 import 'package:test/page/Home/screen/home_page.dart';
 import 'package:test/page/person/screen/person_page.dart';
 import 'package:test/page/setting/screen/setting_page.dart';
 
 void main()  {
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     const MyApp(),
   );

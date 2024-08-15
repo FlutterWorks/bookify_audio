@@ -112,7 +112,6 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                                 api: widget.api,
                                 bookType: widget.bookType,
                                 bookImage: widget.bookImage,
-                               
                                 bookName: widget.bookName,
                                 bookCreatorName: widget.bookCreatorName,
                               ),
