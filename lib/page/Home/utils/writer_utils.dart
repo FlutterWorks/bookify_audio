@@ -6,14 +6,14 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test/page/Home/screen/writer_details_page.dart';
 
-class WriterPage extends StatefulWidget {
-  const WriterPage({super.key});
+class WriterUtils extends StatefulWidget {
+  const WriterUtils({super.key});
 
   @override
-  State<WriterPage> createState() => _WriterPageState();
+  State<WriterUtils> createState() => _WriterUtilsState();
 }
 
-class _WriterPageState extends State<WriterPage> {
+class _WriterUtilsState extends State<WriterUtils> {
   List<dynamic> homePageList = [];
   bool isLoading = true;
   dynamic selectedPerson;
@@ -39,12 +39,12 @@ class _WriterPageState extends State<WriterPage> {
 
   Future<void> saveDataToPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('HomeSaveKey', json.encode(homePageList));
+    prefs.setString('WriterSaveKey', json.encode(homePageList));
   }
 
   Future<void> loadData() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedData = prefs.getString('HomeSaveKey');
+    final savedData = prefs.getString('WriterSaveKey');
     if (savedData != null) {
       setState(() {
         homePageList = json.decode(savedData);
@@ -93,7 +93,6 @@ class _WriterPageState extends State<WriterPage> {
                       MaterialPageRoute(
                         builder: (builder) => WriterDetailsPage(
                           api: writerPageApi['api'],
-                          saveKey: writerPageApi['saveKey'],
                           writerImage: writerPageApi['writerImage'],
                         ),
                       ),

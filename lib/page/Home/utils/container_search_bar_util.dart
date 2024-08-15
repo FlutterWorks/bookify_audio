@@ -331,7 +331,7 @@ class _ContainerSearchBarUtilsState extends State<ContainerSearchBarUtils> {
                                     height: 120,
                                     width: 100,
                                     child: CachedNetworkImage(
-                                      imageUrl: builder['image'].toString(),
+                                      imageUrl: builder['bookImage'].toString(),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -344,7 +344,7 @@ class _ContainerSearchBarUtilsState extends State<ContainerSearchBarUtils> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                          "নাম: ${builder['title'].toString()}"),
+                                          "নাম: ${builder['bookName'].toString()}"),
                                       Text(
                                           'লেখক: ${builder['bookCreatorName'].toString()}'),
                                     ],
@@ -361,8 +361,8 @@ class _ContainerSearchBarUtilsState extends State<ContainerSearchBarUtils> {
               );
             },
             filter: (filter) => [
-              filter['title'].toString(),
-              filter['titleEn'].toString(),
+              filter['bookName'].toString(),
+              filter['bookNameEn'].toString(),
             ],
             items: data,
           ),

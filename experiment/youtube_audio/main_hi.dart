@@ -234,7 +234,7 @@
 //             ),
 //             const Text('সুভা'),
 //             const SizedBox(height: 10),
-//             const Text('রবীন্দ্রনাথ ঠাকুর'),
+//             const Text('bookType'),
 //             const SizedBox(width: 10),
 //             Slider(
 //               value: _currentSliderValue,

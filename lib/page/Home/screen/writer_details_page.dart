@@ -7,14 +7,12 @@ import 'package:test/page/Home/screen/episode_page.dart';
 
 class WriterDetailsPage extends StatefulWidget {
   final String api;
-  final String saveKey;
   final String writerImage;
-
-  const WriterDetailsPage(
-      {super.key,
-      required this.api,
-      required this.saveKey,
-      required this.writerImage});
+  const WriterDetailsPage({
+    super.key,
+    required this.api,
+    required this.writerImage,
+  });
 
   @override
   State<WriterDetailsPage> createState() => _WriterDetailsPageState();
@@ -48,12 +46,12 @@ class _WriterDetailsPageState extends State<WriterDetailsPage> {
 
   Future<void> saveDataToPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString(widget.saveKey, json.encode(writerData));
+    prefs.setString("writerDetailSave", json.encode(writerData));
   }
 
   Future<void> loadData() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedData = prefs.getString(widget.saveKey);
+    final savedData = prefs.getString("writerDetailSave");
     if (savedData != null) {
       writerData = json.decode(savedData);
       setState(() {

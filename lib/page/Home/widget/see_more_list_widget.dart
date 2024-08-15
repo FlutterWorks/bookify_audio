@@ -9,7 +9,6 @@ class SeeMoreListWidget extends StatefulWidget {
   final String api;
   final String bookType;
   final String bookImage;
-  final String saveKey;
   final String bookName;
   final String bookCreatorName;
   const SeeMoreListWidget({
@@ -17,7 +16,6 @@ class SeeMoreListWidget extends StatefulWidget {
     required this.api,
     required this.bookType,
     required this.bookImage,
-    required this.saveKey,
     required this.bookName,
     required this.bookCreatorName,
   });
@@ -61,12 +59,12 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
 
   Future<void> saveDataToPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString(widget.saveKey, json.encode(data));
+    prefs.setString("SeeMoreListSave", json.encode(data));
   }
 
   Future<void> loadData() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedData = prefs.getString(widget.saveKey);
+    final savedData = prefs.getString("SeeMoreListSave");
     if (savedData != null) {
       data = json.decode(savedData);
       if (mounted) {

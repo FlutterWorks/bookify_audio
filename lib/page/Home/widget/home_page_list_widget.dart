@@ -11,7 +11,6 @@ class HomePageListWidget extends StatefulWidget {
   final String api;
   final String bookType;
   final String bookImage;
-  final String saveKey;
   final String bookCreatorName;
   final String bookName;
   const HomePageListWidget({
@@ -19,7 +18,6 @@ class HomePageListWidget extends StatefulWidget {
     required this.api,
     required this.bookType,
     required this.bookImage,
-    required this.saveKey,
     required this.bookCreatorName,
     required this.bookName,
   });
@@ -59,12 +57,12 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
 
   Future<void> saveDataToPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString(widget.saveKey, json.encode(data));
+    prefs.setString("HomeListSave", json.encode(data));
   }
 
   Future<void> loadData() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedData = prefs.getString(widget.saveKey);
+    final savedData = prefs.getString("HomeListSave");
     if (savedData != null) {
       data = json.decode(savedData);
       setState(() {
@@ -114,7 +112,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                                 api: widget.api,
                                 bookType: widget.bookType,
                                 bookImage: widget.bookImage,
-                                saveKey: widget.saveKey,
+                               
                                 bookName: widget.bookName,
                                 bookCreatorName: widget.bookCreatorName,
                               ),
@@ -131,7 +129,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                     ],
                   ),
                   SizedBox(
-                    height: imageHeight + 5,
+                    height: imageHeight,
                     child: isLoading
                         ? const Center(child: CircularProgressIndicator())
                         : ListView.builder(

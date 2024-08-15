@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AudioPlayerScreen extends StatefulWidget {
   final dynamic episode;
-  final String title;
+  final String bookName;
   final String bookCreatorName;
   final String bookImage;
   final String audioUrl;
@@ -17,7 +17,7 @@ class AudioPlayerScreen extends StatefulWidget {
   const AudioPlayerScreen({
     super.key,
     this.episode,
-    required this.title,
+    required this.bookName,
     required this.bookCreatorName,
     required this.bookImage,
     required this.audioUrl,
@@ -68,7 +68,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
         Audio.network(
           audioUrl,
           metas: Metas(
-            title: widget.title,
+            title: widget.bookName,
             artist: widget.bookCreatorName,
             album: widget.voiceOwner,
             image: MetasImage.network(widget.bookImage),
@@ -147,7 +147,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(title: Text(widget.bookName)),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : Padding(
@@ -181,7 +181,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen>
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      widget.title,
+                      widget.bookName,
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,

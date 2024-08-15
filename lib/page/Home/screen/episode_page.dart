@@ -12,7 +12,7 @@ class EpisodeListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          audiobook['title'],
+          audiobook['bookName'],
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -40,7 +40,7 @@ class EpisodeListPage extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: CachedNetworkImage(
-                        imageUrl: audiobook['image'],
+                        imageUrl: audiobook['bookImage'],
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -49,7 +49,7 @@ class EpisodeListPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    'নাম: ${audiobook['title']}',
+                    'নাম: ${audiobook['bookName']}',
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class EpisodeListPage extends StatelessWidget {
                     ),
                     child: ListTile(
                       title: Text(
-                        episode['title'],
+                        episode['bookName'],
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
@@ -100,9 +100,9 @@ class EpisodeListPage extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => AudioPlayerScreen(
                               episode: episode,
-                              title: audiobook['title'],
+                              bookName: audiobook['bookName'],
                               bookCreatorName: audiobook['bookCreatorName'],
-                              bookImage: audiobook['image'],
+                              bookImage: audiobook['bookImage'],
                               audioUrl: episode['audio_url'],
                               voiceOwner: episode['voice_owner'],
                             ),
