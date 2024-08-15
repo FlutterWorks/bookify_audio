@@ -5,7 +5,7 @@ class SeeMorePage extends StatelessWidget {
   final String api;
   final String bookType;
   final String bookImage;
-
+  final String saveKey;
   final String bookName;
   final String bookCreatorName;
   const SeeMorePage({
@@ -15,6 +15,7 @@ class SeeMorePage extends StatelessWidget {
     required this.bookImage,
     required this.bookName,
     required this.bookCreatorName,
+    required this.saveKey,
   });
 
   @override
@@ -25,6 +26,7 @@ class SeeMorePage extends StatelessWidget {
       bookImage: bookImage,
       bookName: bookName,
       bookCreatorName: bookCreatorName,
+      saveKey: saveKey,
     );
   }
 }

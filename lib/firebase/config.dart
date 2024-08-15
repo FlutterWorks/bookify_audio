@@ -27,5 +27,5 @@ class Config {
     }
   }
 
-  static bool get showAd => _config.getBool('show_ads');
+  static String get url => _config.getString('url');
 }

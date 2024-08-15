@@ -15,7 +15,7 @@ class CategoryButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    // bool isDarkMode = Theme.of(context).brightness == Brightness.dark; // not remove this
     return Padding(
       padding: const EdgeInsets.only(left: 5, right: 5),
       child: GestureDetector(
@@ -36,8 +36,8 @@ class CategoryButtonWidget extends StatelessWidget {
               minFontSize: 15,
               maxFontSize: 20,
               categoryText!,
-              style: TextStyle(
-                color: isDarkMode ? Colors.white : Colors.black,
+              style: const TextStyle(
+                color: Colors.black,
                 fontSize: 18,
               ),
             ),

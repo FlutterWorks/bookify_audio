@@ -13,6 +13,7 @@ class HomePageListWidget extends StatefulWidget {
   final String bookImage;
   final String bookCreatorName;
   final String bookName;
+  final String saveKey;
   const HomePageListWidget({
     super.key,
     required this.api,
@@ -20,6 +21,7 @@ class HomePageListWidget extends StatefulWidget {
     required this.bookImage,
     required this.bookCreatorName,
     required this.bookName,
+    required this.saveKey,
   });
 
   @override
@@ -57,12 +59,12 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
 
   Future<void> saveDataToPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString("HomeListSave", json.encode(data));
+    prefs.setString(widget.saveKey, json.encode(data));
   }
 
   Future<void> loadData() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedData = prefs.getString("HomeListSave");
+    final savedData = prefs.getString(widget.saveKey);
     if (savedData != null) {
       data = json.decode(savedData);
       setState(() {
@@ -114,6 +116,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                                 bookImage: widget.bookImage,
                                 bookName: widget.bookName,
                                 bookCreatorName: widget.bookCreatorName,
+                                saveKey: widget.saveKey,
                               ),
                             ),
                           );

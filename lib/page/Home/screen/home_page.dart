@@ -129,6 +129,8 @@ import 'package:test/page/Home/utils/category_list_utils.dart';
 import 'package:test/page/Home/utils/slider_image_utils.dart';
 import 'package:test/page/Home/widget/home_page_list_widget.dart';
 
+import '../../../firebase/config.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -144,6 +146,15 @@ class _HomePageState extends State<HomePage> {
   //     GitHubStarPrompt.checkAndShowDialog(context);
   //   });
   // }
+  late Future<void> _initConfigFuture;
+
+  @override
+  void initState() {
+    _initConfigFuture = Config.initConfig();
+    super.initState();
+    //  print(Config.url);
+  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -153,63 +164,39 @@ class _HomePageState extends State<HomePage> {
           AppBarUtil(),
         ],
       ),
-      body: const SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ImageSliderScreen(),
-              SizedBox(height: 10),
-              CategoryListUtils(),
-              HomePageListWidget(
+              const ImageSliderScreen(),
+              const SizedBox(height: 10),
+              const CategoryListUtils(),
+              FutureBuilder<void>(
+                future: _initConfigFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const SizedBox.shrink();
+                  } else if (snapshot.hasError) {
+                    return const CircularProgressIndicator();
+                  } else {
+                    return HomePageListWidget(
+                      api: Config.url,
+                      bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                      bookImage: "bookImage",
+                      bookCreatorName: 'bookCreatorName',
+                      bookName: "bookName", saveKey: 'save1',
+                    );
+                  }
+                },
+              ),
+              const HomePageListWidget(
                 api: 'https://apon06.github.io/bookify_api/dummy_api.json',
                 bookType: 'রবীন্দ্রনাথ ঠাকুর',
                 bookImage: "bookImage",
                 bookCreatorName: 'bookCreatorName',
-                bookName: "bookName",
+                bookName: "bookName", saveKey: 'save2',
               ),
-              HomePageListWidget(
-                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: "bookImage",
-                bookCreatorName: 'bookCreatorName',
-                bookName: "bookName",
-              ),
-              HomePageListWidget(
-                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: "bookImage",
-                bookCreatorName: 'bookCreatorName',
-                bookName: "bookName",
-              ),
-              WriterUtils(),
-              HomePageListWidget(
-                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: "bookImage",
-                bookCreatorName: 'bookCreatorName',
-                bookName: "bookName",
-              ),
-              HomePageListWidget(
-                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: "bookImage",
-                bookCreatorName: 'bookCreatorName',
-                bookName: "bookName",
-              ),
-              HomePageListWidget(
-                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: "bookImage",
-                bookCreatorName: 'bookCreatorName',
-                bookName: "bookName",
-              ),
-              HomePageListWidget(
-                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: "bookImage",
-                bookCreatorName: 'bookCreatorName',
-                bookName: "bookName",
-              ),
+              const WriterUtils(),
             ],
           ),
         ),

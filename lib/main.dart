@@ -1,15 +1,25 @@
-// ignore_for_file: library_private_types_in_public_api
-
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:test/firebase_options.dart';
 import 'package:test/page/Home/screen/home_page.dart';
 import 'package:test/page/person/screen/person_page.dart';
 import 'package:test/page/setting/screen/setting_page.dart';
 
-void main()  {
-  runApp(
-    const MyApp(),
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Ensure bindings are initialized
+  
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform); // Initialize Firebase
+  
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.manual,
+    overlays: [
+      SystemUiOverlay.top,
+      SystemUiOverlay.bottom,
+    ],
   );
+
+  runApp(const MyApp()); // Run the app
 }
 
 class MyApp extends StatelessWidget {
@@ -38,6 +48,7 @@ class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SplashScreenPageState createState() => _SplashScreenPageState();
 }
 
@@ -50,12 +61,14 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
 
   void _navigateToHome() {
     Future.delayed(
-      const Duration(seconds: 0),
+      const Duration(milliseconds: 1200), // Increase the duration slightly for better user experience
       () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const StartPage()),
-        );
+        if (mounted) { // Ensure the widget is still mounted before navigating
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const StartPage()),
+          );
+        }
       },
     );
   }
@@ -129,7 +142,6 @@ class StartPageState extends State<StartPage> {
     );
   }
 
-  // ignore: non_constant_identifier_names
   Container buildBottomNavigationBar(double displayWidth, ThemeData theme) {
     return Container(
       height: 60,

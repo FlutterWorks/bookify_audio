@@ -29,16 +29,20 @@ class _PersonPageState extends State<PersonPage> {
     );
     if (res.statusCode == 200) {
       final decoded = json.decode(res.body);
-      setState(() {
-        personList = decoded['personInfo'];
-        isLoading = false;
-        selectedPerson = personList.isNotEmpty ? personList[0] : null;
-      });
+      if (mounted) {
+        setState(() {
+          personList = decoded['personInfo'];
+          isLoading = false;
+          selectedPerson = personList.isNotEmpty ? personList[0] : null;
+        });
+      }
       await saveDataToPreferences();
     } else {
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -50,7 +54,7 @@ class _PersonPageState extends State<PersonPage> {
   Future<void> loadData() async {
     final prefs = await SharedPreferences.getInstance();
     final savedData = prefs.getString('personSave');
-    if (savedData != null) {
+    if (savedData != null && mounted) {
       setState(() {
         personList = json.decode(savedData);
         selectedPerson = personList.isNotEmpty ? personList[0] : null;
@@ -61,10 +65,18 @@ class _PersonPageState extends State<PersonPage> {
   }
 
   Future<void> refreshData() async {
-    setState(() {
-      isLoading = true;
-    });
+    if (mounted) {
+      setState(() {
+        isLoading = true;
+      });
+    }
     await getData();
+  }
+
+  @override
+  void dispose() {
+    // Any necessary cleanup can be done here.
+    super.dispose();
   }
 
   @override
@@ -89,9 +101,11 @@ class _PersonPageState extends State<PersonPage> {
                       dynamic person = personList[index];
                       return GestureDetector(
                         onTap: () {
-                          setState(() {
-                            selectedPerson = person;
-                          });
+                          if (mounted) {
+                            setState(() {
+                              selectedPerson = person;
+                            });
+                          }
                         },
                         child: SizedBox(
                           height: 55,
