@@ -97,10 +97,10 @@
 //                         return HomePageListWidget(
 //                           api: homePageApi["api"],
 //                           bookType: homePageApi["bookType"],
-//                           bookImage: 'image',
+//                           bookImage: "bookImage",
 //                           saveKey: homePageApi["saveKey"],
 //                           bookCreatorName: 'bookCreatorName',
-//                           bookName: 'title',
+//                           bookName: "bookName",
 //                         );
 //                       },
 //                     ),
@@ -114,17 +114,18 @@
 
 // //                     // HomePageListWidget(
 // //                     //   api:
-// //                     //       'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
-// //                     //   bookType: 'রবীন্দ্রনাথ ঠাকুর',
-// //                     //   bookImage: 'image',
+// //                     //       'https://apon06.github.io/bookify_api/dummy_api.json',
+// //                     //   bookType: 'bookType',
+// //                     //   bookImage: "bookImage",
 // //                     //   saveKey: 'save_bangladesh',
 // //                     //   bookCreatorName: 'bookCreatorName',
-// //                     //   bookName: 'title',
+// //                     //   bookName: "bookName",
 // //                     // ),
 
 import 'package:flutter/material.dart';
-import 'package:test/page/Home/screen/writer_page.dart';
+import 'package:test/page/Home/utils/writer_utils.dart';
 import 'package:test/page/Home/utils/app_bar_util.dart';
+import 'package:test/page/Home/utils/category_list_utils.dart';
 import 'package:test/page/Home/utils/slider_image_utils.dart';
 import 'package:test/page/Home/widget/home_page_list_widget.dart';
 
@@ -157,69 +158,57 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               ImageSliderScreen(),
+              SizedBox(height: 10),
+              CategoryListUtils(),
               HomePageListWidget(
-                api:
-                    'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: 'image',
-                saveKey: 'save_bangladesh',
+                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
+                bookType: 'bookType',
+                bookImage: "bookImage",
                 bookCreatorName: 'bookCreatorName',
-                bookName: 'title',
+                bookName: "bookName",
               ),
               HomePageListWidget(
-                api:
-                    'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: 'image',
-                saveKey: 'save_bangladesh',
+                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
+                bookType: 'bookType',
+                bookImage: "bookImage",
                 bookCreatorName: 'bookCreatorName',
-                bookName: 'title',
+                bookName: "bookName",
               ),
               HomePageListWidget(
-                api:
-                    'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: 'image',
-                saveKey: 'save_bangladesh',
+                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
+                bookType: 'bookType',
+                bookImage: "bookImage",
                 bookCreatorName: 'bookCreatorName',
-                bookName: 'title',
+                bookName: "bookName",
               ),
-              WriterPage(),
+              WriterUtils(),
               HomePageListWidget(
-                api:
-                    'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: 'image',
-                saveKey: 'save_bangladesh',
+                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
+                bookType: 'bookType',
+                bookImage: "bookImage",
                 bookCreatorName: 'bookCreatorName',
-                bookName: 'title',
+                bookName: "bookName",
               ),
               HomePageListWidget(
-                api:
-                    'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: 'image',
-                saveKey: 'save_bangladesh',
+                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
+                bookType: 'bookType',
+                bookImage: "bookImage",
                 bookCreatorName: 'bookCreatorName',
-                bookName: 'title',
+                bookName: "bookName",
               ),
               HomePageListWidget(
-                api:
-                    'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: 'image',
-                saveKey: 'save_bangladesh',
+                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
+                bookType: 'bookType',
+                bookImage: "bookImage",
                 bookCreatorName: 'bookCreatorName',
-                bookName: 'title',
+                bookName: "bookName",
               ),
               HomePageListWidget(
-                api:
-                    'https://castor-parachutes.000webhostapp.com/apiforlink.php?token=1z14ecxgs1tbt9cb54sa',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: 'image',
-                saveKey: 'save_bangladesh',
+                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
+                bookType: 'bookType',
+                bookImage: "bookImage",
                 bookCreatorName: 'bookCreatorName',
-                bookName: 'title',
+                bookName: "bookName",
               ),
             ],
           ),
