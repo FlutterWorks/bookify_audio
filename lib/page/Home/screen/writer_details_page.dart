@@ -34,13 +34,17 @@ class _WriterDetailsPageState extends State<WriterDetailsPage> {
       final decoded = json.decode(res.body);
       writerData = decoded['audiobooks'];
       await saveDataToPreferences();
-      setState(() {
-        isLoading = false;
-      });
+      setState(
+        () {
+          isLoading = false;
+        },
+      );
     } else {
-      setState(() {
-        isLoading = false;
-      });
+      setState(
+        () {
+          isLoading = false;
+        },
+      );
     }
   }
 
@@ -80,13 +84,11 @@ class _WriterDetailsPageState extends State<WriterDetailsPage> {
               children: [
                 Stack(
                   children: [
-                    Container(
-                      height: 331,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: CachedNetworkImageProvider(widget.writerImage),
-                          fit: BoxFit.fill,
-                        ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 1,
+                      child: CachedNetworkImage(
+                        imageUrl: widget.writerImage,
+                        fit: BoxFit.fill,
                       ),
                     ),
                     if (writerData.isNotEmpty)
@@ -153,10 +155,10 @@ class _WriterDetailsPageState extends State<WriterDetailsPage> {
                             leading: CachedNetworkImage(
                               width: 50,
                               height: 50,
-                              imageUrl: writer['image'],
+                              imageUrl: writer['bookImage'],
                             ),
                             title: Text(
-                              writer['title'],
+                              writer['bookName'],
                               style: const TextStyle(),
                             ),
                             trailing: const Icon(

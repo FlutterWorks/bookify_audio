@@ -7,10 +7,8 @@ import 'package:test/page/person/screen/person_page.dart';
 import 'package:test/page/setting/screen/setting_page.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Ensure bindings are initialized
-  
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform); // Initialize Firebase
-  
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.manual,
     overlays: [
@@ -18,8 +16,7 @@ void main() async {
       SystemUiOverlay.bottom,
     ],
   );
-
-  runApp(const MyApp()); // Run the app
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -48,7 +45,6 @@ class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _SplashScreenPageState createState() => _SplashScreenPageState();
 }
 
@@ -61,9 +57,9 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
 
   void _navigateToHome() {
     Future.delayed(
-      const Duration(milliseconds: 1200), // Increase the duration slightly for better user experience
+      const Duration(milliseconds: 1200),
       () {
-        if (mounted) { // Ensure the widget is still mounted before navigating
+        if (mounted) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const StartPage()),
