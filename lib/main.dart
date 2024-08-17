@@ -45,6 +45,7 @@ class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SplashScreenPageState createState() => _SplashScreenPageState();
 }
 

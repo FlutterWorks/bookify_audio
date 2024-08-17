@@ -84,11 +84,15 @@ class _WriterDetailsPageState extends State<WriterDetailsPage> {
               children: [
                 Stack(
                   children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 1,
-                      child: CachedNetworkImage(
-                        imageUrl: widget.writerImage,
-                        fit: BoxFit.fill,
+                    Hero(
+                      tag: 'hero-tag${widget.writerImage}',
+                      child: SizedBox(
+                        child: CachedNetworkImage(
+                          imageUrl: widget.writerImage,
+                          height: 350,
+                          width: 250,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                     if (writerData.isNotEmpty)
@@ -137,6 +141,7 @@ class _WriterDetailsPageState extends State<WriterDetailsPage> {
                 ),
                 Expanded(
                   child: ListView.builder(
+                    shrinkWrap: true,
                     itemCount: writerData.length,
                     itemBuilder: (context, index) {
                       dynamic writer = writerData[index];

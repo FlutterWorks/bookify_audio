@@ -87,46 +87,49 @@ class _WriterUtilsState extends State<WriterUtils> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (builder) => WriterDetailsPage(
-                          api: writerPageApi['api'],
-                          writerImage: writerPageApi['writerImage'],
-                        ),
-                      ),
-                    );
-                  },
-                  child: SizedBox(
-                    height: 130,
-                    child: ListView.builder(
-                        itemCount: homePageList.length,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (b, index) {
-                          writerPageApi = homePageList[index];
-                          return Padding(
-                            padding: const EdgeInsets.all(4),
-                            child: SizedBox(
-                              height: 130,
-                              width: 130,
-                              child: CircleAvatar(
-                                radius: 130,
-                                backgroundColor: Colors.white,
+                SizedBox(
+                  height: 130,
+                  child: ListView.builder(
+                      itemCount: homePageList.length,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (b, index) {
+                        writerPageApi = homePageList[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (builder) => WriterDetailsPage(
+                                    api: writerPageApi['api'],
+                                    writerImage: writerPageApi['writerImage'],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Hero(
+                              tag: 'hero-tag${ writerPageApi["writerImage"]}',
+                              child: SizedBox(
+                                height: 130,
+                                width: 130,
                                 child: CircleAvatar(
-                                  radius: 125,
-                                  backgroundImage: CachedNetworkImageProvider(
-                                    writerPageApi["writerImage"],
-                                    maxHeight: 125,
-                                    maxWidth: 125,
+                                  radius: 130,
+                                  backgroundColor: Colors.white,
+                                  child: CircleAvatar(
+                                    radius: 125,
+                                    backgroundImage: CachedNetworkImageProvider(
+                                      writerPageApi["writerImage"],
+                                      maxHeight: 125,
+                                      maxWidth: 125,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          );
-                        }),
-                  ),
+                          ),
+                        );
+                      }),
                 ),
               ],
             ),

@@ -128,7 +128,6 @@ import 'package:test/page/Home/utils/app_bar_util.dart';
 import 'package:test/page/Home/utils/category_list_utils.dart';
 import 'package:test/page/Home/utils/slider_image_utils.dart';
 import 'package:test/page/Home/widget/home_page_list_widget.dart';
-
 import '../../../firebase/config.dart';
 
 class HomePage extends StatefulWidget {
@@ -152,9 +151,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     _initConfigFuture = Config.initConfig();
     super.initState();
-    //  print(Config.url);
+    // print(Config.writer1);
   }
- 
 
   @override
   Widget build(BuildContext context) {
@@ -164,42 +162,427 @@ class _HomePageState extends State<HomePage> {
           AppBarUtil(),
         ],
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const ImageSliderScreen(),
-              const SizedBox(height: 10),
-              const CategoryListUtils(),
-              FutureBuilder<void>(
-                future: _initConfigFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const SizedBox.shrink();
-                  } else if (snapshot.hasError) {
-                    return const CircularProgressIndicator();
-                  } else {
-                    return HomePageListWidget(
-                      api: Config.url,
-                      bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                      bookImage: "bookImage",
-                      bookCreatorName: 'bookCreatorName',
-                      bookName: "bookName", saveKey: 'save1',
-                    );
-                  }
-                },
+      body: FutureBuilder<void>(
+        future: _initConfigFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SizedBox.shrink();
+          } else if (snapshot.hasError) {
+            return const CircularProgressIndicator();
+          } else {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  const ImageSliderScreen(),
+                  const SizedBox(height: 10),
+                  const CategoryListUtils(),
+                  //!  I know the logic in this code is really bad.Can someone help me improve the logic? Please share the fixed code when you're done.
+                  HomePageListWidget(
+                    api: Config.writer1,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave2',
+                  ),
+                  HomePageListWidget(
+                    api: Config.writer2,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave2',
+                  ),
+                  const WriterUtils(),
+                  HomePageListWidget(
+                    api: Config.writer3,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave3',
+                  ),
+                  HomePageListWidget(
+                    api: Config.writer4,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave4',
+                  ),
+                  HomePageListWidget(
+                    api: Config.writer5,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave5',
+                  ),
+                  HomePageListWidget(
+                    api: Config.writer6,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave6',
+                  ),
+                  HomePageListWidget(
+                    api: Config.writer7,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave7',
+                  ),
+                  HomePageListWidget(
+                    api: Config.writer8,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave8',
+                  ),
+                  HomePageListWidget(
+                    api: Config.writer9,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave9',
+                  ),
+                  HomePageListWidget(
+                    api: Config.writer10,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave10',
+                  ),
+                  HomePageListWidget(
+                    api: Config.writer11,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave11',
+                  ),
+                  HomePageListWidget(
+                    api: Config.writer12,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave12',
+                  ),
+                  HomePageListWidget(
+                    api: Config.writer13,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave13',
+                  ),
+                  HomePageListWidget(
+                    api: Config.writer14,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave14',
+                  ),
+                  HomePageListWidget(
+                    api: Config.writer15,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'writerSave15',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story1,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave1',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story2,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave2',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story3,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave3',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story4,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave4',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story5,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave5',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story6,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave6',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story7,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave7',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story8,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave8',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story9,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave9',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story10,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave10',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story11,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave11',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story12,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave12',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story13,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave13',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story14,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave14',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story15,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave15',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story16,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave16',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story17,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave17',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story18,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave18',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story19,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave19',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story20,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave20',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story21,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave21',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story22,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave22',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story23,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave23',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story24,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave24',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story25,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave25',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story26,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave26',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story27,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave27',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story28,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave28',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story29,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave29',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story30,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave30',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story31,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave31',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story32,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave32',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story33,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave33',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story34,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave34',
+                  ),
+                  HomePageListWidget(
+                    api: Config.story35,
+                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
+                    bookImage: "bookImage",
+                    bookCreatorName: 'bookCreatorName',
+                    bookName: "bookName",
+                    saveKey: 'storySave35',
+                  ),
+                ],
               ),
-              const HomePageListWidget(
-                api: 'https://apon06.github.io/bookify_api/dummy_api.json',
-                bookType: 'রবীন্দ্রনাথ ঠাকুর',
-                bookImage: "bookImage",
-                bookCreatorName: 'bookCreatorName',
-                bookName: "bookName", saveKey: 'save2',
-              ),
-              const WriterUtils(),
-            ],
-          ),
-        ),
+            );
+          }
+        },
       ),
     );
   }

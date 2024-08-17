@@ -9,7 +9,6 @@ import 'package:test/page/Home/screen/see_more.dart';
 
 class HomePageListWidget extends StatefulWidget {
   final String api;
-  final String bookType;
   final String bookImage;
   final String bookCreatorName;
   final String bookName;
@@ -17,7 +16,6 @@ class HomePageListWidget extends StatefulWidget {
   const HomePageListWidget({
     super.key,
     required this.api,
-    required this.bookType,
     required this.bookImage,
     required this.bookCreatorName,
     required this.bookName,
@@ -30,6 +28,7 @@ class HomePageListWidget extends StatefulWidget {
 
 class _HomePageListWidgetState extends State<HomePageListWidget> {
   List<dynamic> data = [];
+  String bookType = '';
   bool isLoading = true;
 
   @override
@@ -45,6 +44,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
     if (res.statusCode == 200) {
       final decoded = json.decode(res.body);
       data = decoded['audiobooks'];
+      bookType = decoded['bookType'];
       await saveDataToPreferences();
       setState(() {
         isLoading = false;
@@ -59,19 +59,25 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
 
   Future<void> saveDataToPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString(widget.saveKey, json.encode(data));
+    // Save data and bookType separately
+    prefs.setString('${widget.saveKey}_data', json.encode(data));
+    prefs.setString('${widget.saveKey}_bookType', bookType);
   }
 
   Future<void> loadData() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedData = prefs.getString(widget.saveKey);
-    if (savedData != null) {
+    final savedData = prefs.getString('${widget.saveKey}_data');
+    final savedBookType = prefs.getString('${widget.saveKey}_bookType');
+
+    if (savedData != null && savedBookType != null) {
       data = json.decode(savedData);
+      bookType = savedBookType;
       setState(() {
         isLoading = false;
       });
+    } else {
+      await getData();
     }
-    await getData();
   }
 
   Future<void> refreshData() async {
@@ -88,7 +94,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
     final double imageHeight = imageWidth * 1.5;
 
     return isLoading
-        ? const CircularProgressIndicator()
+        ? const SizedBox()
         : RefreshIndicator(
             onRefresh: refreshData,
             child: Padding(
@@ -100,7 +106,7 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       AutoSizeText(
-                        widget.bookType,
+                        bookType,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -112,7 +118,6 @@ class _HomePageListWidgetState extends State<HomePageListWidget> {
                             MaterialPageRoute(
                               builder: (b) => SeeMorePage(
                                 api: widget.api,
-                                bookType: widget.bookType,
                                 bookImage: widget.bookImage,
                                 bookName: widget.bookName,
                                 bookCreatorName: widget.bookCreatorName,

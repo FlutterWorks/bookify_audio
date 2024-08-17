@@ -5,29 +5,28 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test/page/Home/screen/episode_page.dart';
 
-class SeeMoreListWidget extends StatefulWidget {
+class CategoryListSeeMorePage extends StatefulWidget {
   final String api;
+  final String bookType;
   final String bookImage;
   final String bookName;
   final String bookCreatorName;
-  final String saveKey;
-  const SeeMoreListWidget({
+  final String saveKey ;
+  const CategoryListSeeMorePage({
     super.key,
     required this.api,
+    required this.bookType,
     required this.bookImage,
     required this.bookName,
-    required this.bookCreatorName,
-    required this.saveKey,
+    required this.bookCreatorName, required this.saveKey,
   });
 
   @override
-  State<SeeMoreListWidget> createState() => _SeeMoreListWidgetState();
+  State<CategoryListSeeMorePage> createState() => _CategoryListSeeMorePageState();
 }
 
-class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
+class _CategoryListSeeMorePageState extends State<CategoryListSeeMorePage> {
   List<dynamic> data = [];
-  String bookType = ''; // Changed from List<dynamic> to String
-
   bool isLoading = true;
 
   @override
@@ -43,8 +42,6 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
     if (res.statusCode == 200) {
       final decoded = json.decode(res.body);
       data = decoded['audiobooks'];
-      bookType = decoded['bookType']; // bookType is now a string
-
       await saveDataToPreferences();
       if (mounted) {
         setState(() {
@@ -63,28 +60,21 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
 
   Future<void> saveDataToPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    // Save data and bookType separately
-    prefs.setString('${widget.saveKey}_data', json.encode(data));
-    prefs.setString('${widget.saveKey}_bookType', bookType);
+    prefs.setString(widget.saveKey, json.encode(data));
   }
 
   Future<void> loadData() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedData = prefs.getString('${widget.saveKey}_data');
-    final savedBookType = prefs.getString('${widget.saveKey}_bookType');
-
-    if (savedData != null && savedBookType != null) {
+    final savedData = prefs.getString(widget.saveKey);
+    if (savedData != null) {
       data = json.decode(savedData);
-      bookType = savedBookType; // Load bookType as a string
-
       if (mounted) {
         setState(() {
           isLoading = false;
         });
       }
-    } else {
-      await getData();
     }
+    await getData();
   }
 
   Future<void> refreshData() async {
@@ -102,7 +92,7 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          bookType,
+          widget.bookType,
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),

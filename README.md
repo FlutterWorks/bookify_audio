@@ -16,8 +16,8 @@
  4. multi language audio support support
  5. Notification Bar Show Audio And Off Home Screen Show ✓
  6. Audio Book rating and review
- 7. Animation Add
- 8. category page add
+ 7. Animation Add ✓
+ 8. category page add ✓
  9. life story ✓
  10. Search Bar Add ✓
  11. Download Audio Offline
@@ -25,6 +25,6 @@
  13. apps testing add
  14. make api more better
  15. add ai this apps
- 16. Remote Config add
+ 16. Remote Config add ✓
  17. BookMark Add
- 18. When App Exit This Time Audio Return Play
+ 18. When App Exit This Time Audio Return Play ✓

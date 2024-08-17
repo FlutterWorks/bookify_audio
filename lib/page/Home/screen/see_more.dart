@@ -3,7 +3,7 @@ import 'package:test/page/Home/widget/see_more_list_widget.dart';
 
 class SeeMorePage extends StatelessWidget {
   final String api;
-  final String bookType;
+  // final String bookType;
   final String bookImage;
   final String saveKey;
   final String bookName;
@@ -11,7 +11,7 @@ class SeeMorePage extends StatelessWidget {
   const SeeMorePage({
     super.key,
     required this.api,
-    required this.bookType,
+    // required this.bookType,
     required this.bookImage,
     required this.bookName,
     required this.bookCreatorName,
@@ -22,7 +22,7 @@ class SeeMorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SeeMoreListWidget(
       api: api,
-      bookType: bookType,
+      // bookType: bookType,
       bookImage: bookImage,
       bookName: bookName,
       bookCreatorName: bookCreatorName,
