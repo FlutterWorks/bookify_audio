@@ -122,13 +122,20 @@
 // //                     //   bookName: "bookName",
 // //                     // ),
 
+// ignore_for_file: deprecated_member_use
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:test/page/Home/utils/writer_utils.dart';
+// import 'package:test/page/Home/utils/writer_utils.dart';
 import 'package:test/page/Home/utils/app_bar_util.dart';
 import 'package:test/page/Home/utils/category_list_utils.dart';
 import 'package:test/page/Home/utils/slider_image_utils.dart';
 import 'package:test/page/Home/widget/home_page_list_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../firebase/config.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -151,7 +158,65 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     _initConfigFuture = Config.initConfig();
     super.initState();
+    checkForUpdate();
     // print(Config.writer1);
+  }
+
+  Future<void> checkForUpdate() async {
+    try {
+      final response = await http.get(
+          Uri.parse('https://apon06.github.io/bookify_api/app_update.json'));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        String latestVersion = data['latest_version'];
+        String updateMessage = data['update_message'];
+
+        PackageInfo packageInfo = await PackageInfo.fromPlatform();
+        String currentVersion = packageInfo.version;
+
+        if (latestVersion != currentVersion) {
+          showUpdateDialog(updateMessage);
+        }
+      } else {
+        // print('Failed to fetch version info');
+      }
+    } catch (e) {
+      // print('Error checking for update: $e');
+    }
+  }
+
+  void showUpdateDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Update Available'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Later'),
+          ),
+          TextButton(
+            onPressed: () async {
+              const String appUpdateUrl =
+                  'https://github.com/apon06/bookify_audio/releases';
+
+              final Uri url = Uri.parse(appUpdateUrl);
+
+              if (await canLaunch(url.toString())) {
+                await launch(url.toString());
+              } else {
+                await launch(url.toString());
+              }
+            },
+            child: const Text('Update Now'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -193,7 +258,7 @@ class _HomePageState extends State<HomePage> {
                     bookName: "bookName",
                     saveKey: 'writerSave2',
                   ),
-                  const WriterUtils(),
+                  // const WriterUtils(),
                   // HomePageListWidget(
                   //   api: Config.writer3,
                   //   // bookType: 'রবীন্দ্রনাথ ঠাকুর',
