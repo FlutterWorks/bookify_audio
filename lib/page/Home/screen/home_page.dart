@@ -1,9 +1,8 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-// import 'package:test/page/Home/utils/writer_utils.dart';
+import 'package:test/core/quick_action.dart';
 import 'package:test/page/Home/utils/app_bar_util.dart';
 import 'package:test/page/Home/utils/category_list_utils.dart';
 import 'package:test/page/Home/utils/slider_image_utils.dart';
@@ -36,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     _initConfigFuture = Config.initConfig();
     super.initState();
     checkForUpdate();
-    // print(Config.writer1);
+    initializeAction(context);
   }
 
   Future<void> checkForUpdate() async {
@@ -56,10 +55,10 @@ class _HomePageState extends State<HomePage> {
           showUpdateDialog(updateMessage);
         }
       } else {
-        // print('Failed to fetch version info');
+        //
       }
     } catch (e) {
-      // print('Error checking for update: $e');
+      //
     }
   }
 
@@ -121,7 +120,6 @@ class _HomePageState extends State<HomePage> {
                   //!  I know the logic in this code is really bad.Can someone help me improve the logic? Please share the fixed code when you're done.
                   HomePageListWidget(
                     api: Config.writer1,
-                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
                     bookImage: "bookImage",
                     bookCreatorName: 'bookCreatorName',
                     bookName: "bookName",
@@ -129,7 +127,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                   HomePageListWidget(
                     api: Config.writer2,
-                    // bookType: 'রবীন্দ্রনাথ ঠাকুর',
                     bookImage: "bookImage",
                     bookCreatorName: 'bookCreatorName',
                     bookName: "bookName",
