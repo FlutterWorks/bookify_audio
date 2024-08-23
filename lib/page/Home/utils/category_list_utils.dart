@@ -15,7 +15,6 @@ class CategoryListUtils extends StatefulWidget {
 class _CategoryListUtilsState extends State<CategoryListUtils> {
   List<dynamic> categoryList = [];
   bool isLoading = true;
-  // dynamic selectedPerson;
 
   Future<void> getData() async {
     final res = await http.get(
@@ -26,7 +25,6 @@ class _CategoryListUtilsState extends State<CategoryListUtils> {
       setState(() {
         categoryList = decoded['Category'];
         isLoading = false;
-        // selectedPerson = categoryList.isNotEmpty ? categoryList[0] : null;
       });
       await saveDataToPreferences();
     } else {
@@ -47,7 +45,6 @@ class _CategoryListUtilsState extends State<CategoryListUtils> {
     if (savedData != null) {
       setState(() {
         categoryList = json.decode(savedData);
-        // selectedPerson = categoryList.isNotEmpty ? categoryList[0] : null;
         isLoading = false;
       });
     }
@@ -76,7 +73,6 @@ class _CategoryListUtilsState extends State<CategoryListUtils> {
         itemCount: categoryList.length,
         itemBuilder: (b, index) {
           var categoryApi = categoryList[index];
-          // print(categoryApi["bookImage"]); // image but why plz tell me
           return CategoryButtonWidget(
             onTap: () => Navigator.push(
               context,

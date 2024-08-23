@@ -75,7 +75,6 @@ class _PersonPageState extends State<PersonPage> {
 
   @override
   void dispose() {
-    // Any necessary cleanup can be done here.
     super.dispose();
   }
 
@@ -127,7 +126,6 @@ class _PersonPageState extends State<PersonPage> {
                   ),
                 ),
                 VerticalDivider(
-                  // color: Colors.white,
                   width: MediaQuery.of(context).size.width * 0.04,
                 ),
                 selectedPerson != null

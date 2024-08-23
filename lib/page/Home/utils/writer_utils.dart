@@ -15,7 +15,6 @@ class WriterUtils extends StatefulWidget {
 class _WriterUtilsState extends State<WriterUtils> {
   List<dynamic> writerList = [];
   bool isLoading = true;
-  // dynamic selectedPerson;
 
   Future<void> getData() async {
     final res = await http.get(
@@ -26,7 +25,6 @@ class _WriterUtilsState extends State<WriterUtils> {
       setState(() {
         writerList = decoded['WriterInfo'];
         isLoading = false;
-        // selectedPerson = writerList.isNotEmpty ? writerList[0] : null;
       });
       await saveDataToPreferences();
     } else {
@@ -47,7 +45,6 @@ class _WriterUtilsState extends State<WriterUtils> {
     if (savedData != null) {
       setState(() {
         writerList = json.decode(savedData);
-        // selectedPerson = writerList.isNotEmpty ? writerList[0] : null;
         isLoading = false;
       });
     }
@@ -76,7 +73,6 @@ class _WriterUtilsState extends State<WriterUtils> {
         itemCount: writerList.length,
         itemBuilder: (b, index) {
           var categoryApi = writerList[index];
-          // print(categoryApi["bookImage"]); // image but why plz tell me
           return GestureDetector(
             onTap: () => Navigator.push(
               context,
@@ -91,25 +87,15 @@ class _WriterUtilsState extends State<WriterUtils> {
                 ),
               ),
             ),
-            // categoryText: categoryApi["bookType"],
-            // categoryColor: categoryApi["color"],
-            // child: SizedBox(
-            //   height: 80,
-            //   child: CircleAvatar(
-            //     radius: 80,
-            //     child: CachedNetworkImage(
-            //       imageUrl: categoryApi["writerImage"],
-            //     ),
-            //   ),
-            // ),
             child: CircleAvatar(
-                radius: 75,
-                backgroundColor: Colors.white,
-                child: CircleAvatar(
-                  radius: 70,
-                  backgroundImage: CachedNetworkImageProvider(categoryApi["writerImage"]),
-                ),
+              radius: 75,
+              backgroundColor: Colors.white,
+              child: CircleAvatar(
+                radius: 70,
+                backgroundImage:
+                    CachedNetworkImageProvider(categoryApi["writerImage"]),
               ),
+            ),
           );
         },
       ),

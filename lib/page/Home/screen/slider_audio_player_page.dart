@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
-
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -74,13 +72,7 @@ class _SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
         ),
         autoStart: false,
         showNotification: true,
-        notificationSettings: const NotificationSettings(
-            // stopEnabled: false,
-            // customPlayPauseAction: true,
-            // customNextAction: true,
-            // customPrevAction: true,
-            // customStopAction: true,
-            ),
+        notificationSettings: const NotificationSettings(),
         playInBackground: PlayInBackground.enabled,
         seek: Duration(seconds: lastPosition),
       );
@@ -132,9 +124,7 @@ class _SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
         }
         _isPlaying = !_isPlaying;
       });
-    } catch (e) {
-      // Handle error
-    }
+    } catch (e) {}
   }
 
   void _undo() {

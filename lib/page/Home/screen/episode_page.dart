@@ -58,12 +58,12 @@ class EpisodeListPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0),
                   child: Text(
                     'লেখক: ${audiobook['bookCreatorName']}',
                     style: const TextStyle(
                       fontSize: 16,
-                      // color: Colors.grey[600],
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -76,7 +76,8 @@ class EpisodeListPage extends StatelessWidget {
               (context, index) {
                 final episode = audiobook['episodes'][index];
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                   child: Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
@@ -121,31 +122,3 @@ class EpisodeListPage extends StatelessWidget {
     );
   }
 }
-
-
-// class AudioPlayerPage extends StatelessWidget {
-//   final dynamic episode;
-
-//   AudioPlayerPage({required this.episode});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(episode['title']),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Text('Playing ${episode['title']}'),
-//             ElevatedButton(
-//               onPressed: () {},
-//               child: Text('Play'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

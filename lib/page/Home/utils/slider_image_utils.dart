@@ -11,7 +11,6 @@ class ImageSliderScreen extends StatefulWidget {
   const ImageSliderScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _ImageSliderScreenState createState() => _ImageSliderScreenState();
 }
 
@@ -36,8 +35,8 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> {
   }
 
   Future<void> _fetchImages() async {
-    final response = await http.get(
-        Uri.parse('https://apon06.github.io/bookify_api/slider_api.json'));
+    final response = await http
+        .get(Uri.parse('https://apon06.github.io/bookify_api/slider_api.json'));
     if (response.statusCode == 200) {
       setState(() {
         _imageList = json.decode(response.body);
@@ -95,16 +94,12 @@ class _ImageSliderScreenState extends State<ImageSliderScreen> {
                             width: 1000,
                             imageUrl: item['image'] ?? '',
                             placeholder: (context, url) => Container(
-                              // width: imageWidth,
-                              // height: imageHeight,
                               color: Colors.grey[200],
                               child: const Center(
                                 child: CircularProgressIndicator(),
                               ),
                             ),
                             errorWidget: (context, url, error) => Container(
-                              // width: imageWidth,
-                              // height: imageHeight,
                               color: Colors.grey[200],
                               child: const Icon(Icons.error),
                             ),
