@@ -131,6 +131,7 @@ import 'package:flutter/material.dart';
 import 'package:test/page/Home/utils/app_bar_util.dart';
 import 'package:test/page/Home/utils/category_list_utils.dart';
 import 'package:test/page/Home/utils/slider_image_utils.dart';
+import 'package:test/page/Home/utils/writer_utils.dart';
 import 'package:test/page/Home/widget/home_page_list_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../firebase/config.dart';
@@ -258,7 +259,7 @@ class _HomePageState extends State<HomePage> {
                     bookName: "bookName",
                     saveKey: 'writerSave2',
                   ),
-                  // const WriterUtils(),
+                  const WriterUtils(),
                   // HomePageListWidget(
                   //   api: Config.writer3,
                   //   // bookType: 'রবীন্দ্রনাথ ঠাকুর',
