@@ -146,21 +146,21 @@ packages:
     source: hosted
     version: "1.0.0"
   dio:
-    dependency: "direct main"
-    description:
-      name: dio
-      sha256: "0dfb6b6a1979dac1c1245e17cef824d7b452ea29bd33d3467269f9bef3715fb0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.6.0"
-  dio_web_adapter:
     dependency: transitive
     description:
-      name: dio_web_adapter
-      sha256: "33259a9276d6cea88774a0000cfae0d861003497755969c92faa223108620dc8"
+      name: dio
+      sha256: "7d328c4d898a61efc3cd93655a0955858e29a0aa647f0f9e02d59b3bb275e2e8"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "4.0.6"
+  facebook_audience_network:
+    dependency: "direct main"
+    description:
+      name: facebook_audience_network
+      sha256: "44eb10576b861c5872d1eec3fc9abe7494500314e4e02c49c06dbdd549c9ade0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -254,6 +254,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  flutter_speedtest:
+    dependency: "direct main"
+    description:
+      name: flutter_speedtest
+      sha256: "4ba9f8bc30bd546b5a368a7d0bcb6a2e635dc0da8e0cf47c08f75f17cbc49aab"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -677,6 +685,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.0"
+  tuple:
+    dependency: transitive
+    description:
+      name: tuple
+      sha256: a97ce2013f240b2f3807bcbaf218765b6f301c3eff91092bcfa23a039e7dd151
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   typed_data:
     dependency: transitive
     description:
@@ -789,6 +805,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
+  webview_flutter:
+    dependency: "direct main"
+    description:
+      name: webview_flutter
+      sha256: "6886b3ceef1541109df5001054aade5ee3c36b5780302e41701c78357233721c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.8.0"
+  webview_flutter_android:
+    dependency: transitive
+    description:
+      name: webview_flutter_android
+      sha256: "8b3b2450e98876c70bfcead876d9390573b34b9418c19e28168b74f6cb252dbd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.10.4"
+  webview_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: webview_flutter_platform_interface
+      sha256: "812165e4e34ca677bdfbfa58c01e33b27fd03ab5fa75b70832d4b7d4ca1fa8cf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.9.5"
+  webview_flutter_wkwebview:
+    dependency: transitive
+    description:
+      name: webview_flutter_wkwebview
+      sha256: a5364369c758892aa487cbf59ea41d9edd10f9d9baf06a94e80f1bd1b4c7bbc0
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.9.5"
   win32:
     dependency: transitive
     description:
