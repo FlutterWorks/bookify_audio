@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:test/firebase_options.dart';
 import 'package:test/page/Home/screen/home_page.dart';
 import 'package:test/page/person/screen/person_page.dart';
-import 'package:test/page/setting/screen/setting_page.dart';
+import 'package:test/page/setting/screen/setting.dart';
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
