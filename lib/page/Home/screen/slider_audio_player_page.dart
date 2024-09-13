@@ -21,11 +21,11 @@ class SliderAudioPlayerScreen extends StatefulWidget {
   });
 
   @override
-  _SliderAudioPlayerScreenState createState() =>
-      _SliderAudioPlayerScreenState();
+  SliderAudioPlayerScreenState createState() =>
+      SliderAudioPlayerScreenState();
 }
 
-class _SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
+class SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
     with WidgetsBindingObserver {
   late AssetsAudioPlayer _audioPlayer;
   bool _isPlaying = false;
@@ -124,7 +124,9 @@ class _SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
         }
         _isPlaying = !_isPlaying;
       });
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
   }
 
   void _undo() {
@@ -295,6 +297,7 @@ class _SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
                         if (await canLaunchUrl(uri)) {
                           await launchUrl(uri);
                         } else {
+                          // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                                 content: Text('Could not launch $youtubeUrl')),

@@ -30,6 +30,8 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+# /E:/Extansion/exprement/bookify_audio/experiment/
+/experiment/
 
 # Symbolication related
 app.*.symbols

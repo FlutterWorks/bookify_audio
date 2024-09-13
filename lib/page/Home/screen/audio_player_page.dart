@@ -25,11 +25,10 @@ class AudioPlayerScreen extends StatefulWidget {
   });
 
   @override
-  // ignore: library_private_types_in_public_api
-  _AudioPlayerScreenState createState() => _AudioPlayerScreenState();
+  AudioPlayerScreenState createState() => AudioPlayerScreenState();
 }
 
-class _AudioPlayerScreenState extends State<AudioPlayerScreen>
+class AudioPlayerScreenState extends State<AudioPlayerScreen>
     with WidgetsBindingObserver {
   late AssetsAudioPlayer _audioPlayer;
   bool _isPlaying = false;

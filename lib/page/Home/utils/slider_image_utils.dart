@@ -11,10 +11,10 @@ class ImageSliderScreen extends StatefulWidget {
   const ImageSliderScreen({super.key});
 
   @override
-  _ImageSliderScreenState createState() => _ImageSliderScreenState();
+  ImageSliderScreenState createState() => ImageSliderScreenState();
 }
 
-class _ImageSliderScreenState extends State<ImageSliderScreen> {
+class ImageSliderScreenState extends State<ImageSliderScreen> {
   List<dynamic> _imageList = [];
 
   @override
