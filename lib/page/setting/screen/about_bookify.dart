@@ -2,7 +2,6 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/text_button_widget.dart';
 
 class AboutBookify extends StatelessWidget {
@@ -23,8 +22,8 @@ class AboutBookify extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: SizedBox(
-                    height: 100,
-                    width: 100,
+                    height: 200,
+                    width: 200,
                     child: CachedNetworkImage(
                       imageUrl: "https://i.postimg.cc/KYHd794P/app-icon.jpg",
                     ),
@@ -78,6 +77,10 @@ class AboutBookify extends StatelessWidget {
                       TextButtonWidget(
                         text: "Source Code (Github)",
                         url: 'https://github.com/apon06/bookify_audio',
+                      ),
+                       TextButtonWidget(
+                        text: "Bookify Audio Api",
+                        url: 'https://github.com/apon06/bookify_api',
                       ),
                       TextButtonWidget(
                         text: "License",

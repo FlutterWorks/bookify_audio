@@ -67,33 +67,36 @@ class _WriterUtilsState extends State<WriterUtils> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 150,
+      height: 160,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: writerList.length,
         itemBuilder: (b, index) {
           var categoryApi = writerList[index];
-          return GestureDetector(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => WriterDetailsPage(
-                  api: categoryApi["api"],
-                  bookImage: categoryApi["bookImage"],
-                  bookName: categoryApi["bookName"],
-                  bookCreatorName: categoryApi["bookCreatorName"],
-                  saveKey: categoryApi["saveKey"],
-                  writerImage: categoryApi['writerImage'],
+          return Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WriterDetailsPage(
+                    api: categoryApi["api"],
+                    bookImage: categoryApi["bookImage"],
+                    bookName: categoryApi["bookName"],
+                    bookCreatorName: categoryApi["bookCreatorName"],
+                    saveKey: categoryApi["saveKey"],
+                    writerImage: categoryApi['writerImage'],
+                  ),
                 ),
               ),
-            ),
-            child: CircleAvatar(
-              radius: 75,
-              backgroundColor: Colors.white,
               child: CircleAvatar(
-                radius: 70,
-                backgroundImage:
-                    CachedNetworkImageProvider(categoryApi["writerImage"]),
+                radius: 75,
+                backgroundColor: Colors.white,
+                child: CircleAvatar(
+                  radius: 70,
+                  backgroundImage:
+                      CachedNetworkImageProvider(categoryApi["writerImage"]),
+                ),
               ),
             ),
           );

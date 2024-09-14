@@ -6,15 +6,15 @@ import 'package:search_page/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test/page/Home/screen/episode_page.dart';
 
-class ContainerSearchBarUtils extends StatefulWidget {
-  const ContainerSearchBarUtils({super.key});
+class SearchBarUils extends StatefulWidget {
+  const SearchBarUils({super.key});
 
   @override
-  State<ContainerSearchBarUtils> createState() =>
-      _ContainerSearchBarUtilsState();
+  State<SearchBarUils> createState() =>
+      _SearchBarUilsState();
 }
 
-class _ContainerSearchBarUtilsState extends State<ContainerSearchBarUtils> {
+class _SearchBarUilsState extends State<SearchBarUils> {
   List<Map<String, dynamic>> data = [];
   bool isLoading = true;
 
@@ -27,7 +27,7 @@ class _ContainerSearchBarUtilsState extends State<ContainerSearchBarUtils> {
   Future<void> getData() async {
     try {
       final res = await http.get(
-        Uri.parse('https://apon06.github.io/bookify_api/dummy_api.json'),
+        Uri.parse('https://apon06.github.io/bookify_api/writer/rabindranath_thakur.json'),
       );
       if (res.statusCode == 200) {
         final decoded = json.decode(res.body);
