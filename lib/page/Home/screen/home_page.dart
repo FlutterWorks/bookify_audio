@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
       body: const SingleChildScrollView(
         child: Column(
           children: [
-            ImageSliderScreen(),
+            SliderImageUtils(),
             SizedBox(height: 10),
             CategoryListUtils(),
             HomePageListWidget(

@@ -7,14 +7,14 @@ import 'dart:convert';
 
 import 'package:test/page/Home/screen/slider_audio_player_page.dart';
 
-class ImageSliderScreen extends StatefulWidget {
-  const ImageSliderScreen({super.key});
+class SliderImageUtils extends StatefulWidget {
+  const SliderImageUtils({super.key});
 
   @override
-  ImageSliderScreenState createState() => ImageSliderScreenState();
+  SliderImageUtilsState createState() => SliderImageUtilsState();
 }
 
-class ImageSliderScreenState extends State<ImageSliderScreen> {
+class SliderImageUtilsState extends State<SliderImageUtils> {
   List<dynamic> _imageList = [];
 
   @override

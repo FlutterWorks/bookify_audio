@@ -7,16 +7,16 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-double currentSliderValue = 0;
+import '../page/Home/screen/audio_player_page.dart';
 
-class AudioPlayerScreen extends StatefulWidget {
+class BigMiniplayer extends StatefulWidget {
   final dynamic episode;
   final String bookName;
   final String bookCreatorName;
   final String bookImage;
   final String audioUrl;
   final String voiceOwner;
-  const AudioPlayerScreen({
+  const BigMiniplayer({
     super.key,
     this.episode,
     required this.bookName,
@@ -27,14 +27,15 @@ class AudioPlayerScreen extends StatefulWidget {
   });
 
   @override
-  AudioPlayerScreenState createState() => AudioPlayerScreenState();
+  BigMiniplayerState createState() => BigMiniplayerState();
 }
 
-class AudioPlayerScreenState extends State<AudioPlayerScreen>
+class BigMiniplayerState extends State<BigMiniplayer>
     with WidgetsBindingObserver {
   late AssetsAudioPlayer _audioPlayer;
   bool _isPlaying = false;
   bool _isLoading = true;
+  // double currentSliderValue = 0;
   double _playbackSpeed = 1.0;
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
@@ -144,10 +145,24 @@ class AudioPlayerScreenState extends State<AudioPlayerScreen>
     _audioPlayer.seek(newPosition < _duration ? newPosition : _duration);
   }
 
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.bookName)),
+      // appBar: AppBar(title: Text(widget.bookName)),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : Padding(
@@ -337,19 +352,5 @@ class AudioPlayerScreenState extends State<AudioPlayerScreen>
               ),
             ),
     );
-  }
-
-  String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _audioPlayer.dispose();
-    super.dispose();
   }
 }
