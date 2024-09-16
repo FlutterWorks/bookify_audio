@@ -1,10 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:test/firebase_options.dart';
 import 'package:test/page/Home/screen/home_page.dart';
-import 'package:test/page/Home/screen/mini_player.dart';
 import 'package:test/page/person/screen/person_page.dart';
 import 'package:test/page/setting/screen/setting.dart';
 import 'dart:convert';
@@ -12,15 +13,10 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:http/http.dart' as http;
 
-import 'provider/audio_player_provider.dart';
-
-void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => AudioPlayerProvider(),
-      child: const MyApp(),
-    ),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -113,11 +109,12 @@ class StartPage extends StatefulWidget {
 
 class StartPageState extends State<StartPage> {
   int currentIndex = 0;
-
+  final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   @override
   void initState() {
     super.initState();
     checkForUpdate();
+    analytics.setAnalyticsCollectionEnabled(true);
   }
 
   Future<void> checkForUpdate() async {
@@ -158,7 +155,7 @@ class StartPageState extends State<StartPage> {
           TextButton(
             onPressed: () async {
               const String appUpdateUrl =
-                  'https://github.com/apon06/bookify_audio/releases';
+                  'https://gokeihub.blogspot.com/p/bookify.html';
 
               final Uri url = Uri.parse(appUpdateUrl);
 
@@ -197,27 +194,10 @@ class StartPageState extends State<StartPage> {
   Widget build(BuildContext context) {
     double displayWidth = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
-    return Consumer<AudioPlayerProvider>(
-        builder: (context, audioPlayerProvider, child) {
-      return Scaffold(
-        body: Stack(
-          children: [
-            _pages[currentIndex],
-            if (audioPlayerProvider.currentEpisode != null)
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: MiniPlayerWidget(
-                  currentEpisode: audioPlayerProvider.currentEpisode!,
-                  onTap: () {},
-                ),
-              ),
-          ],
-        ),
-        bottomNavigationBar: buildBottomNavigationBar(displayWidth, theme),
-      );
-    });
+    return Scaffold(
+      body: _pages[currentIndex],
+      bottomNavigationBar: buildBottomNavigationBar(displayWidth, theme),
+    );
   }
 
   Container buildBottomNavigationBar(double displayWidth, ThemeData theme) {
@@ -246,7 +226,11 @@ class StartPageState extends State<StartPage> {
   Widget buildNavItem(int index, double displayWidth, ThemeData theme) {
     return GestureDetector(
       onTap: () {
-        setState(() {
+        setState(() async {
+          await analytics.logEvent(name: "Page_track", parameters: {
+            "page_index": index,
+            "page_name": _titles[index],
+          });
           currentIndex = index;
           HapticFeedback.lightImpact();
         });
@@ -328,8 +312,6 @@ class StartPageState extends State<StartPage> {
     );
   }
 }
-
-
 
 
 
