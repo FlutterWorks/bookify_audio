@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:test/page/setting/screen/app_information_page.dart';
 import 'package:test/page/setting/screen/change_log_page.dart';
+import 'package:test/page/setting/widgets/bookify_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends StatefulWidget {
@@ -103,6 +104,12 @@ class _SettingPageState extends State<SettingPage> {
               trailing: const Icon(Icons.privacy_tip),
             ),
           ),
+          connectionStatus
+              ? const BookifyAds(
+                  apiUrl:
+                      'https://apon06.github.io/bookify_api/ads/bookify_ads_1.json',
+                )
+              : const SizedBox(),
           Card(
             child: ListTile(
               onTap: () async {
