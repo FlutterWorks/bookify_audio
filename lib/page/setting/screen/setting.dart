@@ -2,10 +2,8 @@
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:test/page/setting/screen/about_bookify.dart';
 import 'package:test/page/setting/screen/app_information_page.dart';
 import 'package:test/page/setting/screen/change_log_page.dart';
-// import 'package:test/page/setting/widgets/bookify_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends StatefulWidget {
@@ -40,9 +38,7 @@ class _SettingPageState extends State<SettingPage> {
         });
       }
     } catch (e) {
-      setState(() {
-        // connectionStatus = 'Failed to get connectivity';
-      });
+      setState(() {});
     }
   }
 
@@ -70,19 +66,6 @@ class _SettingPageState extends State<SettingPage> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (b) => const AboutBookify(),
-                  ),
-                );
-              },
-              title: const Text('About Bookify'),
-              trailing: const Icon(Icons.info_rounded),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
                     builder: (b) => const ChangeLogPage(),
                   ),
                 );
@@ -91,12 +74,24 @@ class _SettingPageState extends State<SettingPage> {
               trailing: const Icon(Icons.history),
             ),
           ),
-          // connectionStatus == true ? const BookifyAds() : const SizedBox(),
+          // Card(
+          //   child: ListTile(
+          //     onTap: () {
+          //       Navigator.of(context).push(
+          //         MaterialPageRoute(
+          //           builder: (b) => const AboutBookify(),
+          //         ),
+          //       );
+          //     },
+          //     title: const Text('About Bookify'),
+          //     trailing: const Icon(Icons.info_rounded),
+          //   ),
+          // ),
           Card(
             child: ListTile(
               onTap: () async {
                 String privacyUrl =
-                    'https://sites.google.com/view/toolify-hub/home';
+                    'https://sites.google.com/view/bookify-audio/home';
                 final Uri url = Uri.parse(privacyUrl);
                 if (await canLaunch(url.toString())) {
                   await launch(url.toString());
@@ -106,6 +101,21 @@ class _SettingPageState extends State<SettingPage> {
               },
               title: const Text('Privacy Policy'),
               trailing: const Icon(Icons.privacy_tip),
+            ),
+          ),
+          Card(
+            child: ListTile(
+              onTap: () async {
+                String privacyUrl = 'https://t.me/+iCD-EPh5ye1iM2Q1';
+                final Uri url = Uri.parse(privacyUrl);
+                if (await canLaunch(url.toString())) {
+                  await launch(url.toString());
+                } else {
+                  await launch(url.toString());
+                }
+              },
+              title: const Text('Telegram Group'),
+              trailing: const Icon(Icons.telegram),
             ),
           ),
         ],
