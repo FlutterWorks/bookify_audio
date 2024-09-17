@@ -27,12 +27,12 @@ class _SearchBarUilsState extends State<SearchBarUils> {
   Future<void> getData() async {
     try {
       final res = await http.get(
-        Uri.parse('https://apon06.github.io/bookify_api/writer/rabindranath_thakur.json'),
+        Uri.parse('https://apon06.github.io/bookify_api/search_bar.json'),
       );
       if (res.statusCode == 200) {
         final decoded = json.decode(res.body);
         setState(() {
-          data = List<Map<String, dynamic>>.from(decoded['audiobooks']);
+          data = List<Map<String, dynamic>>.from(decoded['searchBar']);
           isLoading = false;
         });
         await saveDataToPreferences();

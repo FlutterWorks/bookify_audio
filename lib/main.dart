@@ -18,9 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
-    const BetterFeedback(
-      child: MyApp(),
-    ),
+    const MyApp(),
   );
 }
 
@@ -29,19 +27,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: Colors.blueAccent,
-        iconTheme: const IconThemeData(color: Colors.black54),
+    return BetterFeedback(
+      child: MaterialApp(
+        theme: ThemeData(
+          brightness: Brightness.light,
+          primaryColor: Colors.blueAccent,
+          iconTheme: const IconThemeData(color: Colors.black54),
+        ),
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          primaryColor: Colors.blueAccent,
+          iconTheme: const IconThemeData(color: Colors.white70),
+        ),
+        themeMode: ThemeMode.system,
+        home: const SplashScreenPage(),
       ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: Colors.blueAccent,
-        iconTheme: const IconThemeData(color: Colors.white70),
-      ),
-      themeMode: ThemeMode.system,
-      home: const SplashScreenPage(),
     );
   }
 }
