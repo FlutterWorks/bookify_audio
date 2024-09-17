@@ -57,7 +57,7 @@ class BookifyAdsState extends State<BookifyAds> {
 
     if (isLoading) {
       return const Center(
-        child: CircularProgressIndicator(),
+        child: SizedBox(),
       );
     }
 
@@ -107,7 +107,7 @@ class BookifyAdsState extends State<BookifyAds> {
                         Text(
                           main2Name ?? '',
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.normal,
                           ),
                         ),
                       ],

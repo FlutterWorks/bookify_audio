@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:test/page/setting/screen/app_information_page.dart';
 import 'package:test/page/setting/screen/change_log_page.dart';
+import 'package:test/page/setting/screen/missing_story.dart';
 import 'package:test/page/setting/widgets/bookify_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -123,6 +124,19 @@ class _SettingPageState extends State<SettingPage> {
               },
               title: const Text('Telegram Group'),
               trailing: const Icon(Icons.telegram),
+            ),
+          ),
+          Card(
+            child: ListTile(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (b) => const MissingStory(),
+                  ),
+                );
+              },
+              title: const Text('Missing Story'),
+              trailing: const Icon(Icons.add),
             ),
           ),
         ],

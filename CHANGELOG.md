@@ -1,2 +1,3 @@
 ## 1.0.0
--Basic App And functionality
+
+ - Basic App And functionality

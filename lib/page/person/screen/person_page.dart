@@ -113,6 +113,7 @@ class _PersonPageState extends State<PersonPage> {
                               Padding(
                                 padding: const EdgeInsets.all(5),
                                 child: AutoSizeText(
+                                  minFontSize: 5,
                                   person['personName'],
                                   maxLines: 1,
                                 ),
@@ -193,8 +194,10 @@ class PersonInfoPage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Center(
-              child: Text(
+              child: AutoSizeText(
+                minFontSize: 20,
                 personName,
+                maxLines: 1,
                 style: const TextStyle(fontSize: 30),
               ),
             ),
