@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:test/page/setting/screen/app_information_page.dart';
 import 'package:test/page/setting/screen/change_log_page.dart';
 import 'package:test/page/setting/screen/missing_story.dart';
-import 'package:test/page/setting/widgets/bookify_ads.dart';
+// import 'package:test/page/setting/widgets/bookify_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../package/ads.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -18,11 +20,23 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   bool connectionStatus = true;
   final Connectivity _connectivity = Connectivity();
+  var startApp = StartAppSdk();
+  StartAppBannerAd? bannerAds;
+
+  loadBannerAds() {
+    startApp.setTestAdsEnabled(true);
+    startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
+      setState(() {
+        bannerAds = value;
+      });
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     _checkConnection();
+    loadBannerAds();
   }
 
   Future<void> _checkConnection() async {
@@ -105,11 +119,14 @@ class _SettingPageState extends State<SettingPage> {
               trailing: const Icon(Icons.privacy_tip),
             ),
           ),
-          connectionStatus
-              ? const BookifyAds(
-                  apiUrl:
-                      'https://apon06.github.io/bookify_api/ads/bookify_ads_1.json',
-                )
+          // connectionStatus
+          //     ? const BookifyAds(
+          //         apiUrl:
+          //             'https://apon06.github.io/bookify_api/ads/bookify_ads_1.json',
+          //       )
+          //     : const SizedBox(),
+          bannerAds != null
+              ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
               : const SizedBox(),
           Card(
             child: ListTile(

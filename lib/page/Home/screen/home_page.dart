@@ -174,6 +174,8 @@ import 'package:test/page/Home/utils/slider_image_utils.dart';
 import 'package:test/page/Home/utils/writer_utils.dart';
 import 'package:test/page/Home/widget/home_page_list_widget.dart';
 
+import '../../../core/quick_action.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -234,6 +236,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     loadData();
+    initializeAction(context);
   }
 
   @override

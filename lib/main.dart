@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           iconTheme: const IconThemeData(color: Colors.white70),
         ),
         themeMode: ThemeMode.system,
-        home: const SplashScreenPage(),
+        home: const SettingPage(),
       ),
     );
   }

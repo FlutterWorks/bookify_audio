@@ -28,6 +28,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="com.startapp.sdk.APPLICATION_ID"
+            android:value="208101839" />
     </application>
 
     <queries>
