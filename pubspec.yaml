@@ -1,5 +1,5 @@
 name: test
-description: "A new Flutter project."
+description: "Bookify Audio"
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -29,14 +29,12 @@ dependencies:
   quick_actions: ^1.0.7
   provider: ^6.1.2
   flutter_markdown: ^0.7.3+1
-  connectivity_plus: ^6.0.5
-  miniplayer: ^1.0.1
   firebase_analytics: ^11.3.1
   flutter_email_sender: ^6.0.3
   feedback: ^3.1.0
   cloud_firestore: ^5.4.2
   google_fonts: ^6.2.1
-  # startapp_sdk: ^1.0.1
+  startapp_sdk: ^1.0.1
   # flutter_animated_progress_bar: ^1.0.5
 
 dev_dependencies:
