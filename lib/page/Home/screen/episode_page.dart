@@ -1,18 +1,45 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:startapp_sdk/startapp.dart';
 import 'package:test/page/Home/screen/audio_player_page.dart';
 
-class EpisodeListPage extends StatelessWidget {
+class EpisodeListPage extends StatefulWidget {
   final dynamic audiobook;
 
   const EpisodeListPage({super.key, required this.audiobook});
 
   @override
+  State<EpisodeListPage> createState() => _EpisodeListPageState();
+}
+
+class _EpisodeListPageState extends State<EpisodeListPage> {
+  var startApp = StartAppSdk();
+  StartAppBannerAd? bannerAds;
+
+  loadBannerAds() {
+    startApp.setTestAdsEnabled(true);
+    startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
+      setState(() {
+        bannerAds = value;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadBannerAds();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: bannerAds != null
+          ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
+          : const SizedBox(),
       appBar: AppBar(
         title: Text(
-          audiobook['bookName'],
+          widget.audiobook['bookName'],
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -40,7 +67,7 @@ class EpisodeListPage extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: CachedNetworkImage(
-                        imageUrl: audiobook['bookImage'],
+                        imageUrl: widget.audiobook['bookImage'],
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -49,7 +76,7 @@ class EpisodeListPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    'নাম: ${audiobook['bookName']}',
+                    'নাম: ${widget.audiobook['bookName']}',
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -61,7 +88,7 @@ class EpisodeListPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 16.0, vertical: 8.0),
                   child: Text(
-                    'লেখক: ${audiobook['bookCreatorName']}',
+                    'লেখক: ${widget.audiobook['bookCreatorName']}',
                     style: const TextStyle(
                       fontSize: 16,
                     ),
@@ -74,7 +101,7 @@ class EpisodeListPage extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                final episode = audiobook['episodes'][index];
+                final episode = widget.audiobook['episodes'][index];
                 return Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -101,9 +128,10 @@ class EpisodeListPage extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => AudioPlayerScreen(
                               episode: episode,
-                              bookName: audiobook['bookName'],
-                              bookCreatorName: audiobook['bookCreatorName'],
-                              bookImage: audiobook['bookImage'],
+                              bookName: widget.audiobook['bookName'],
+                              bookCreatorName:
+                                  widget.audiobook['bookCreatorName'],
+                              bookImage: widget.audiobook['bookImage'],
                               audioUrl: episode['audio_url'],
                               voiceOwner: episode['voice_owner'],
                             ),
@@ -114,7 +142,7 @@ class EpisodeListPage extends StatelessWidget {
                   ),
                 );
               },
-              childCount: audiobook['episodes'].length,
+              childCount: widget.audiobook['episodes'].length,
             ),
           ),
         ],

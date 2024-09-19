@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startapp_sdk/startapp.dart';
 import '../../../firebase/database.dart';
 import '../widgets/setting_field_button_widget.dart';
 import '../widgets/setting_field_widget.dart';
@@ -13,11 +14,34 @@ class MissingStory extends StatefulWidget {
 
 class _MissingStoryState extends State<MissingStory> {
   final TextEditingController appsAdd = TextEditingController();
+  var startApp = StartAppSdk();
+  StartAppBannerAd? bannerAds;
+
+  loadBannerAds() {
+    startApp.setTestAdsEnabled(true);
+    startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
+      setState(() {
+        bannerAds = value;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // _checkConnection();
+    loadBannerAds();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text("Missing Story"),
+      ),
+      bottomNavigationBar: bannerAds != null
+          ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
+          : const SizedBox(),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(

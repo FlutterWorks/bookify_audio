@@ -6,7 +6,6 @@ import 'package:startapp_sdk/startapp.dart';
 import 'package:test/page/setting/screen/app_information_page.dart';
 import 'package:test/page/setting/screen/change_log_page.dart';
 import 'package:test/page/setting/screen/missing_story.dart';
-// import 'package:test/page/setting/widgets/bookify_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends StatefulWidget {
@@ -60,7 +59,12 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text("Setting"),
+      ),
+      bottomNavigationBar: bannerAds != null
+          ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
+          : const SizedBox(),
       body: Column(
         children: [
           Card(
@@ -124,9 +128,7 @@ class _SettingPageState extends State<SettingPage> {
           //             'https://apon06.github.io/bookify_api/ads/bookify_ads_1.json',
           //       )
           //     : const SizedBox(),
-          bannerAds != null
-              ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
-              : const SizedBox(),
+
           Card(
             child: ListTile(
               onTap: () async {
