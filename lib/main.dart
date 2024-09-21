@@ -5,10 +5,12 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:test/firebase_options.dart';
 import 'package:test/page/Home/screen/home_page.dart';
 import 'package:test/page/person/screen/person_page.dart';
 import 'package:test/page/setting/screen/setting.dart';
+import 'package:test/provider/theme_provider.dart';
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -18,7 +20,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
-    const MyApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 
@@ -27,6 +34,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return BetterFeedback(
       child: MaterialApp(
         theme: ThemeData(
@@ -39,7 +47,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.blueAccent,
           iconTheme: const IconThemeData(color: Colors.white70),
         ),
-        themeMode: ThemeMode.system,
+        themeMode: themeProvider.themeMode,
         home: const SplashScreenPage(),
       ),
     );
@@ -317,4 +325,3 @@ class StartPageState extends State<StartPage> {
     );
   }
 }
-

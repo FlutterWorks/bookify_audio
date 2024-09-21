@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:startapp_sdk/startapp.dart';
 import 'package:test/page/Home/screen/episode_page.dart';
 
 class WriterDetailsPage extends StatefulWidget {
@@ -29,6 +30,17 @@ class WriterDetailsPage extends StatefulWidget {
 class _WriterDetailsPageState extends State<WriterDetailsPage> {
   List<dynamic> data = [];
   String bookType = '';
+  var startApp = StartAppSdk();
+  StartAppBannerAd? bannerAds;
+
+  loadBannerAds() {
+    startApp.setTestAdsEnabled(true);
+    startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
+      setState(() {
+        bannerAds = value;
+      });
+    });
+  }
 
   Future<void> loadData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -68,6 +80,7 @@ class _WriterDetailsPageState extends State<WriterDetailsPage> {
     super.initState();
     loadData();
     fetchData();
+    loadBannerAds();
   }
 
   @override
@@ -75,6 +88,9 @@ class _WriterDetailsPageState extends State<WriterDetailsPage> {
     // ignore: prefer_typing_uninitialized_variables
     var book;
     return Scaffold(
+      bottomNavigationBar: bannerAds != null
+          ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
+          : const SizedBox(),
       appBar: AppBar(
         centerTitle: true,
         title: Text(

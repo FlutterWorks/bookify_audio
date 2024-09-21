@@ -1,12 +1,17 @@
 // ignore_for_file: deprecated_member_use
 
 // import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:startapp_sdk/startapp.dart';
 import 'package:test/page/setting/screen/app_information_page.dart';
 import 'package:test/page/setting/screen/change_log_page.dart';
 import 'package:test/page/setting/screen/missing_story.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../provider/theme_provider.dart';
+import '../widgets/bookify_ads.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -17,7 +22,7 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   bool connectionStatus = true;
-  // final Connectivity _connectivity = Connectivity();
+  final Connectivity _connectivity = Connectivity();
   var startApp = StartAppSdk();
   StartAppBannerAd? bannerAds;
 
@@ -33,31 +38,32 @@ class _SettingPageState extends State<SettingPage> {
   @override
   void initState() {
     super.initState();
-    // _checkConnection();
+    _checkConnection();
     loadBannerAds();
   }
 
-  // Future<void> _checkConnection() async {
-  //   try {
-  //     List<ConnectivityResult> results =
-  //         await _connectivity.checkConnectivity();
-  //     if (results.contains(ConnectivityResult.mobile) ||
-  //         results.contains(ConnectivityResult.wifi)) {
-  //       setState(() {
-  //         connectionStatus = true;
-  //       });
-  //     } else {
-  //       setState(() {
-  //         connectionStatus = false;
-  //       });
-  //     }
-  //   } catch (e) {
-  //     setState(() {});
-  //   }
-  // }
+  Future<void> _checkConnection() async {
+    try {
+      List<ConnectivityResult> results =
+          await _connectivity.checkConnectivity();
+      if (results.contains(ConnectivityResult.mobile) ||
+          results.contains(ConnectivityResult.wifi)) {
+        setState(() {
+          connectionStatus = true;
+        });
+      } else {
+        setState(() {
+          connectionStatus = false;
+        });
+      }
+    } catch (e) {
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Setting"),
@@ -67,6 +73,17 @@ class _SettingPageState extends State<SettingPage> {
           : const SizedBox(),
       body: Column(
         children: [
+          Card(
+            child: ListTile(
+              title: const Text('Theme'),
+              trailing: Switch(
+                value: themeProvider.isDarkMode,
+                onChanged: (value) {
+                  themeProvider.toggleTheme(value);
+                },
+              ),
+            ),
+          ),
           Card(
             child: ListTile(
               onTap: () {
@@ -122,12 +139,12 @@ class _SettingPageState extends State<SettingPage> {
               trailing: const Icon(Icons.privacy_tip),
             ),
           ),
-          // connectionStatus
-          //     ? const BookifyAds(
-          //         apiUrl:
-          //             'https://apon06.github.io/bookify_api/ads/bookify_ads_1.json',
-          //       )
-          //     : const SizedBox(),
+          connectionStatus
+              ? const BookifyAds(
+                  apiUrl:
+                      'https://apon06.github.io/bookify_api/ads/bookify_ads_1.json',
+                )
+              : const SizedBox(),
 
           Card(
             child: ListTile(

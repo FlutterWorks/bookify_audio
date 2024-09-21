@@ -13,7 +13,7 @@ class MissingStory extends StatefulWidget {
 }
 
 class _MissingStoryState extends State<MissingStory> {
-  final TextEditingController appsAdd = TextEditingController();
+  final TextEditingController bookAdd = TextEditingController();
   var startApp = StartAppSdk();
   StartAppBannerAd? bannerAds;
 
@@ -58,15 +58,15 @@ class _MissingStoryState extends State<MissingStory> {
             ),
             const SizedBox(height: 15),
             SettingFieldWidget(
-              hintText: 'Adds Missing App Name only',
-              textEditingController: appsAdd,
+              hintText: 'Adds Missing Book Name only',
+              textEditingController: bookAdd,
             ),
             const SizedBox(height: 15),
             SettingFieldButtonWidget(
               buttonText: 'Add',
               onTap: () async {
                 Map<String, dynamic> addQuiz = {
-                  'Story': appsAdd.text,
+                  'Story': bookAdd.text,
                 };
                 await DataBaseMethods()
                     .addQuizCategory(addQuiz, 'Missing')
@@ -81,7 +81,7 @@ class _MissingStoryState extends State<MissingStory> {
                   },
                 );
                 setState(() {
-                  appsAdd.text = '';
+                  bookAdd.text = '';
                 });
               },
             )
