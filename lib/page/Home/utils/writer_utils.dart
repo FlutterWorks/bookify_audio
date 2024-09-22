@@ -118,13 +118,16 @@ class _WriterUtilsState extends State<WriterUtils> {
                         ),
                       ),
                     ),
-                    child: CircleAvatar(
-                      radius: 75,
-                      backgroundColor: Colors.white,
+                    child: Tooltip(
+                      message: categoryApi['writerName'],
                       child: CircleAvatar(
-                        radius: 70,
-                        backgroundImage: CachedNetworkImageProvider(
-                          categoryApi["writerImage"],
+                        radius: 75,
+                        backgroundColor: Colors.white,
+                        child: CircleAvatar(
+                          radius: 70,
+                          backgroundImage: CachedNetworkImageProvider(
+                            categoryApi["writerImage"],
+                          ),
                         ),
                       ),
                     ),
