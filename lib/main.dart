@@ -123,6 +123,7 @@ class StartPage extends StatefulWidget {
 class StartPageState extends State<StartPage> {
   int currentIndex = 0;
   final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
   @override
   void initState() {
     super.initState();
@@ -238,12 +239,15 @@ class StartPageState extends State<StartPage> {
 
   Widget buildNavItem(int index, double displayWidth, ThemeData theme) {
     return GestureDetector(
-      onTap: () {
-        setState(() async {
-          await analytics.logEvent(name: "Page_track", parameters: {
-            "page_index": index,
-            "page_name": _titles[index],
-          });
+      onTap: () async {
+        // Perform the async operation first
+        await analytics.logEvent(name: "Page_track", parameters: {
+          "page_index": index,
+          "page_name": _titles[index],
+        });
+
+        // Then update the state
+        setState(() {
           currentIndex = index;
           HapticFeedback.lightImpact();
         });

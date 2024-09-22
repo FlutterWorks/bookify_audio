@@ -13,9 +13,9 @@ class PersonPage extends StatefulWidget {
 }
 
 class _PersonPageState extends State<PersonPage> {
-  List<dynamic> personList = [];
+  List<Map<String, dynamic>> personList = [];
   bool isLoading = true;
-  dynamic selectedPerson;
+  Map<String, dynamic>? selectedPerson;
 
   @override
   void initState() {
@@ -24,25 +24,30 @@ class _PersonPageState extends State<PersonPage> {
   }
 
   Future<void> getData() async {
-    final res = await http.get(
-      Uri.parse('https://apon06.github.io/bookify_api/person_api.json'),
-    );
-    if (res.statusCode == 200) {
-      final decoded = json.decode(res.body);
+    try {
+      final res = await http.get(
+        Uri.parse('https://apon06.github.io/bookify_api/person_api.json'),
+      );
+      if (res.statusCode == 200) {
+        final decoded = json.decode(res.body);
+        if (mounted) {
+          setState(() {
+            personList = List<Map<String, dynamic>>.from(decoded['personInfo']);
+            isLoading = false;
+            selectedPerson = personList.isNotEmpty ? personList[0] : null;
+          });
+        }
+        await saveDataToPreferences();
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
       if (mounted) {
         setState(() {
-          personList = decoded['personInfo'];
-          isLoading = false;
-          selectedPerson = personList.isNotEmpty ? personList[0] : null;
-        });
-      }
-      await saveDataToPreferences();
-    } else {
-      if (mounted) {
-        setState(() {
           isLoading = false;
         });
       }
+      // print('Error fetching data: $e');
     }
   }
 
@@ -56,7 +61,7 @@ class _PersonPageState extends State<PersonPage> {
     final savedData = prefs.getString('personSave');
     if (savedData != null && mounted) {
       setState(() {
-        personList = json.decode(savedData);
+        personList = List<Map<String, dynamic>>.from(json.decode(savedData));
         selectedPerson = personList.isNotEmpty ? personList[0] : null;
         isLoading = false;
       });
@@ -71,11 +76,6 @@ class _PersonPageState extends State<PersonPage> {
       });
     }
     await getData();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -97,7 +97,7 @@ class _PersonPageState extends State<PersonPage> {
                   child: ListView.builder(
                     itemCount: personList.length,
                     itemBuilder: (context, index) {
-                      dynamic person = personList[index];
+                      final person = personList[index];
                       return GestureDetector(
                         onTap: () {
                           if (mounted) {
@@ -113,8 +113,8 @@ class _PersonPageState extends State<PersonPage> {
                               Padding(
                                 padding: const EdgeInsets.all(5),
                                 child: AutoSizeText(
+                                  person['personName'] ?? '',
                                   minFontSize: 5,
-                                  person['personName'],
                                   maxLines: 1,
                                 ),
                               ),
@@ -132,13 +132,13 @@ class _PersonPageState extends State<PersonPage> {
                 selectedPerson != null
                     ? Expanded(
                         child: PersonInfoPage(
-                          personImage: selectedPerson['personImage'],
-                          personName: selectedPerson['personName'],
-                          personBirth: selectedPerson['personBirth'],
-                          personDeath: selectedPerson['personDeath'],
-                          personBio: selectedPerson['personBio'],
-                          personBook: selectedPerson['personBook'],
-                          personWiki: selectedPerson['personWiki'],
+                          personImage: selectedPerson!['personImage'] ?? '',
+                          personName: selectedPerson!['personName'] ?? '',
+                          personBirth: selectedPerson!['personBirth'] ?? '',
+                          personDeath: selectedPerson!['personDeath'] ?? '',
+                          personBio: selectedPerson!['personBio'] ?? '',
+                          personBook: selectedPerson!['personBook'] ?? '',
+                          personWiki: selectedPerson!['personWiki'],
                         ),
                       )
                     : const Expanded(
@@ -195,8 +195,8 @@ class PersonInfoPage extends StatelessWidget {
             const SizedBox(height: 24),
             Center(
               child: AutoSizeText(
-                minFontSize: 20,
                 personName,
+                minFontSize: 20,
                 maxLines: 1,
                 style: const TextStyle(fontSize: 30),
               ),

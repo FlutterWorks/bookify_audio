@@ -3,7 +3,7 @@ import 'package:startapp_sdk/startapp.dart';
 import '../../../firebase/database.dart';
 import '../widgets/setting_field_button_widget.dart';
 import '../widgets/setting_field_widget.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
 class MissingStory extends StatefulWidget {
   const MissingStory({super.key});
@@ -47,13 +47,11 @@ class _MissingStoryState extends State<MissingStory> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'প্রিয় ব্যবহারকারী,আমাদের অ্যাপটি নতুন, তাই আপনার পছন্দের গল্পগুলো এখনো নাও থাকতে পারে। অনুগ্রহ করে আপনার প্রিয় গল্পগুলোর নাম জানিয়ে আমাদের সহযোগিতা করুন।',
-              style: GoogleFonts.acme(
-                textStyle: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                ),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
               ),
             ),
             const SizedBox(height: 15),
