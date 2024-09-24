@@ -67,4 +67,6 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation 'com.startapp:inapp-sdk:4.10.5'
+}

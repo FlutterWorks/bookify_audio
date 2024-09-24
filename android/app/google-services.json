@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1001101373726",
-    "project_id": "notify-4b1e0",
-    "storage_bucket": "notify-4b1e0.appspot.com"
+    "project_number": "600476798823",
+    "project_id": "backendui",
+    "storage_bucket": "backendui.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1001101373726:android:cd2fad557bdb0961d6990f",
+        "mobilesdk_app_id": "1:600476798823:android:061f7d98662426c58569c2",
         "android_client_info": {
           "package_name": "com.bookify.audio"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAfFwZ-YOONtQFaTUr7sXg00qFYSnm7KUc"
+          "current_key": "AIzaSyA4J9xm0r8_0VMMjEFk-XxikptEaJhhOXY"
         }
       ],
       "services": {

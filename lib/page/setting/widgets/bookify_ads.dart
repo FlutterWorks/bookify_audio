@@ -1,6 +1,8 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -21,6 +23,13 @@ class BookifyAdsState extends State<BookifyAds> {
   String? main2Name;
   bool isLoading = true;
 
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedData(); // Load data from SharedPreferences
+    fetchData();
+  }
+
   // Fetch data from API
   Future<void> fetchData() async {
     final apiUrl = widget.apiUrl;
@@ -36,8 +45,8 @@ class BookifyAdsState extends State<BookifyAds> {
           main2Name = data['main2Name'];
           isLoading = false;
         });
+        _saveData(); // Save the fetched data to SharedPreferences
       } else {
-        // Handle the error
         throw Exception('Failed to load data');
       }
     } catch (e) {
@@ -45,16 +54,29 @@ class BookifyAdsState extends State<BookifyAds> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
+  // Save data to SharedPreferences
+  Future<void> _saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('url', url ?? '');
+    prefs.setString('image', image ?? '');
+    prefs.setString('main1Name', main1Name ?? '');
+    prefs.setString('main2Name', main2Name ?? '');
+  }
+
+  // Load saved data from SharedPreferences
+  Future<void> _loadSavedData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      url = prefs.getString('url');
+      image = prefs.getString('image');
+      main1Name = prefs.getString('main1Name');
+      main2Name = prefs.getString('main2Name');
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // final bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-
     if (isLoading) {
       return const Center(
         child: SizedBox(),
@@ -86,12 +108,12 @@ class BookifyAdsState extends State<BookifyAds> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(width: 10),
-                    Image.network(
-                      image ?? '',
-                      height: 50,
-                      errorBuilder: (context, error, stackTrace) {
+                    CachedNetworkImage(
+                      imageUrl: image ?? '',
+                      errorWidget: (context, error, stackTrace) {
                         return const Icon(Icons.error);
                       },
+                      height: 50,
                     ),
                     const SizedBox(width: 15),
                     Column(

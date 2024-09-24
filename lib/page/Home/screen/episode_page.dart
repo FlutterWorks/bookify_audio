@@ -17,7 +17,7 @@ class _EpisodeListPageState extends State<EpisodeListPage> {
   StartAppBannerAd? bannerAds;
 
   loadBannerAds() {
-    startApp.setTestAdsEnabled(true);
+    //! startApp.setTestAdsEnabled(true);
     startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
       setState(() {
         bannerAds = value;

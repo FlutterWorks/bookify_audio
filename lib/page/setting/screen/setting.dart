@@ -1,6 +1,5 @@
 // ignore_for_file: deprecated_member_use
 
-// import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,13 +26,17 @@ class _SettingPageState extends State<SettingPage> {
   StartAppBannerAd? bannerAds;
 
   loadBannerAds() {
-    startApp.setTestAdsEnabled(true);
+  try {
     startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
       setState(() {
         bannerAds = value;
       });
     });
+  } catch (e) {
+    // print("Failed to load StartApp banner ad: $e");
   }
+}
+
 
   @override
   void initState() {
