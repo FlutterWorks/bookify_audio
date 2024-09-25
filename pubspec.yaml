@@ -2,12 +2,23 @@ name: test
 description: "Bookify Audio"
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
 dependencies:
 
+  assets_audio_player: ^3.1.1
+  auto_size_text: ^3.0.0
+  cached_network_image: ^3.3.1
+  carousel_slider: ^5.0.0
+  change_app_package_name: ^1.4.0
+  cloud_firestore: ^4.15.8
+  connectivity_plus: ^6.0.3
+  dio: ^5.7.0
+  feedback: ^3.1.0
+  firebase_analytics: ^10.8.9
+  firebase_core: ^2.27.0
   flutter:
     sdk: flutter
   flutter_email_sender: ^6.0.3
@@ -21,51 +32,9 @@ dependencies:
   quick_actions: ^1.0.7
   search_page: ^2.3.0
   shared_preferences: ^2.2.3
-  startapp_sdk: ^1.0.1
   url_launcher: ^6.3.0
-  youtube_explode_dart: ^2.2.1
-  assets_audio_player: ^3.1.1
-  auto_size_text: ^3.0.0
-  cached_network_image: ^3.3.1
-  carousel_slider: ^5.0.0
-  change_app_package_name: ^1.4.0
-  cloud_firestore: ^4.15.8
-  connectivity_plus: ^6.0.3
-  dio: ^5.7.0
-  feedback: ^3.1.0
-  firebase_analytics: ^10.8.9
-  firebase_core: ^2.27.0
-  onesignal_flutter: ^5.2.5
-  firebase_messaging: ^14.7.19
+  youtube_explode_dart: ^2.2.2
 
-
-  # icons_launcher: ^2.1.7
-  # shared_preferences: ^2.2.3
-  # url_launcher: ^6.3.0
-  # http: ^1.2.2
-  # carousel_slider: ^4.2.1
-  # auto_size_text: ^3.0.0
-  # search_page: ^2.3.0
-  # assets_audio_player: ^3.1.1
-  # firebase_core: ^3.3.0
-  # dio: ^5.7.0
-  # path_provider: ^2.1.4
-  # hexcolor: ^3.0.1
-  # youtube_explode_dart: ^2.2.1
-  # cached_network_image: ^3.3.1
-  # package_info_plus: ^8.0.2
-  # quick_actions: ^1.0.7
-  # provider: ^6.1.2
-  # flutter_markdown: ^0.7.3+1
-  # firebase_analytics: ^11.3.1
-  # flutter_email_sender: ^6.0.3
-  # feedback: ^3.1.0
-  # cloud_firestore: ^5.4.2
-  # google_fonts: ^6.2.1
-  # startapp_sdk: ^1.0.1
-  # home_widget: ^0.7.0
-  # connectivity_plus:
-  # flutter_animated_progress_bar: ^1.0.5
 
 dev_dependencies:
   flutter_test:

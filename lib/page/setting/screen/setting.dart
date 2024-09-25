@@ -1,9 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:startapp_sdk/startapp.dart';
 import 'package:test/page/setting/screen/app_information_page.dart';
 import 'package:test/page/setting/screen/change_log_page.dart';
 import 'package:test/page/setting/screen/missing_story.dart';
@@ -20,48 +18,25 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  bool connectionStatus = true;
-  final Connectivity _connectivity = Connectivity();
-  var startApp = StartAppSdk();
-  StartAppBannerAd? bannerAds;
+  // var startApp = StartAppSdk();
+  // StartAppBannerAd? bannerAds;
 
-  loadBannerAds() {
-  try {
-    startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
-      setState(() {
-        bannerAds = value;
-      });
-    });
-  } catch (e) {
-    // print("Failed to load StartApp banner ad: $e");
-  }
-}
-
+//   loadBannerAds() {
+//   try {
+//     startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
+//       setState(() {
+//         bannerAds = value;
+//       });
+//     });
+//   } catch (e) {
+//     // print("Failed to load StartApp banner ad: $e");
+//   }
+// }
 
   @override
   void initState() {
     super.initState();
-    _checkConnection();
-    loadBannerAds();
-  }
-
-  Future<void> _checkConnection() async {
-    try {
-      List<ConnectivityResult> results =
-          await _connectivity.checkConnectivity();
-      if (results.contains(ConnectivityResult.mobile) ||
-          results.contains(ConnectivityResult.wifi)) {
-        setState(() {
-          connectionStatus = true;
-        });
-      } else {
-        setState(() {
-          connectionStatus = false;
-        });
-      }
-    } catch (e) {
-      setState(() {});
-    }
+    // loadBannerAds();
   }
 
   @override
@@ -71,9 +46,9 @@ class _SettingPageState extends State<SettingPage> {
       appBar: AppBar(
         title: const Text("Setting"),
       ),
-      bottomNavigationBar: bannerAds != null
-          ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
-          : const SizedBox(),
+      // bottomNavigationBar: bannerAds != null
+      //     ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
+      //     : const SizedBox(),
       body: Column(
         children: [
           Card(
@@ -99,6 +74,10 @@ class _SettingPageState extends State<SettingPage> {
               title: const Text('App Information'),
               trailing: const Icon(Icons.info_rounded),
             ),
+          ),
+          const BookifyAds(
+            apiUrl:
+                'https://apon06.github.io/bookify_api/ads/setting_1.json',
           ),
           Card(
             child: ListTile(
@@ -142,12 +121,10 @@ class _SettingPageState extends State<SettingPage> {
               trailing: const Icon(Icons.privacy_tip),
             ),
           ),
-          connectionStatus
-              ? const BookifyAds(
-                  apiUrl:
-                      'https://apon06.github.io/bookify_api/ads/bookify_ads_1.json',
-                )
-              : const SizedBox(),
+          const BookifyAds(
+            apiUrl:
+                'https://apon06.github.io/bookify_api/ads/setting_2.json',
+          ),
 
           Card(
             child: ListTile(
@@ -176,6 +153,10 @@ class _SettingPageState extends State<SettingPage> {
               title: const Text('Missing Story'),
               trailing: const Icon(Icons.add),
             ),
+          ),
+          const BookifyAds(
+            apiUrl:
+                'https://apon06.github.io/bookify_api/ads/setting_3.json',
           ),
         ],
       ),

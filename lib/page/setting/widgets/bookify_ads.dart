@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
 import 'package:url_launcher/url_launcher.dart';
@@ -22,12 +23,15 @@ class BookifyAdsState extends State<BookifyAds> {
   String? main1Name;
   String? main2Name;
   bool isLoading = true;
+  bool connectionStatus = true;
+  final Connectivity _connectivity = Connectivity();
 
   @override
   void initState() {
     super.initState();
     _loadSavedData(); // Load data from SharedPreferences
     fetchData();
+    _checkConnection();
   }
 
   // Fetch data from API
@@ -75,6 +79,25 @@ class BookifyAdsState extends State<BookifyAds> {
     });
   }
 
+  Future<void> _checkConnection() async {
+    try {
+      List<ConnectivityResult> results =
+          await _connectivity.checkConnectivity();
+      if (results.contains(ConnectivityResult.mobile) ||
+          results.contains(ConnectivityResult.wifi)) {
+        setState(() {
+          connectionStatus = true;
+        });
+      } else {
+        setState(() {
+          connectionStatus = false;
+        });
+      }
+    } catch (e) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
@@ -83,77 +106,79 @@ class BookifyAdsState extends State<BookifyAds> {
       );
     }
 
-    return GestureDetector(
-      onTap: () async {
-        if (url != null) {
-          final Uri playStoreAppUrl = Uri.parse(url!);
-          final Uri webUrl = Uri.parse(url!);
+    return connectionStatus
+        ? GestureDetector(
+            onTap: () async {
+              if (url != null) {
+                final Uri playStoreAppUrl = Uri.parse(url!);
+                final Uri webUrl = Uri.parse(url!);
 
-          if (await canLaunch(playStoreAppUrl.toString())) {
-            await launch(playStoreAppUrl.toString());
-          } else {
-            await launch(webUrl.toString());
-          }
-        }
-      },
-      child: Card(
-        child: SizedBox(
-          height: 60,
-          width: MediaQuery.of(context).size.width,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 10),
-                    CachedNetworkImage(
-                      imageUrl: image ?? '',
-                      errorWidget: (context, error, stackTrace) {
-                        return const Icon(Icons.error);
-                      },
-                      height: 50,
-                    ),
-                    const SizedBox(width: 15),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          main1Name ?? '',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                if (await canLaunch(playStoreAppUrl.toString())) {
+                  await launch(playStoreAppUrl.toString());
+                } else {
+                  await launch(webUrl.toString());
+                }
+              }
+            },
+            child: Card(
+              child: SizedBox(
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(width: 10),
+                          CachedNetworkImage(
+                            imageUrl: image ?? '',
+                            errorWidget: (context, error, stackTrace) {
+                              return const Icon(Icons.error);
+                            },
+                            height: 50,
                           ),
-                        ),
-                        Text(
-                          main2Name ?? '',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.normal,
+                          const SizedBox(width: 15),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                main1Name ?? '',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                main2Name ?? '',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Container(
-                      height: 40,
-                      width: 70,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(25),
+                          const Spacer(),
+                          Container(
+                            height: 40,
+                            width: 70,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: const Center(
+                              child: Text("Install"),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                        ],
                       ),
-                      child: const Center(
-                        child: Text("Install"),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                  ],
+                    ],
+                  ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          )
+        : const SizedBox();
   }
 }

@@ -245,8 +245,6 @@ class StartPageState extends State<StartPage> {
           "page_index": index,
           "page_name": _titles[index],
         });
-
-        // Then update the state
         setState(() {
           currentIndex = index;
           HapticFeedback.lightImpact();

@@ -1,6 +1,6 @@
 {
-    "name": "test",
-    "short_name": "test",
+    "name": "bookify_audio",
+    "short_name": "bookify_audio",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

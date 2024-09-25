@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:startapp_sdk/startapp.dart';
+import 'package:test/page/setting/widgets/bookify_ads.dart';
+// import 'package:startapp_sdk/startapp.dart';
 import '../../../firebase/database.dart';
 import '../widgets/setting_field_button_widget.dart';
 import '../widgets/setting_field_widget.dart';
@@ -14,23 +15,23 @@ class MissingStory extends StatefulWidget {
 
 class _MissingStoryState extends State<MissingStory> {
   final TextEditingController bookAdd = TextEditingController();
-  var startApp = StartAppSdk();
-  StartAppBannerAd? bannerAds;
+  // var startApp = StartAppSdk();
+  // StartAppBannerAd? bannerAds;
 
-  loadBannerAds() {
-    //! startApp.setTestAdsEnabled(true);
-    startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
-      setState(() {
-        bannerAds = value;
-      });
-    });
-  }
+  // loadBannerAds() {
+  //   //! startApp.setTestAdsEnabled(true);
+  //   startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
+  //     setState(() {
+  //       bannerAds = value;
+  //     });
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
     // _checkConnection();
-    loadBannerAds();
+    // loadBannerAds();
   }
 
   @override
@@ -39,9 +40,13 @@ class _MissingStoryState extends State<MissingStory> {
       appBar: AppBar(
         title: const Text("Missing Story"),
       ),
-      bottomNavigationBar: bannerAds != null
-          ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
-          : const SizedBox(),
+      // bottomNavigationBar: bannerAds != null
+      //     ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
+      //     : const SizedBox(),
+      bottomNavigationBar:   const BookifyAds(
+            apiUrl:
+                'https://apon06.github.io/bookify_api/ads/missing.json',
+          ),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -70,6 +75,7 @@ class _MissingStoryState extends State<MissingStory> {
                     .addQuizCategory(addQuiz, 'Missing')
                     .then(
                   (value) {
+                    // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Upload Complate'),

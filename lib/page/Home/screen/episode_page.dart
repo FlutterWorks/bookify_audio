@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:startapp_sdk/startapp.dart';
+// import 'package:startapp_sdk/startapp.dart';
 import 'package:test/page/Home/screen/audio_player_page.dart';
+
+import '../../setting/widgets/bookify_ads.dart';
 
 class EpisodeListPage extends StatefulWidget {
   final dynamic audiobook;
@@ -13,30 +15,34 @@ class EpisodeListPage extends StatefulWidget {
 }
 
 class _EpisodeListPageState extends State<EpisodeListPage> {
-  var startApp = StartAppSdk();
-  StartAppBannerAd? bannerAds;
+  // var startApp = StartAppSdk();
 
-  loadBannerAds() {
-    //! startApp.setTestAdsEnabled(true);
-    startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
-      setState(() {
-        bannerAds = value;
-      });
-    });
-  }
+  // StartAppBannerAd? bannerAds;
+
+  // loadBannerAds() {
+  //   //! startApp.setTestAdsEnabled(true);
+  //   startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
+  //     setState(() {
+  //       bannerAds = value;
+  //     });
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
-    loadBannerAds();
+    // loadBannerAds();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: bannerAds != null
-          ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
-          : const SizedBox(),
+      // bottomNavigationBar: bannerAds != null
+      //     ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
+      //     : const SizedBox(),
+      bottomNavigationBar: const BookifyAds(
+        apiUrl: 'https://apon06.github.io/bookify_api/ads/episode.json',
+      ),
       appBar: AppBar(
         title: Text(
           widget.audiobook['bookName'],

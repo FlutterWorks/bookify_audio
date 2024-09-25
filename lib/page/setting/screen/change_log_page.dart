@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:startapp_sdk/startapp.dart';
+
+import '../widgets/bookify_ads.dart';
+// import 'package:startapp_sdk/startapp.dart';
 
 class ChangeLogPage extends StatefulWidget {
   const ChangeLogPage({super.key});
@@ -13,22 +15,22 @@ class ChangeLogPage extends StatefulWidget {
 class ChangeLogPageState extends State<ChangeLogPage> {
   String markdownData = '';
 
-  var startApp = StartAppSdk();
-  StartAppBannerAd? bannerAds;
+  // var startApp = StartAppSdk();
+  // StartAppBannerAd? bannerAds;
 
-  loadBannerAds() {
-    //! startApp.setTestAdsEnabled(true);
-    startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
-      setState(() {
-        bannerAds = value;
-      });
-    });
-  }
+  // loadBannerAds() {
+  //   //! startApp.setTestAdsEnabled(true);
+  //   startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
+  //     setState(() {
+  //       bannerAds = value;
+  //     });
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
-    loadBannerAds();
+    // loadBannerAds();
     loadMarkdown();
   }
 
@@ -45,9 +47,12 @@ class ChangeLogPageState extends State<ChangeLogPage> {
       appBar: AppBar(
         title: const Text('Chanage History'),
       ),
-      bottomNavigationBar: bannerAds != null
-          ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
-          : const SizedBox(),
+      // bottomNavigationBar: bannerAds != null
+      //     ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
+      //     : const SizedBox(),
+      bottomNavigationBar: const BookifyAds(
+        apiUrl: 'https://apon06.github.io/bookify_api/ads/changelog.json',
+      ),
       body: Markdown(
         data: markdownData,
       ),

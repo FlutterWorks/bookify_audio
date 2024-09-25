@@ -3,10 +3,12 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:startapp_sdk/startapp.dart';
+// import 'package:startapp_sdk/startapp.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../setting/widgets/bookify_ads.dart';
 
 double currentSliderValue = 0;
 
@@ -40,17 +42,17 @@ class AudioPlayerScreenState extends State<AudioPlayerScreen>
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
   late SharedPreferences _prefs;
-  var startApp = StartAppSdk();
-  StartAppBannerAd? bannerAds;
+  // var startApp = StartAppSdk();
+  // StartAppBannerAd? bannerAds;
 
-  loadBannerAds() {
-    //! startApp.setTestAdsEnabled(true);
-    startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
-      setState(() {
-        bannerAds = value;
-      });
-    });
-  }
+  // loadBannerAds() {
+  //   //! startApp.setTestAdsEnabled(true);
+  //   startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
+  //     setState(() {
+  //       bannerAds = value;
+  //     });
+  //   });
+  // }
 
   @override
   void initState() {
@@ -58,7 +60,7 @@ class AudioPlayerScreenState extends State<AudioPlayerScreen>
     WidgetsBinding.instance.addObserver(this);
     _audioPlayer = AssetsAudioPlayer();
     _initializePlayer();
-    loadBannerAds();
+    // loadBannerAds();
   }
 
   Future<void> _initializePlayer() async {
@@ -161,9 +163,12 @@ class AudioPlayerScreenState extends State<AudioPlayerScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.bookName)),
-      bottomNavigationBar: bannerAds != null
-          ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
-          : const SizedBox(),
+      // bottomNavigationBar: bannerAds != null
+      //     ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
+      //     : const SizedBox(),
+      bottomNavigationBar: const BookifyAds(
+        apiUrl: 'https://apon06.github.io/bookify_api/ads/audio_player_ads.json',
+      ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : Padding(
