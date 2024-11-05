@@ -21,7 +21,7 @@ class _WriterUtilsState extends State<WriterUtils> {
   Future<void> getData() async {
     try {
       final res = await http.get(
-        Uri.parse('https://apon06.github.io/bookify_api/writer.json'),
+        Uri.parse('https://gokeihub.github.io/bookify_api/writer.json'),
       );
       if (res.statusCode == 200) {
         final decoded = json.decode(res.body);

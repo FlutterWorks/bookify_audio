@@ -167,7 +167,7 @@ class AudioPlayerScreenState extends State<AudioPlayerScreen>
       //     ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
       //     : const SizedBox(),
       bottomNavigationBar: const BookifyAds(
-        apiUrl: 'https://apon06.github.io/bookify_api/ads/audio_player_ads.json',
+        apiUrl: 'https://gokeihub.github.io/bookify_api/ads/audio_player_ads.json',
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())

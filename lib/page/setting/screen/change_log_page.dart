@@ -51,7 +51,7 @@ class ChangeLogPageState extends State<ChangeLogPage> {
       //     ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
       //     : const SizedBox(),
       bottomNavigationBar: const BookifyAds(
-        apiUrl: 'https://apon06.github.io/bookify_api/ads/changelog.json',
+        apiUrl: 'https://gokeihub.github.io/bookify_api/ads/changelog.json',
       ),
       body: Markdown(
         data: markdownData,

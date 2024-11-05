@@ -41,7 +41,7 @@ class _EpisodeListPageState extends State<EpisodeListPage> {
       //     ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
       //     : const SizedBox(),
       bottomNavigationBar: const BookifyAds(
-        apiUrl: 'https://apon06.github.io/bookify_api/ads/episode.json',
+        apiUrl: 'https://gokeihub.github.io/bookify_api/ads/episode.json',
       ),
       appBar: AppBar(
         title: Text(

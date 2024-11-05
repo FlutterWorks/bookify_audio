@@ -26,7 +26,7 @@ class _PersonPageState extends State<PersonPage> {
   Future<void> getData() async {
     try {
       final res = await http.get(
-        Uri.parse('https://apon06.github.io/bookify_api/person_api.json'),
+        Uri.parse('https://gokeihub.github.io/bookify_api/person_api.json'),
       );
       if (res.statusCode == 200) {
         final decoded = json.decode(res.body);

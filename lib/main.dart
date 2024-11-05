@@ -1,12 +1,8 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:feedback/feedback.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:test/firebase_options.dart';
 import 'package:test/page/Home/screen/home_page.dart';
 import 'package:test/page/person/screen/person_page.dart';
 import 'package:test/page/setting/screen/setting.dart';
@@ -16,9 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:http/http.dart' as http;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+void main() {
   runApp(
     MultiProvider(
       providers: [
@@ -35,21 +29,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    return BetterFeedback(
-      child: MaterialApp(
-        theme: ThemeData(
-          brightness: Brightness.light,
-          primaryColor: Colors.blueAccent,
-          iconTheme: const IconThemeData(color: Colors.black54),
-        ),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: Colors.blueAccent,
-          iconTheme: const IconThemeData(color: Colors.white70),
-        ),
-        themeMode: themeProvider.themeMode,
-        home: const SplashScreenPage(),
+    return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.blueAccent,
+        iconTheme: const IconThemeData(color: Colors.black54),
       ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.blueAccent,
+        iconTheme: const IconThemeData(color: Colors.white70),
+      ),
+      themeMode: themeProvider.themeMode,
+      home: const SplashScreenPage(),
     );
   }
 }
@@ -122,19 +114,17 @@ class StartPage extends StatefulWidget {
 
 class StartPageState extends State<StartPage> {
   int currentIndex = 0;
-  final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   @override
   void initState() {
     super.initState();
     checkForUpdate();
-    analytics.setAnalyticsCollectionEnabled(true);
   }
 
   Future<void> checkForUpdate() async {
     try {
       final response = await http.get(
-          Uri.parse('https://apon06.github.io/bookify_api/app_update.json'));
+          Uri.parse('https://gokeihub.github.io/bookify_api/app_update.json'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -239,12 +229,7 @@ class StartPageState extends State<StartPage> {
 
   Widget buildNavItem(int index, double displayWidth, ThemeData theme) {
     return GestureDetector(
-      onTap: () async {
-        // Perform the async operation first
-        await analytics.logEvent(name: "Page_track", parameters: {
-          "page_index": index,
-          "page_name": _titles[index],
-        });
+      onTap: () {
         setState(() {
           currentIndex = index;
           HapticFeedback.lightImpact();

@@ -36,7 +36,7 @@ class SliderImageUtilsState extends State<SliderImageUtils> {
 
   Future<void> _fetchImages() async {
     final response = await http
-        .get(Uri.parse('https://apon06.github.io/bookify_api/slider_api.json'));
+        .get(Uri.parse('https://gokeihub.github.io/bookify_api/slider_api.json'));
     if (response.statusCode == 200) {
       setState(() {
         _imageList = json.decode(response.body);

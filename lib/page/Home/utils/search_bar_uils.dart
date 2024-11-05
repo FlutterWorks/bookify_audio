@@ -27,7 +27,7 @@ class _SearchBarUilsState extends State<SearchBarUils> {
   Future<void> getData() async {
     try {
       final res = await http.get(
-        Uri.parse('https://apon06.github.io/bookify_api/search_bar.json'),
+        Uri.parse('https://gokeihub.github.io/bookify_api/search_bar.json'),
       );
       if (res.statusCode == 200) {
         final decoded = json.decode(res.body);

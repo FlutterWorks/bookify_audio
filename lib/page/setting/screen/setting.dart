@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:test/page/setting/screen/about_bookify.dart';
 import 'package:test/page/setting/screen/app_information_page.dart';
 import 'package:test/page/setting/screen/change_log_page.dart';
-import 'package:test/page/setting/screen/missing_story.dart';
+// import 'package:test/page/setting/screen/missing_story.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../../provider/theme_provider.dart';
 import '../widgets/bookify_ads.dart';
 
@@ -78,7 +78,8 @@ class _SettingPageState extends State<SettingPage> {
               ),
             ),
             const BookifyAds(
-              apiUrl: 'https://apon06.github.io/bookify_api/ads/setting_1.json',
+              apiUrl:
+                  'https://gokeihub.github.io/bookify_api/ads/setting_1.json',
             ),
             Card(
               child: ListTile(
@@ -93,19 +94,19 @@ class _SettingPageState extends State<SettingPage> {
                 trailing: const Icon(Icons.history),
               ),
             ),
-            // Card(
-            //   child: ListTile(
-            //     onTap: () {
-            //       Navigator.of(context).push(
-            //         MaterialPageRoute(
-            //           builder: (b) => const AboutBookify(),
-            //         ),
-            //       );
-            //     },
-            //     title: const Text('About Bookify'),
-            //     trailing: const Icon(Icons.info_rounded),
-            //   ),
-            // ),
+            Card(
+              child: ListTile(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (b) => const AboutBookify(),
+                    ),
+                  );
+                },
+                title: const Text('About Bookify'),
+                trailing: const Icon(Icons.info_rounded),
+              ),
+            ),
             Card(
               child: ListTile(
                 onTap: () async {
@@ -123,7 +124,8 @@ class _SettingPageState extends State<SettingPage> {
               ),
             ),
             const BookifyAds(
-              apiUrl: 'https://apon06.github.io/bookify_api/ads/setting_2.json',
+              apiUrl:
+                  'https://gokeihub.github.io/bookify_api/ads/setting_2.json',
             ),
 
             Card(
@@ -141,28 +143,26 @@ class _SettingPageState extends State<SettingPage> {
                 trailing: const Icon(Icons.telegram),
               ),
             ),
-            Card(
-              child: ListTile(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (b) => const MissingStory(),
-                    ),
-                  );
-                },
-                title: const Text('Missing Story'),
-                trailing: const Icon(Icons.add),
-              ),
-            ),
-            const BookifyAds(
-              apiUrl: 'https://apon06.github.io/bookify_api/ads/setting_3.json',
-            ),
+            // Card(
+            //   child: ListTile(
+            //     onTap: () {
+            //       Navigator.of(context).push(
+            //         MaterialPageRoute(
+            //           builder: (b) => const MissingStory(),
+            //         ),
+            //       );
+            //     },
+            //     title: const Text('Missing Story'),
+            //     trailing: const Icon(Icons.add),
+            //   ),
+            // ),
+
             Card(
               child: ListTile(
                 onTap: () async {
-                  String privacyUrl =
+                  String termCondition =
                       'https://sites.google.com/view/bookify-term/home';
-                  final Uri url = Uri.parse(privacyUrl);
+                  final Uri url = Uri.parse(termCondition);
                   if (await canLaunch(url.toString())) {
                     await launch(url.toString());
                   } else {
@@ -173,11 +173,15 @@ class _SettingPageState extends State<SettingPage> {
                 trailing: const Icon(Icons.assignment),
               ),
             ),
+            const BookifyAds(
+              apiUrl:
+                  'https://gokeihub.github.io/bookify_api/ads/setting_3.json',
+            ),
             Card(
               child: ListTile(
                 onTap: () async {
-                  String privacyUrl = 'https://github.com/apon06';
-                  final Uri url = Uri.parse(privacyUrl);
+                  String githubUrl = 'https://github.com/gokeihub';
+                  final Uri url = Uri.parse(githubUrl);
                   if (await canLaunch(url.toString())) {
                     await launch(url.toString());
                   } else {
@@ -186,6 +190,22 @@ class _SettingPageState extends State<SettingPage> {
                 },
                 title: const Text('Github'),
                 trailing: const Icon(FontAwesomeIcons.github),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                onTap: () async {
+                  String issuesUrl =
+                      'https://github.com/gokeihub/bookify_audio/issues';
+                  final Uri url = Uri.parse(issuesUrl);
+                  if (await canLaunch(url.toString())) {
+                    await launch(url.toString());
+                  } else {
+                    await launch(url.toString());
+                  }
+                },
+                title: const Text('Any Issues'),
+                trailing: const Icon(Icons.error),
               ),
             ),
           ],

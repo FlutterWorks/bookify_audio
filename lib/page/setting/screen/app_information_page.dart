@@ -57,7 +57,7 @@ class _AppInformationPageState extends State<AppInformationPage> {
       //     ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
       //     : const SizedBox(),
       bottomNavigationBar: const BookifyAds(
-        apiUrl: 'https://apon06.github.io/bookify_api/ads/bookify_ads_1.json',
+        apiUrl: 'https://gokeihub.github.io/bookify_api/ads/bookify_ads_1.json',
       ),
       body: Column(
         children: [
@@ -75,7 +75,7 @@ class _AppInformationPageState extends State<AppInformationPage> {
           ),
           const BookifyAds(
             apiUrl:
-                'https://apon06.github.io/bookify_api/ads/app_info.json',
+                'https://gokeihub.github.io/bookify_api/ads/app_info.json',
           ),
           Card(
             child: ListTile(

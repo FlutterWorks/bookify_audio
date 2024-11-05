@@ -1,5 +1,5 @@
 # Add GitHub remote
-```git remote add github https://github.com/apon06/bookify_audio```
+```git remote add github https://github.com/gokeihub/bookify_audio```
 
 # Add GitLab remote
 ```git remote add gitlab https://gitlab.com/book2611932/bookify_audio```
@@ -12,7 +12,7 @@
 ```git push -u gitlab main```
 
 
-```git remote set-url --add --push origin https://github.com/apon06/bookify_audio```
+```git remote set-url --add --push origin https://github.com/gokeihub/bookify_audio```
 ```git remote set-url --add --push origin https://gitlab.com/book2611932/bookify_audio```
 
 

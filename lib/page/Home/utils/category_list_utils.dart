@@ -18,7 +18,7 @@ class _CategoryListUtilsState extends State<CategoryListUtils> {
 
   Future<void> getData() async {
     final res = await http.get(
-      Uri.parse('https://apon06.github.io/bookify_api/category.json'),
+      Uri.parse('https://gokeihub.github.io/bookify_api/category.json'),
     );
     if (res.statusCode == 200) {
       final decoded = json.decode(res.body);

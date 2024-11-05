@@ -101,7 +101,7 @@ class _WriterDetailsPageSeeMoreState extends State<WriterDetailsPageSeeMore> {
       //     ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
       //     : const SizedBox(),
       bottomNavigationBar: const BookifyAds(
-        apiUrl: 'https://apon06.github.io/bookify_api/ads/writer_details.json',
+        apiUrl: 'https://gokeihub.github.io/bookify_api/ads/writer_details.json',
       ),
       body: Column(
         children: [

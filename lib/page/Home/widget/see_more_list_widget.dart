@@ -98,7 +98,7 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
       //     ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
       //     : const SizedBox(),
       bottomNavigationBar: const BookifyAds(
-        apiUrl: 'https://apon06.github.io/bookify_api/ads/see_more.json',
+        apiUrl: 'https://gokeihub.github.io/bookify_api/ads/see_more.json',
       ),
       body: ListView.builder(
         itemCount: data.length,

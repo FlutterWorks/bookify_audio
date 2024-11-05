@@ -110,7 +110,7 @@
 //             CategoryListUtils(),
 //             HomePageListWidget(
 //               api:
-//                   "https://apon06.github.io/bookify_api/writer/rabindranath_thakur.json",
+//                   "https://gokeihub.github.io/bookify_api/writer/rabindranath_thakur.json",
 //               bookImage: "bookImage",
 //               bookCreatorName: 'bookCreatorName',
 //               bookName: "bookName",
@@ -118,7 +118,7 @@
 //             ),
 //             HomePageListWidget(
 //               api:
-//                   "https://apon06.github.io/bookify_api/writer/sarat_chandra_chattopadhyay.json",
+//                   "https://gokeihub.github.io/bookify_api/writer/sarat_chandra_chattopadhyay.json",
 //               bookImage: "bookImage",
 //               bookCreatorName: 'bookCreatorName',
 //               bookName: "bookName",
@@ -126,7 +126,7 @@
 //             ),
 //             HomePageListWidget(
 //               api:
-//                   "https://apon06.github.io/bookify_api/writer/kazi_nazrul_islam.json",
+//                   "https://gokeihub.github.io/bookify_api/writer/kazi_nazrul_islam.json",
 //               bookImage: "bookImage",
 //               bookCreatorName: 'bookCreatorName',
 //               bookName: "bookName",
@@ -135,7 +135,7 @@
 //             WriterUtils(),
 //             HomePageListWidget(
 //               api:
-//                   "https://apon06.github.io/bookify_api/writer/humayun_ahmed.json",
+//                   "https://gokeihub.github.io/bookify_api/writer/humayun_ahmed.json",
 //               bookImage: "bookImage",
 //               bookCreatorName: 'bookCreatorName',
 //               bookName: "bookName",
@@ -143,7 +143,7 @@
 //             ),
 //             HomePageListWidget(
 //               api:
-//                   "https://apon06.github.io/bookify_api/writer/vibhutibhushan_banerjee.json",
+//                   "https://gokeihub.github.io/bookify_api/writer/vibhutibhushan_banerjee.json",
 //               bookImage: "bookImage",
 //               bookCreatorName: 'bookCreatorName',
 //               bookName: "bookName",
@@ -151,7 +151,7 @@
 //             ),
 //             HomePageListWidget(
 //               api:
-//                   "https://apon06.github.io/bookify_api/writer/tara_shankar_banerjee.json",
+//                   "https://gokeihub.github.io/bookify_api/writer/tara_shankar_banerjee.json",
 //               bookImage: "bookImage",
 //               bookCreatorName: 'bookCreatorName',
 //               bookName: "bookName",
@@ -190,7 +190,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> getData() async {
     final res = await http.get(
-      Uri.parse('https://apon06.github.io/bookify_api/homepage_api.json'),
+      Uri.parse('https://gokeihub.github.io/bookify_api/homepage_api.json'),
     );
     if (res.statusCode == 200) {
       final decoded = json.decode(res.body);
@@ -258,7 +258,7 @@ class _HomePageState extends State<HomePage> {
                     const CategoryListUtils(),
                     const HomePageListWidget(
                       api:
-                          "https://apon06.github.io/bookify_api/writer/rabindranath_thakur.json",
+                          "https://gokeihub.github.io/bookify_api/writer/rabindranath_thakur.json",
                       bookImage: "bookImage",
                       bookCreatorName: 'bookCreatorName',
                       bookName: "bookName",
@@ -266,7 +266,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const HomePageListWidget(
                       api:
-                          "https://apon06.github.io/bookify_api/writer/sarat_chandra_chattopadhyay.json",
+                          "https://gokeihub.github.io/bookify_api/writer/sarat_chandra_chattopadhyay.json",
                       bookImage: "bookImage",
                       bookCreatorName: 'bookCreatorName',
                       bookName: "bookName",
@@ -274,7 +274,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const HomePageListWidget(
                       api:
-                          "https://apon06.github.io/bookify_api/writer/kazi_nazrul_islam.json",
+                          "https://gokeihub.github.io/bookify_api/writer/kazi_nazrul_islam.json",
                       bookImage: "bookImage",
                       bookCreatorName: 'bookCreatorName',
                       bookName: "bookName",
@@ -298,7 +298,7 @@ class _HomePageState extends State<HomePage> {
 
                         //  return HomePageListWidget(
                         //   api:
-                        //       "https://apon06.github.io/bookify_api/writer/vibhutibhushan_banerjee.json",
+                        //       "https://gokeihub.github.io/bookify_api/writer/vibhutibhushan_banerjee.json",
                         //   bookImage: "bookImage",
                         //   bookCreatorName: 'bookCreatorName',
                         //   bookName: "bookName",

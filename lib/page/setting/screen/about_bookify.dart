@@ -59,8 +59,8 @@ class AboutBookify extends StatelessWidget {
                   children: [
                     Text("Md Apon Ahmed"),
                     TextButtonWidget(
-                      text: "apon06",
-                      url: 'https://github.com/apon06',
+                      text: "gokeihub",
+                      url: 'https://github.com/gokeihub',
                     ),
                   ],
                 ),
@@ -76,21 +76,21 @@ class AboutBookify extends StatelessWidget {
                       ),
                       TextButtonWidget(
                         text: "Source Code (Github)",
-                        url: 'https://github.com/apon06/bookify_audio',
+                        url: 'https://github.com/gokeihub/bookify_audio',
                       ),
                        TextButtonWidget(
                         text: "Bookify Audio Api",
-                        url: 'https://github.com/apon06/bookify_api',
+                        url: 'https://github.com/gokeihub/bookify_api',
                       ),
                       TextButtonWidget(
                         text: "License",
                         url:
-                            'https://github.com/apon06/bookify_audio/blob/main/LICENSE',
+                            'https://github.com/gokeihub/bookify_audio/blob/main/LICENSE',
                       ),
                       TextButtonWidget(
                         text: "CHANGELOG",
                         url:
-                            'https://github.com/apon06/bookify_audio/blob/main/CHANGELOG.md',
+                            'https://github.com/gokeihub/bookify_audio/blob/main/CHANGELOG.md',
                       ),
                     ],
                   ),
