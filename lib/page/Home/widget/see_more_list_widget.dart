@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:startapp_sdk/startapp.dart';
-import 'package:test/page/Home/screen/episode_page.dart';
-
 import '../../setting/widgets/bookify_ads.dart';
+import '../screen/episode_page.dart';
 
 class SeeMoreListWidget extends StatefulWidget {
   final String api;
@@ -30,18 +28,6 @@ class SeeMoreListWidget extends StatefulWidget {
 class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
   List<dynamic> data = [];
   String bookType = '';
-
-  // var startApp = StartAppSdk();
-  // StartAppBannerAd? bannerAds;
-
-  // loadBannerAds() {
-  //   //! startApp.setTestAdsEnabled(true);
-  //   startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
-  //     setState(() {
-  //       bannerAds = value;
-  //     });
-  //   });
-  // }
 
   Future<void> loadData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -94,9 +80,6 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
-      // bottomNavigationBar: bannerAds != null
-      //     ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
-      //     : const SizedBox(),
       bottomNavigationBar: const BookifyAds(
         apiUrl: 'https://gokeihub.github.io/bookify_api/ads/see_more.json',
       ),

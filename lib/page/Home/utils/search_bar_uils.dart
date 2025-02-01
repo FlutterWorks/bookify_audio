@@ -4,7 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:search_page/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test/page/Home/screen/episode_page.dart';
+
+import '../screen/episode_page.dart';
 
 class SearchBarUils extends StatefulWidget {
   const SearchBarUils({super.key});

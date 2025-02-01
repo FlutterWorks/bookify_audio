@@ -17,7 +17,6 @@ class BookifyAds extends StatefulWidget {
 }
 
 class BookifyAdsState extends State<BookifyAds> {
-  // Variables to hold API data
   String? url;
   String? image;
   String? main1Name;

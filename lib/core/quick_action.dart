@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quick_actions/quick_actions.dart';
-import 'package:test/page/Home/screen/home_page.dart';
-import 'package:test/page/person/screen/person_page.dart';
-
+import '../page/Home/screen/home_page.dart';
+import '../page/person/screen/person_page.dart';
 import '../page/setting/screen/setting.dart';
 
 const QuickActions quickActions = QuickActions();

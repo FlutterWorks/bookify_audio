@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test/page/Home/screen/writer_details_page_see_more.dart';
+
+import 'writer_details_page_see_more.dart';
 
 class WriterDetailsPage extends StatelessWidget {
   final String api;

@@ -47,7 +47,6 @@ class _PersonPageState extends State<PersonPage> {
           isLoading = false;
         });
       }
-      // print('Error fetching data: $e');
     }
   }
 

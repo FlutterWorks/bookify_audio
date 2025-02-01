@@ -3,14 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:test/page/Home/screen/home_page.dart';
-import 'package:test/page/person/screen/person_page.dart';
-import 'package:test/page/setting/screen/setting.dart';
-import 'package:test/provider/theme_provider.dart';
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:http/http.dart' as http;
+import 'page/Home/screen/home_page.dart';
+import 'page/person/screen/person_page.dart';
+import 'page/setting/screen/setting.dart';
+import 'provider/theme_provider.dart';
 
 void main() {
   runApp(

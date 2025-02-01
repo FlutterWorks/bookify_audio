@@ -4,8 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test/page/Home/screen/episode_page.dart';
-import 'package:test/page/Home/screen/see_more.dart';
+
+import '../screen/episode_page.dart';
+import '../screen/see_more.dart';
 
 class HomePageListWidget extends StatefulWidget {
   final String api;

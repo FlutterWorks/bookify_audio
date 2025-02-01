@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test/page/Home/screen/see_more.dart';
-import 'package:test/page/Home/widget/category_button_widget.dart';
+
+import '../screen/see_more.dart';
+import '../widget/category_button_widget.dart';
 
 class CategoryListUtils extends StatefulWidget {
   const CategoryListUtils({super.key});

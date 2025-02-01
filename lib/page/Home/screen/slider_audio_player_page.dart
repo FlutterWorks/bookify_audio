@@ -1,4 +1,4 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:assets_audio_player_plus/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -27,7 +27,7 @@ class SliderAudioPlayerScreen extends StatefulWidget {
 
 class SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
     with WidgetsBindingObserver {
-  late AssetsAudioPlayer _audioPlayer;
+  late AssetsAudioPlayerPlus _audioPlayer;
   bool _isPlaying = false;
   bool _isLoading = true;
   double _currentSliderValue = 0;
@@ -40,7 +40,7 @@ class SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _audioPlayer = AssetsAudioPlayer();
+    _audioPlayer = AssetsAudioPlayerPlus();
     _initializePlayer();
   }
 

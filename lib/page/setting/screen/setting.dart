@@ -3,13 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:test/page/setting/screen/about_bookify.dart';
-import 'package:test/page/setting/screen/app_information_page.dart';
-import 'package:test/page/setting/screen/change_log_page.dart';
-// import 'package:test/page/setting/screen/missing_story.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../provider/theme_provider.dart';
 import '../widgets/bookify_ads.dart';
+import 'about_bookify.dart';
+import 'app_information_page.dart';
+import 'change_log_page.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -19,25 +18,9 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  // var startApp = StartAppSdk();
-  // StartAppBannerAd? bannerAds;
-
-//   loadBannerAds() {
-//   try {
-//     startApp.loadBannerAd(StartAppBannerType.BANNER).then((value) {
-//       setState(() {
-//         bannerAds = value;
-//       });
-//     });
-//   } catch (e) {
-//     // print("Failed to load StartApp banner ad: $e");
-//   }
-// }
-
   @override
   void initState() {
     super.initState();
-    // loadBannerAds();
   }
 
   @override
@@ -47,9 +30,6 @@ class _SettingPageState extends State<SettingPage> {
       appBar: AppBar(
         title: const Text("Setting"),
       ),
-      // bottomNavigationBar: bannerAds != null
-      //     ? SizedBox(height: 60, child: StartAppBanner(bannerAds!))
-      //     : const SizedBox(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -143,20 +123,6 @@ class _SettingPageState extends State<SettingPage> {
                 trailing: const Icon(Icons.telegram),
               ),
             ),
-            // Card(
-            //   child: ListTile(
-            //     onTap: () {
-            //       Navigator.of(context).push(
-            //         MaterialPageRoute(
-            //           builder: (b) => const MissingStory(),
-            //         ),
-            //       );
-            //     },
-            //     title: const Text('Missing Story'),
-            //     trailing: const Icon(Icons.add),
-            //   ),
-            // ),
-
             Card(
               child: ListTile(
                 onTap: () async {
