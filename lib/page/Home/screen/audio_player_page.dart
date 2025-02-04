@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../setting/widgets/bookify_ads.dart';
+import 'dart:io' show Platform;
+import 'package:audioplayers/audioplayers.dart' as audio_players;
 
 double currentSliderValue = 0;
 
@@ -33,19 +34,25 @@ class AudioPlayerScreen extends StatefulWidget {
 
 class AudioPlayerScreenState extends State<AudioPlayerScreen>
     with WidgetsBindingObserver {
-  late AssetsAudioPlayerPlus _audioPlayer;
+  late AssetsAudioPlayerPlus _assetsAudioPlayer;
+  late audio_players.AudioPlayer _audioPlayerWeb;
   bool _isPlaying = false;
   bool _isLoading = true;
   double _playbackSpeed = 1.0;
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
   late SharedPreferences _prefs;
+  bool get _isMobileOrMac => Platform.isAndroid || Platform.isIOS || Platform.isMacOS;
  
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _audioPlayer = AssetsAudioPlayerPlus();
+    if (_isMobileOrMac) {
+      _assetsAudioPlayer = AssetsAudioPlayerPlus();
+    } else {
+      _audioPlayerWeb = audio_players.AudioPlayer();
+    }
     _initializePlayer();
   }
 
@@ -65,38 +72,12 @@ class AudioPlayerScreenState extends State<AudioPlayerScreen>
       final lastPosition =
           _prefs.getInt('lastPosition_${widget.audioUrl}') ?? 0;
 
-      await _audioPlayer.open(
-        Audio.network(
-          audioUrl,
-          metas: Metas(
-            title: widget.bookName,
-            artist: widget.bookCreatorName,
-            album: widget.voiceOwner,
-            image: MetasImage.network(widget.bookImage),
-          ),
-        ),
-        autoStart: false,
-        showNotification: true,
-        notificationSettings: const NotificationSettings(),
-        playInBackground: PlayInBackground.enabled,
-        seek: Duration(seconds: lastPosition),
-      );
+      if (_isMobileOrMac) {
+        await _initializeMobilePlayer(audioUrl, lastPosition);
+      } else {
+        await _initializeWebPlayer(audioUrl, lastPosition);
+      }
 
-      _audioPlayer.current.listen((playingAudio) {
-        setState(() {
-          _duration = playingAudio?.audio.duration ?? Duration.zero;
-        });
-      });
-
-      _audioPlayer.currentPosition.listen((position) {
-        setState(() {
-          _position = position;
-          currentSliderValue = _position.inSeconds.toDouble();
-        });
-        _savePosition();
-      });
-
-      await _audioPlayer.play();
       setState(() {
         _isPlaying = true;
         _isLoading = false;
@@ -106,6 +87,62 @@ class AudioPlayerScreenState extends State<AudioPlayerScreen>
         _isLoading = false;
       });
     }
+  }
+
+  Future<void> _initializeMobilePlayer(String audioUrl, int lastPosition) async {
+    await _assetsAudioPlayer.open(
+      Audio.network(
+        audioUrl,
+        metas: Metas(
+          title: widget.bookName,
+          artist: widget.bookCreatorName,
+          album: widget.voiceOwner,
+          image: MetasImage.network(widget.bookImage),
+        ),
+      ),
+      autoStart: false,
+      showNotification: true,
+      notificationSettings: const NotificationSettings(),
+      playInBackground: PlayInBackground.enabled,
+      seek: Duration(seconds: lastPosition),
+    );
+
+    _assetsAudioPlayer.current.listen((playingAudio) {
+      setState(() {
+        _duration = playingAudio?.audio.duration ?? Duration.zero;
+      });
+    });
+
+    _assetsAudioPlayer.currentPosition.listen((position) {
+      setState(() {
+        _position = position;
+        currentSliderValue = _position.inSeconds.toDouble();
+      });
+      _savePosition();
+    });
+
+    await _assetsAudioPlayer.play();
+  }
+
+  Future<void> _initializeWebPlayer(String audioUrl, int lastPosition) async {
+    await _audioPlayerWeb.setSource(audio_players.UrlSource(audioUrl));
+    await _audioPlayerWeb.seek(Duration(seconds: lastPosition));
+    
+    _audioPlayerWeb.onDurationChanged.listen((Duration duration) {
+      setState(() {
+        _duration = duration;
+      });
+    });
+
+    _audioPlayerWeb.onPositionChanged.listen((Duration position) {
+      setState(() {
+        _position = position;
+        currentSliderValue = _position.inSeconds.toDouble();
+      });
+      _savePosition();
+    });
+
+    await _audioPlayerWeb.resume();
   }
 
   void _savePosition() {
@@ -123,9 +160,17 @@ class AudioPlayerScreenState extends State<AudioPlayerScreen>
     try {
       setState(() {
         if (_isPlaying) {
-          _audioPlayer.pause();
+          if (_isMobileOrMac) {
+            _assetsAudioPlayer.pause();
+          } else {
+            _audioPlayerWeb.pause();
+          }
         } else {
-          _audioPlayer.play();
+          if (_isMobileOrMac) {
+            _assetsAudioPlayer.play();
+          } else {
+            _audioPlayerWeb.resume();
+          }
         }
         _isPlaying = !_isPlaying;
       });
@@ -136,23 +181,27 @@ class AudioPlayerScreenState extends State<AudioPlayerScreen>
 
   void _undo() {
     final newPosition = _position - const Duration(seconds: 10);
-    _audioPlayer
-        .seek(newPosition > Duration.zero ? newPosition : Duration.zero);
+    if (_isMobileOrMac) {
+      _assetsAudioPlayer.seek(newPosition > Duration.zero ? newPosition : Duration.zero);
+    } else {
+      _audioPlayerWeb.seek(newPosition > Duration.zero ? newPosition : Duration.zero);
+    }
   }
 
   void _redo() {
     final newPosition = _position + const Duration(seconds: 10);
-    _audioPlayer.seek(newPosition < _duration ? newPosition : _duration);
+    if (_isMobileOrMac) {
+      _assetsAudioPlayer.seek(newPosition < _duration ? newPosition : _duration);
+    } else {
+      _audioPlayerWeb.seek(newPosition < _duration ? newPosition : _duration);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.bookName)),
-     
-      bottomNavigationBar: const BookifyAds(
-        apiUrl: 'https://gokeihub.github.io/bookify_api/ads/audio_player_ads.json',
-      ),
+    
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : Padding(
@@ -211,7 +260,11 @@ class AudioPlayerScreenState extends State<AudioPlayerScreen>
                             setState(() {
                               currentSliderValue = value;
                             });
-                            _audioPlayer.seek(Duration(seconds: value.toInt()));
+                            if (_isMobileOrMac) {
+                              _assetsAudioPlayer.seek(Duration(seconds: value.toInt()));
+                            } else {
+                              _audioPlayerWeb.seek(Duration(seconds: value.toInt()));
+                            }
                           },
                         ),
                         Row(
@@ -271,7 +324,11 @@ class AudioPlayerScreenState extends State<AudioPlayerScreen>
                                   if (newValue != null) {
                                     setState(() {
                                       _playbackSpeed = newValue;
-                                      _audioPlayer.setPlaySpeed(newValue);
+                                      if (_isMobileOrMac) {
+                                        _assetsAudioPlayer.setPlaySpeed(newValue);
+                                      } else {
+                                        _audioPlayerWeb.setPlaybackRate(newValue);
+                                      }
                                     });
                                   }
                                 },
@@ -354,7 +411,11 @@ class AudioPlayerScreenState extends State<AudioPlayerScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _audioPlayer.dispose();
+    if (_isMobileOrMac) {
+      _assetsAudioPlayer.dispose();
+    } else {
+      _audioPlayerWeb.dispose();
+    }
     super.dispose();
   }
 }

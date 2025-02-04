@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../setting/widgets/bookify_ads.dart';
 import 'episode_page.dart';
 
 class WriterDetailsPageSeeMore extends StatefulWidget {
@@ -81,9 +80,6 @@ class _WriterDetailsPageSeeMoreState extends State<WriterDetailsPageSeeMore> {
           bookType,
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-      ),
-      bottomNavigationBar: const BookifyAds(
-        apiUrl: 'https://gokeihub.github.io/bookify_api/ads/writer_details.json',
       ),
       body: Column(
         children: [

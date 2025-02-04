@@ -1,9 +1,11 @@
 import 'package:assets_audio_player_plus/assets_audio_player.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io' show Platform;
 
 class SliderAudioPlayerScreen extends StatefulWidget {
   final String title;
@@ -27,7 +29,7 @@ class SliderAudioPlayerScreen extends StatefulWidget {
 
 class SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
     with WidgetsBindingObserver {
-  late AssetsAudioPlayerPlus _audioPlayer;
+  late dynamic _audioPlayer;
   bool _isPlaying = false;
   bool _isLoading = true;
   double _currentSliderValue = 0;
@@ -35,12 +37,16 @@ class SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
   late SharedPreferences _prefs;
+  bool _isMobileOrMac = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _audioPlayer = AssetsAudioPlayerPlus();
+    _isMobileOrMac = Platform.isIOS || Platform.isAndroid || Platform.isMacOS;
+    _audioPlayer = _isMobileOrMac 
+        ? AssetsAudioPlayerPlus()
+        : AudioPlayer();
     _initializePlayer();
   }
 
@@ -60,38 +66,60 @@ class SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
       final lastPosition =
           _prefs.getInt('lastPosition_${widget.audioUrl}') ?? 0;
 
-      await _audioPlayer.open(
-        Audio.network(
-          audioUrl,
-          metas: Metas(
-            title: widget.title,
-            artist: widget.bookCreatorName,
-            album: widget.voiceOwner,
-            image: MetasImage.network(widget.bookImage),
+      if (_isMobileOrMac) {
+        await (_audioPlayer as AssetsAudioPlayerPlus).open(
+          Audio.network(
+            audioUrl,
+            metas: Metas(
+              title: widget.title,
+              artist: widget.bookCreatorName,
+              album: widget.voiceOwner,
+              image: MetasImage.network(widget.bookImage),
+            ),
           ),
-        ),
-        autoStart: false,
-        showNotification: true,
-        notificationSettings: const NotificationSettings(),
-        playInBackground: PlayInBackground.enabled,
-        seek: Duration(seconds: lastPosition),
-      );
+          autoStart: false,
+          showNotification: true,
+          notificationSettings: const NotificationSettings(),
+          playInBackground: PlayInBackground.enabled,
+          seek: Duration(seconds: lastPosition),
+        );
 
-      _audioPlayer.current.listen((playingAudio) {
-        setState(() {
-          _duration = playingAudio?.audio.duration ?? Duration.zero;
+        (_audioPlayer as AssetsAudioPlayerPlus).current.listen((playingAudio) {
+          setState(() {
+            _duration = playingAudio?.audio.duration ?? Duration.zero;
+          });
         });
-      });
 
-      _audioPlayer.currentPosition.listen((position) {
-        setState(() {
-          _position = position;
-          _currentSliderValue = _position.inSeconds.toDouble();
+        (_audioPlayer as AssetsAudioPlayerPlus).currentPosition.listen((position) {
+          setState(() {
+            _position = position;
+            _currentSliderValue = _position.inSeconds.toDouble();
+          });
+          _savePosition();
         });
-        _savePosition();
-      });
 
-      await _audioPlayer.play();
+        await (_audioPlayer as AssetsAudioPlayerPlus).play();
+      } else {
+        await (_audioPlayer as AudioPlayer).setSourceUrl(audioUrl);
+        await (_audioPlayer as AudioPlayer).seek(Duration(seconds: lastPosition));
+        
+        (_audioPlayer as AudioPlayer).onDurationChanged.listen((duration) {
+          setState(() {
+            _duration = duration;
+          });
+        });
+
+        (_audioPlayer as AudioPlayer).onPositionChanged.listen((position) {
+          setState(() {
+            _position = position;
+            _currentSliderValue = _position.inSeconds.toDouble();
+          });
+          _savePosition();
+        });
+
+        await (_audioPlayer as AudioPlayer).resume();
+      }
+
       setState(() {
         _isPlaying = true;
         _isLoading = false;
@@ -118,9 +146,17 @@ class SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
     try {
       setState(() {
         if (_isPlaying) {
-          _audioPlayer.pause();
+          if (_isMobileOrMac) {
+            (_audioPlayer as AssetsAudioPlayerPlus).pause();
+          } else {
+            (_audioPlayer as AudioPlayer).pause();
+          }
         } else {
-          _audioPlayer.play();
+          if (_isMobileOrMac) {
+            (_audioPlayer as AssetsAudioPlayerPlus).play();
+          } else {
+            (_audioPlayer as AudioPlayer).resume();
+          }
         }
         _isPlaying = !_isPlaying;
       });
@@ -131,13 +167,20 @@ class SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
 
   void _undo() {
     final newPosition = _position - const Duration(seconds: 10);
-    _audioPlayer
-        .seek(newPosition > Duration.zero ? newPosition : Duration.zero);
+    if (_isMobileOrMac) {
+      (_audioPlayer as AssetsAudioPlayerPlus).seek(newPosition > Duration.zero ? newPosition : Duration.zero);
+    } else {
+      (_audioPlayer as AudioPlayer).seek(newPosition > Duration.zero ? newPosition : Duration.zero);
+    }
   }
 
   void _redo() {
     final newPosition = _position + const Duration(seconds: 10);
-    _audioPlayer.seek(newPosition < _duration ? newPosition : _duration);
+    if (_isMobileOrMac) {
+      (_audioPlayer as AssetsAudioPlayerPlus).seek(newPosition < _duration ? newPosition : _duration);
+    } else {
+      (_audioPlayer as AudioPlayer).seek(newPosition < _duration ? newPosition : _duration);
+    }
   }
 
   @override
@@ -202,7 +245,11 @@ class SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
                             setState(() {
                               _currentSliderValue = value;
                             });
-                            _audioPlayer.seek(Duration(seconds: value.toInt()));
+                            if (_isMobileOrMac) {
+                              (_audioPlayer as AssetsAudioPlayerPlus).seek(Duration(seconds: value.toInt()));
+                            } else {
+                              (_audioPlayer as AudioPlayer).seek(Duration(seconds: value.toInt()));
+                            }
                           },
                         ),
                         Row(
@@ -262,7 +309,9 @@ class SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
                                   if (newValue != null) {
                                     setState(() {
                                       _playbackSpeed = newValue;
-                                      _audioPlayer.setPlaySpeed(newValue);
+                                      if (_isMobileOrMac) {
+                                        (_audioPlayer as AssetsAudioPlayerPlus).setPlaySpeed(newValue);
+                                      }
                                     });
                                   }
                                 },
@@ -346,7 +395,11 @@ class SliderAudioPlayerScreenState extends State<SliderAudioPlayerScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _audioPlayer.dispose();
+    if (_isMobileOrMac) {
+      (_audioPlayer as AssetsAudioPlayerPlus).dispose();
+    } else {
+      (_audioPlayer as AudioPlayer).dispose();
+    }
     super.dispose();
   }
 }

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../../setting/widgets/bookify_ads.dart';
 import 'audio_player_page.dart';
 
 class EpisodeListPage extends StatefulWidget {
@@ -23,9 +22,7 @@ class _EpisodeListPageState extends State<EpisodeListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BookifyAds(
-        apiUrl: 'https://gokeihub.github.io/bookify_api/ads/episode.json',
-      ),
+   
       appBar: AppBar(
         title: Text(
           widget.audiobook['bookName'],

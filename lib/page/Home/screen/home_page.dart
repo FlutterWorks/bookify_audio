@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -69,7 +70,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     loadData();
+    if(Platform.isAndroid || Platform.isIOS){
     initializeAction(context);
+    }
   }
 
   @override

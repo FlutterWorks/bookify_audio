@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../setting/widgets/bookify_ads.dart';
 import '../screen/episode_page.dart';
 
 class SeeMoreListWidget extends StatefulWidget {
@@ -79,9 +78,6 @@ class _SeeMoreListWidgetState extends State<SeeMoreListWidget> {
           bookType,
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-      ),
-      bottomNavigationBar: const BookifyAds(
-        apiUrl: 'https://gokeihub.github.io/bookify_api/ads/see_more.json',
       ),
       body: ListView.builder(
         itemCount: data.length,
