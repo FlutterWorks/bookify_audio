@@ -1,0 +1,225 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/authors_provider.dart';
+import '../widgets/mini_player.dart';
+import 'author_screen.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Fetch authors when the screen loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AuthorsProvider>(context, listen: false).fetchAuthors();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Bookify Audio'),
+        elevation: 0,
+      ),
+      body: Consumer<AuthorsProvider>(
+        builder: (context, authorsProvider, child) {
+          if (authorsProvider.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (authorsProvider.error != null) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Error: ${authorsProvider.error}',
+                    style: const TextStyle(color: Colors.red),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      authorsProvider.fetchAuthors();
+                    },
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          if (authorsProvider.authors.isEmpty) {
+            return const Center(
+              child: Text('No authors found'),
+            );
+          }
+
+          return Stack(
+            children: [
+              ListView.builder(
+                padding: const EdgeInsets.only(bottom: 80), // Add padding for mini player
+                itemCount: authorsProvider.authors.length,
+                itemBuilder: (context, index) {
+                  final author = authorsProvider.authors[index];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Author section header
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 20,
+                              backgroundImage: CachedNetworkImageProvider(author.image),
+                              onBackgroundImageError: (_, __) {},
+                              backgroundColor: Colors.grey[300],
+                              child: author.image.isEmpty
+                                  ? Text(
+                                      author.name.isNotEmpty
+                                          ? author.name[0]
+                                          : '?',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
+                                  : null,
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                author.name,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AuthorScreen(author: author),
+                                  ),
+                                );
+                              },
+                              child: const Text('See More'),
+                            ),
+                          ],
+                        ),
+                      ),
+                      
+                      // Books horizontal list
+                      SizedBox(
+                        height: 220,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          itemCount: author.books.length,
+                          itemBuilder: (context, bookIndex) {
+                            final book = author.books[bookIndex];
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/book',
+                                  arguments: {
+                                    'book': book,
+                                    'author': author,
+                                  },
+                                );
+                              },
+                              child: Container(
+                                width: 120,
+                                margin: const EdgeInsets.symmetric(horizontal: 8),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Book cover
+                                    Hero(
+                                      tag: 'book-cover-${book.id}',
+                                      child: Container(
+                                        height: 170,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.1),
+                                              blurRadius: 5,
+                                              offset: const Offset(0, 3),
+                                            ),
+                                          ],
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(8),
+                                          child: CachedNetworkImage(
+                                            fit: BoxFit.cover,
+                                            errorWidget: (context, error, stackTrace) {
+                                              return Container(
+                                                color: Colors.grey[300],
+                                                child: const Icon(
+                                                  Icons.book,
+                                                  size: 40,
+                                                  color: Colors.grey,
+                                                ),
+                                              );
+                                            }, imageUrl: book.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    
+                                    const SizedBox(height: 8),
+                                    
+                                    // Book title
+                                    Text(
+                                      book.title,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 8),
+                      
+                    ],
+                  );
+                },
+              ),
+              
+              // Mini player at the bottom
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: MiniPlayer(),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+} 
