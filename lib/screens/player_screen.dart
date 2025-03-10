@@ -103,7 +103,12 @@ class PlayerScreen extends StatelessWidget {
                         ),
                       ),
                       
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 20),
+                      
+                      // Download button
+                      _buildDownloadButton(context, audioPlayerProvider, episode),
+                      
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
@@ -234,6 +239,104 @@ class PlayerScreen extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+  
+  Widget _buildDownloadButton(
+    BuildContext context, 
+    AudioPlayerProvider audioPlayerProvider,
+    Episode episode,
+  ) {
+    // Check if the episode is already downloaded
+    if (audioPlayerProvider.isDownloaded && 
+        audioPlayerProvider.currentEpisode?.id == episode.id) {
+      return ElevatedButton.icon(
+        icon: const Icon(Icons.delete),
+        label: const Text('Delete Download'),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.red,
+          foregroundColor: Colors.white,
+        ),
+        onPressed: () async {
+          await audioPlayerProvider.deleteDownloadedEpisode(episode);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Download deleted')),
+          );
+        },
+      );
+    }
+    
+    // Show download progress if downloading
+    if (audioPlayerProvider.isDownloading && 
+        audioPlayerProvider.currentEpisode?.id == episode.id) {
+      return Column(
+        children: [
+          LinearProgressIndicator(
+            value: audioPlayerProvider.downloadProgress,
+            backgroundColor: Colors.grey[300],
+            valueColor: AlwaysStoppedAnimation<Color>(
+              Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Downloading ${(audioPlayerProvider.downloadProgress * 100).toStringAsFixed(1)}%',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextButton.icon(
+            icon: const Icon(Icons.cancel),
+            label: const Text('Cancel'),
+            onPressed: () {
+              audioPlayerProvider.cancelDownload();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Download canceled')),
+              );
+            },
+          ),
+        ],
+      );
+    }
+    
+    // Show download button if not downloaded and not downloading
+    return FutureBuilder<bool>(
+      future: audioPlayerProvider.isEpisodeDownloaded(episode),
+      builder: (context, snapshot) {
+        final isDownloaded = snapshot.data ?? false;
+        
+        if (isDownloaded) {
+          return ElevatedButton.icon(
+            icon: const Icon(Icons.delete),
+            label: const Text('Delete Download'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            onPressed: () async {
+              await audioPlayerProvider.deleteDownloadedEpisode(episode);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Download deleted')),
+              );
+            },
+          );
+        }
+        
+        return ElevatedButton.icon(
+          icon: const Icon(Icons.download),
+          label: const Text('Download for Offline'),
+          onPressed: () async {
+            await audioPlayerProvider.downloadEpisode(episode);
+            if (audioPlayerProvider.isDownloaded) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Download complete')),
+              );
+            }
+          },
+        );
+      },
     );
   }
   

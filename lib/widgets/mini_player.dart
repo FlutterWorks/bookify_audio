@@ -137,9 +137,14 @@ class MiniPlayer extends StatelessWidget {
                         // Close button
                         IconButton(
                           icon: const Icon(Icons.close, size: 20),
-                          onPressed: () {
-                            audioPlayerProvider.stop();
-                            audioPlayerProvider.hideMiniPlayer();
+                          onPressed: () async {
+                            // First stop the audio
+                            await audioPlayerProvider.stop();
+                            // Then hide the mini player
+                            // Use Future.microtask to ensure UI updates properly
+                            Future.microtask(() {
+                              audioPlayerProvider.hideMiniPlayer();
+                            });
                           },
                         ),
                       ],
