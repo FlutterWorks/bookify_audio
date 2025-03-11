@@ -14,8 +14,18 @@ class Book {
   });
 
   factory Book.fromJson(Map<String, dynamic> json) {
+    // Handle the _id field which is a nested object with $oid
+    String id = '';
+    if (json['_id'] is Map) {
+      // Use string key for accessing the $oid field
+      final idMap = json['_id'] as Map;
+      id = idMap.containsKey('\$oid') ? idMap['\$oid']?.toString() ?? '' : '';
+    } else {
+      id = json['_id']?.toString() ?? '';
+    }
+
     return Book(
-      id: json['_id'] ?? '',
+      id: id,
       title: json['title'] ?? '',
       cover: json['cover'] ?? '',
       episodes: (json['episodes'] as List<dynamic>?)
