@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/authors_provider.dart';
 import '../widgets/mini_player.dart';
 import 'author_screen.dart';
+import 'dart:async';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,6 +14,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool _isRefreshEnabled = true;
+  Timer? _refreshCooldownTimer;
+
   @override
   void initState() {
     super.initState();
@@ -23,11 +27,49 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void dispose() {
+    _refreshCooldownTimer?.cancel();
+    super.dispose();
+  }
+
+  void _refreshData() {
+    if (_isRefreshEnabled) {
+      setState(() {
+        _isRefreshEnabled = false;
+      });
+      
+      // Refresh the data
+      Provider.of<AuthorsProvider>(context, listen: false).fetchAuthors(forceRefresh: true);
+      
+      // Start cooldown timer
+      _refreshCooldownTimer = Timer(const Duration(seconds: 15), () {
+        if (mounted) {
+          setState(() {
+            _isRefreshEnabled = true;
+          });
+        }
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bookify Audio'),
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.refresh,
+              color: _isRefreshEnabled ? null : Colors.grey,
+            ),
+            onPressed: _isRefreshEnabled ? _refreshData : null,
+            tooltip: _isRefreshEnabled 
+                ? 'Refresh data' 
+                : 'Refresh available in a moment',
+          ),
+        ],
       ),
       body: Consumer<AuthorsProvider>(
         builder: (context, authorsProvider, child) {
@@ -222,4 +264,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-} 
+}

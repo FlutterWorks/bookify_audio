@@ -1,38 +1,124 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/models.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  static const String baseUrl = 'https://gokeihub.github.io/bookify_api/new.json';
+  static const String baseUrl = 'http://localhost:3000/api/authors';
+  static const String cacheKey = 'cached_authors_data';
 
-  Future<List<Author>> fetchAuthors() async {
+  // Fetch authors from API or cache
+  Future<List<Author>> fetchAuthors({bool forceRefresh = false}) async {
     try {
-      final response = await http.get(Uri.parse(baseUrl));
-      if (response.statusCode == 200) {
-        // Print the raw response for debugging
-        print('Raw API response: ${response.body}');
-        
-        final List<dynamic> decodedData = jsonDecode(response.body) as List<dynamic>;
-        
-        // Process each item carefully with proper type checking
-        return decodedData.map((item) {
-          // Ensure each item is properly cast to Map<String, dynamic>
-          if (item is Map) {
-            return Author.fromJson(Map<String, dynamic>.from(item));
-          } else {
-            throw Exception('Invalid author data format: $item');
-          }
-        }).toList();
-      } else {
-        throw Exception('Failed to load authors: ${response.statusCode}');
+      // If forceRefresh is true or we don't have cached data, fetch from API
+      if (forceRefresh || !(await _hasCachedData())) {
+        return await _fetchFromApi();
+      }
+      
+      // Otherwise, try to load from cache first
+      try {
+        return await _loadAuthorsFromCache();
+      } catch (cacheError) {
+        // If cache fails, fall back to API
+        print('Cache error: $cacheError');
+        return await _fetchFromApi();
       }
     } catch (e) {
       print('Exception details: $e');
-      throw Exception('Failed to load authors: $e');
+      // If there's an exception with API, try to load from cache
+      try {
+        return await _loadAuthorsFromCache();
+      } catch (cacheError) {
+        print('Cache error: $cacheError');
+        throw Exception('Failed to load authors: $e');
+      }
+    }
+  }
+
+  // Helper method to check if we have cached data
+  Future<bool> _hasCachedData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString(cacheKey);
+    return jsonString != null && jsonString.isNotEmpty;
+  }
+
+  // Helper method to fetch from API
+  Future<List<Author>> _fetchFromApi() async {
+    final response = await http.get(Uri.parse(baseUrl));
+    if (response.statusCode == 200) {
+      // Print the raw response for debugging
+      print('Raw API response: ${response.body}');
+      
+      final List<dynamic> decodedData = jsonDecode(response.body) as List<dynamic>;
+      
+      // Save the fresh data to SharedPreferences
+      await _saveAuthorsToCache(response.body);
+      
+      // Process each item carefully with proper type checking
+      return decodedData.map((item) {
+        // Ensure each item is properly cast to Map<String, dynamic>
+        if (item is Map) {
+          return Author.fromJson(Map<String, dynamic>.from(item));
+        } else {
+          throw Exception('Invalid author data format: $item');
+        }
+      }).toList();
+    } else {
+      throw Exception('Failed to load authors: ${response.statusCode}');
+    }
+  }
+
+  // Save authors data to SharedPreferences
+  Future<void> _saveAuthorsToCache(String jsonData) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(cacheKey, jsonData);
+      print('Authors data saved to cache');
+    } catch (e) {
+      print('Failed to save authors to cache: $e');
+    }
+  }
+
+  // Load authors data from SharedPreferences
+  Future<List<Author>> _loadAuthorsFromCache() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString(cacheKey);
+    
+    if (jsonString == null || jsonString.isEmpty) {
+      throw Exception('No cached data available');
+    }
+    
+    print('Loading authors from cache');
+    final List<dynamic> decodedData = jsonDecode(jsonString) as List<dynamic>;
+    
+    return decodedData.map((item) {
+      if (item is Map) {
+        return Author.fromJson(Map<String, dynamic>.from(item));
+      } else {
+        throw Exception('Invalid cached author data format');
+      }
+    }).toList();
+  }
+  
+  // Check if there is newer data available
+  Future<bool> hasNewData() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final cachedData = prefs.getString(cacheKey);
+      
+      if (cachedData == null) return true;
+      
+      final response = await http.get(Uri.parse(baseUrl));
+      if (response.statusCode == 200) {
+        return response.body != cachedData;
+      }
+      return false;
+    } catch (e) {
+      print('Error checking for new data: $e');
+      return false;
     }
   }
 }
-
 
 // const apiData = [{
 //   "_id": {
@@ -145,7 +231,7 @@ class ApiService {
 //       }
 //     },
 //     {
-//       "title": "dsfdsfsssssssssssssss",
+//       "title": "dsfdsfsssssssssssssssss",
 //       "cover": "https://yt3.ggpht.com/KVjptxDSWT7rjVfGax2TgTNVAYgplgo1z_fwaV3MFjPpcmNVZC0TIgQV030BPJ0ybCP3_Fz-2w=s88-c-k-c0x00ffffff-no-rj",
 //       "_id": {
 //         "$oid": "67c3e669a0eaea993eae8d6d"
