@@ -4,7 +4,7 @@ import '../models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://localhost:3000/api/authors';
+  static const String baseUrl = 'https://gokeihub.github.io/bookify_api/new.json';
   static const String cacheKey = 'cached_authors_data';
 
   // Fetch authors from API or cache
