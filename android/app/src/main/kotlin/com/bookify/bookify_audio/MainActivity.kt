@@ -1,5 +1,5 @@
-package com.bookify.bookify_audio
+package com.bookify.audio
 
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity()
+class MainActivity : FlutterActivity()
